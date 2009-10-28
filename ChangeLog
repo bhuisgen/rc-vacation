@@ -1,0 +1,17 @@
+ChangeLog
+
+2009-10-07 Boris HUISGEN <bhuisgen@hbis.fr>
+	* allow to disable vacation subject.
+	* add HTML message support.
+	* lib/drivers/ldap.php: LDAP driver.
+	[RELEASE]: version 0.3
+
+2009-09-16 Boris HUISGEN <bhuisgen@hbis.fr>
+	* vacation.php: support plugin API, add backend storage through drivers.
+	* rcube_vacation.php: remove all storage code and add it to lib/drivers/sql.php
+	* lib/drivers/sql.php: SQL driver.
+	* config.inc.php: move to SQL queries blocks (postfixAdmin default queries).
+	[RELEASE]: version 0.2
+
+2008-05-28 Boris HUISGEN <bhuisgen@hbis.fr>
+	[RELEASE]: version 0.1

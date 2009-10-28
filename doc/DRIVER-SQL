@@ -1,0 +1,20 @@
+DRIVER-SQL
+
+This driver is a SQL backend storage.
+
+His configuration settings are  :
+- vacation_sql_dsn : DSN of the database.
+- vacation_sql_read : array of queries to do for reading data.
+- vacation_sql_write : array of queries to do for writing data.
+
+Query syntax :
+
+The driver replaces the predefined keys into a query by the real values on
+input (get) and/or output (set). These keys are :
+- %username : the user mail or username (get).
+- %email : the email of the user (get/set).
+- %email_local : the email local part if username is a full email (get/set). 
+- %email_domain : the email domain if the username is a full email (get/set).
+- %vacation_enable : boolean, flag to enable disable the vacation message (get/set).
+- %vacation_subject : string, subject of the vacation message (get/set).
+- %vacation_message : string, message of the vacation (get/set).

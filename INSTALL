@@ -1,0 +1,12 @@
+INSTALL
+
+To install this plugin, copy his directory into the 'plugins' directory
+of your roundcube instance and activate the plugin name by adding his name
+'vacation' to the option array 'plugins' in config/main.inc.php :
+
+	// List of active plugins (in plugins/ directory)
+	$rcmail_config['plugins'] = array('vacation');
+
+Edit now the plugin configuration file 'config.inc.php'. You must choose the
+driver for your backend storage and configure his options. For more information,
+please take a look in the directory /doc.
