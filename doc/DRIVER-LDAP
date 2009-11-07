@@ -7,7 +7,7 @@ His configuration settings are :
 - vacation_ldap_port : server port
 - vacation_ldap_starttls : flag to use TLS transactions
 - vacation_ldap_version : LDAP protocol to use
-- vacation_ldap_base : base DN
+- vacation_ldap_basedn : base DN
 - vacation_ldap_binddn : bind DN
 - vacation_ldap_bindpw : bind password
 - vacation_ldap_attr_email : attribute name to map email address

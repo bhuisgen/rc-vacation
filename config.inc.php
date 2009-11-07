@@ -81,7 +81,7 @@ $rcmail_config['vacation_ldap_starttls'] = false;
 $rcmail_config['vacation_ldap_version'] = 3;
 
 // Base DN
-$rcmail_config['vacation_ldap_base'] = 'dc=ldap,dc=my,dc=domain';
+$rcmail_config['vacation_ldap_basedn'] = 'dc=ldap,dc=my,dc=domain';
 
 // Bind DN
 $rcmail_config['vacation_ldap_binddn'] =

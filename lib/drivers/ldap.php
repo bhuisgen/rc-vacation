@@ -25,9 +25,9 @@ function vacation_read(array &$data)
         'port'      => $rcmail->config->get('vacation_ldap_port'),
         'starttls'  => $rcmail->config->get('vacation_ldap_starttls'),
         'version'   => $rcmail->config->get('vacation_ldap_version'),
-        'binddn'    => $rcmail->config->get('vacation_ldap_binddn'),
-        'bindpw'    => $rcmail->config->get('vacation_ldap_bindpw'),
         'basedn'    => $rcmail->config->get('vacation_ldap_basedn'),
+		'binddn'    => $rcmail->config->get('vacation_ldap_binddn'),
+        'bindpw'    => $rcmail->config->get('vacation_ldap_bindpw'),
 	);
 
 	$ldap = Net_LDAP2::connect($ldapConfig);
@@ -130,9 +130,9 @@ function vacation_write(array &$data)
         'port'      => $rcmail->config->get('vacation_ldap_port'),
         'starttls'  => $rcmail->config->get('vacation_ldap_starttls'),
         'version'   => $rcmail->config->get('vacation_ldap_version'),
-        'binddn'    => $rcmail->config->get('vacation_ldap_binddn'),
-        'bindpw'    => $rcmail->config->get('vacation_ldap_bindpw'),
         'basedn'    => $rcmail->config->get('vacation_ldap_basedn'),
+	    'binddn'    => $rcmail->config->get('vacation_ldap_binddn'),
+        'bindpw'    => $rcmail->config->get('vacation_ldap_bindpw'),
 	);
 
 	$ldap = Net_LDAP2::connect($ldapConfig);
