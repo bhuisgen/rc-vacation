@@ -3,8 +3,8 @@
 $labels = array();
 $labels['vacation'] = 'Répondeur';
 $labels['vacationenable'] = 'Activer';
-$labels['vacationsubject'] = 'Sujet:';
-$labels['vacationmessage'] = 'Message:';
+$labels['vacationsubject'] = 'Sujet :';
+$labels['vacationmessage'] = 'Message :';
 
 $messages = array();
 $messages['vacationnosubject'] = 'Veuillez saisir le sujet de votre répondeur.';

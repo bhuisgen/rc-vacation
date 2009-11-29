@@ -139,7 +139,7 @@ function vacation_write(array &$data)
 		return PLUGIN_ERROR_CONNECT;
 	}
 
-	foreach($rcmail->config->get('vacation_sql_read') as $query)
+	foreach($rcmail->config->get('vacation_sql_write') as $query)
 	{
 		$search = array('%username', '%email_local', '%email_domain', '%email',
 							'%vacation_enable', '%vacation_subject',

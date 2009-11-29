@@ -110,7 +110,7 @@ class vacation extends rcube_plugin
 		$table->add(null, $text_vacationmessage->show($this->obj->get_vacation_message()));
 
 		$out = html::div(array('class' => "settingsbox", 'style' => "margin:0"),
-		html::div(array('id' => "prefs-title"), $this->gettext('vacation')) .
+		html::div(array('id' => "prefs-title", 'class' => 'boxtitle'), $this->gettext('vacation')) .
 		html::div(array('style' => "padding:15px"), $table->show() .
 		html::p(null, $this->rc->output->button(array(
 		      'command' => 'plugin.vacation-save', 'type' => 'input', 'class' => 'button mainaction', 'label' => 'save')))));
