@@ -1,5 +1,9 @@
 ChangeLog
 
+2009-12-17 Boris HUISGEN <bhuisgen@hbis.fr>
+	* fix overwriting values bug.
+	* add es_ES localization (Patricio MARTINEZ).
+
 2009-11-07 Boris HUISGEN <bhuisgen@hbis.fr
 	* fix configuration value name.
 	[RELEASE]: version 0.3.1

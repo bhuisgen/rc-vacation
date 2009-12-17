@@ -191,12 +191,35 @@ class vacation extends rcube_plugin
 				}
 		}
 
-		$this->obj->set_email($data['email']);
-		$this->obj->set_email_local($data['email_local']);
-		$this->obj->set_email_domain($data['email_domain']);
-		$this->obj->set_vacation_enable($data['vacation_enable']);
-		$this->obj->set_vacation_subject($data['vacation_subject']);
-		$this->obj->set_vacation_message($data['vacation_message']);
+		if (isset($data['email']))
+		{
+			$this->obj->set_email($data['email']);
+		}
+		
+		if (isset($data['email_local']))
+		{
+			$this->obj->set_email_local($data['email_local']);
+		}
+		
+		if (isset($data['email_domain']))
+		{
+			$this->obj->set_email_domain($data['email_domain']);
+		}
+		
+		if (isset($data['vacation_enable']))
+		{
+			$this->obj->set_vacation_enable($data['vacation_enable']);
+		}
+		
+		if (isset($data['vacation_subject']))
+		{
+			$this->obj->set_vacation_subject($data['vacation_subject']);
+		}
+		
+		if (isset($data['vacation_message']))
+		{
+			$this->obj->set_vacation_message($data['vacation_message']);
+		}
 
 		return TRUE;
 	}
@@ -283,12 +306,35 @@ class vacation extends rcube_plugin
 				}
 		}
 
-		$this->obj->set_email($data['email']);
-		$this->obj->set_email_local($data['email_local']);
-		$this->obj->set_email_domain($data['email_domain']);
-		$this->obj->set_vacation_enable($data['vacation_enable']);
-		$this->obj->set_vacation_subject($data['vacation_subject']);
-		$this->obj->set_vacation_message($data['vacation_message']);
+		if (isset($data['email']))
+		{
+			$this->obj->set_email($data['email']);
+		}
+		
+		if (isset($data['email_local']))
+		{
+			$this->obj->set_email_local($data['email_local']);
+		}
+		
+		if (isset($data['email_domain']))
+		{
+			$this->obj->set_email_domain($data['email_domain']);
+		}
+		
+		if (isset($data['vacation_enable']))
+		{
+			$this->obj->set_vacation_enable($data['vacation_enable']);
+		}
+		
+		if (isset($data['vacation_subject']))
+		{
+			$this->obj->set_vacation_subject($data['vacation_subject']);
+		}
+		
+		if (isset($data['vacation_message']))
+		{
+			$this->obj->set_vacation_message($data['vacation_message']);
+		}
 
 		return TRUE;
 	}
