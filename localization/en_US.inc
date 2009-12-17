@@ -3,8 +3,8 @@
 $labels = array();
 $labels['vacation'] = 'Vacation';
 $labels['vacationenable'] = 'Enable';
-$labels['vacationsubject'] = 'Subject :';
-$labels['vacationmessage'] = 'Message :';
+$labels['vacationsubject'] = 'Subject:';
+$labels['vacationmessage'] = 'Message:';
 
 $messages = array();
 $messages['vacationnosubject'] = 'Please fill the subject of your vacation.';
