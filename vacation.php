@@ -75,9 +75,7 @@ class vacation extends rcube_plugin
 
 		$field_id = 'vacationenable';
 		$input_vacationenable = new html_checkbox(array('name' => '_vacationenable',
-				 'id' => $field_id, 'value' => 1,
-				 'onclick' => 'document.getElementById(\'vacationsubject\').disabled=!document.getElementById(\'vacationenable\').checked;' .
-				  'document.getElementById(\'vacationmessage\').disabled=!document.getElementById(\'vacationenable\').checked;'));
+				 'id' => $field_id, 'value' => 1));
 		$table->add('title', html::label($field_id, Q($this->gettext('vacationenable'))));
 		$table->add(null, $input_vacationenable->show($this->obj->is_vacation_enable() ? 1 : 0));
 

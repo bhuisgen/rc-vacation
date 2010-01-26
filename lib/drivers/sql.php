@@ -20,7 +20,7 @@ function vacation_read(array &$data)
 {
 	$rcmail = rcmail::get_instance();
 
-	if ($dsn = $rcmail->config->get('vacation_db_dsn'))
+	if ($dsn = $rcmail->config->get('vacation_sql_dsn'))
 	{
 		if (is_array($dsn) && empty($dsn['new_link']))
 		{
@@ -114,7 +114,7 @@ function vacation_write(array &$data)
 {
 	$rcmail = rcmail::get_instance();
 
-	if ($dsn = $rcmail->config->get('vacation_db_dsn'))
+	if ($dsn = $rcmail->config->get('vacation_sql_dsn'))
 	{
 		if (is_array($dsn) && empty($dsn['new_link']))
 		{
