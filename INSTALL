@@ -1,8 +1,11 @@
 INSTALL
 
-To install this plugin, copy his directory into the 'plugins' directory
-of your roundcube instance and activate the plugin name by adding his name
-'vacation' to the option array 'plugins' in config/main.inc.php :
+Requirements :
+- PEAR Net/LDAP2 module for LDAP driver.
+
+To install this plugin, copy his directory into the 'plugins' directory of your
+Roundcube instance and activate it by adding his name 'vacation' to the option
+array 'plugins' in config/main.inc.php :
 
 	// List of active plugins (in plugins/ directory)
 	$rcmail_config['plugins'] = array('vacation');

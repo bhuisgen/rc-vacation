@@ -1,5 +1,8 @@
 ChangeLog
 
+2010-06-15 Boris HUISGEN <bhuisgen@hbis.fr>
+	* add vacation forward support.
+
 2010-01-26 Boris HUISGEN <bhuisgen@hbis.fr>
 	* fix variable vacation_sql_dsn.
 	* remove javascript onclick event.

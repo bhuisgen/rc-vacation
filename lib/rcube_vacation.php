@@ -15,11 +15,10 @@ class rcube_vacation
 	public $email = '';
 	public $email_local = '';
 	public $email_domain =  '';
-	public $mailbox_aliases = '';
 	public $vacation_enable = FALSE;
 	public $vacation_subject = '';
 	public $vacation_message = '';
-	public $vacation_alias = '';
+	public $vacation_forwarder = '';
 
 	/**
 	 * Constructor of the class.
@@ -116,6 +115,16 @@ class rcube_vacation
 	}
 	
 	/*
+	 * Gets the vacation forward address.
+	 * 
+	 * @return string the vacation forward address.
+	 */
+	public function get_vacation_forwarder()
+	{
+		return $this->vacation_forwarder;
+	}
+	
+	/*
 	 * Sets the email of the user
 	 *
 	 * @param string $email the email.
@@ -173,6 +182,16 @@ class rcube_vacation
 	public function set_vacation_message($message)
 	{
 		$this->vacation_message = $message;
+	}
+	
+	/*
+	 * Sets the vacation forward address.
+	 * 
+	 * @param string $forwarder the vacation forward address.
+	 */
+	public function set_vacation_forwarder($forwarder)
+	{
+		$this->vacation_forwarder = $forwarder;
 	}
 }
 ?>

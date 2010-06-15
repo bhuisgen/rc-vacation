@@ -18,6 +18,7 @@ His configuration settings are :
 - vacation_ldap_attr_vacationenable_value_disabled : attribute value for disabled vacation flag
 - vacation_ldap_attr_vacationsubject : attribute name to map vacation subject
 - vacation_ldap_attr_vacationmessage : attribute name to map vacation message
+- vacation_ldap_attr_vacationforwarder : attribute name to map vacation forward address
 - vacation_ldap_search_base : search base for reading data.
 - vacation_ldap_search_filter : search filter for reading data.
 - vacation_ldap_search_attrs : array of attributes for reading data.
@@ -35,3 +36,4 @@ input (get) and/or output (set). These keys are :
 - %vacation_enable : boolean, flag to enable disable the vacation message (get/set).
 - %vacation_subject : string, subject of the vacation message (get/set).
 - %vacation_message : string, message of the vacation (get/set).
+- %vacation_forwarder : string, forward address of the vacation (get/set).

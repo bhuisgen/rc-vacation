@@ -47,13 +47,23 @@ function vacation_read(array &$data)
 
 	foreach($rcmail->config->get('vacation_sql_read') as $query)
 	{
-		$search = array('%username', '%email_local', '%email_domain', '%email',
-							'%vacation_enable', '%vacation_subject',
-							'%vacation_message');
-		$replace = array($db->quote($data['username']), $db->quote($data['email_local']),
-		$db->quote($data['email_domain']), $db->quote($data['email']),
-		$db->quote($data['vacation_enable'], 'boolean'), $db->quote($data['vacation_subject']),
-		$db->quote($data['vacation_message'])
+		$search = array('%username',
+						'%email_local',
+						'%email_domain',
+						'%email',
+						'%vacation_enable',
+						'%vacation_subject',
+						'%vacation_message',
+						'%vacation_forwarder'
+		);
+		$replace = array($db->quote($data['username']),
+						 $db->quote($data['email_local']),
+						 $db->quote($data['email_domain']),
+						 $db->quote($data['email']),
+						 $db->quote($data['vacation_enable'], 'boolean'),
+						 $db->quote($data['vacation_subject']),
+						 $db->quote($data['vacation_message']),
+						 $db->quote($data['vacation_forwarder'])
 		);
 		$query = str_replace($search, $replace, $query);
 
@@ -98,6 +108,11 @@ function vacation_read(array &$data)
 		{
 			$data['vacation_message'] = $sql_arr['vacation_message'];
 		}
+		
+		if (isset($sql_arr['vacation_forwarder']))
+		{
+			$data['vacation_forwarder'] = $sql_arr['vacation_forwarder'];
+		}
 	}
 
 	return PLUGIN_NOERROR;
@@ -141,13 +156,23 @@ function vacation_write(array &$data)
 
 	foreach($rcmail->config->get('vacation_sql_write') as $query)
 	{
-		$search = array('%username', '%email_local', '%email_domain', '%email',
-							'%vacation_enable', '%vacation_subject',
-							'%vacation_message');
-		$replace = array($db->quote($data['username']), $db->quote($data['email_local']),
-		$db->quote($data['email_domain']), $db->quote($data['email']),
-		$db->quote($data['vacation_enable'], 'boolean'), $db->quote($data['vacation_subject']),
-		$db->quote($data['vacation_message'])
+		$search = array('%username',
+						'%email_local',
+						'%email_domain',
+						'%email',
+						'%vacation_enable',
+						'%vacation_subject',
+						'%vacation_message',
+						'%vacation_forwarder'
+		);
+		$replace = array($db->quote($data['username']),
+						 $db->quote($data['email_local']),
+						 $db->quote($data['email_domain']),
+						 $db->quote($data['email']),
+						 $db->quote($data['vacation_enable'], 'boolean'),
+						 $db->quote($data['vacation_subject']),
+						 $db->quote($data['vacation_message']),
+						 $db->quote($data['vacation_forwarder'])
 		);
 		$query = str_replace($search, $replace, $query);
 

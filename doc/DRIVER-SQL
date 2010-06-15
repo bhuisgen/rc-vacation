@@ -18,3 +18,4 @@ input (get) and/or output (set). These keys are :
 - %vacation_enable : boolean, flag to enable disable the vacation message (get/set).
 - %vacation_subject : string, subject of the vacation message (get/set).
 - %vacation_message : string, message of the vacation (get/set).
+- %vacation_forwarder : string, forward address of the vacation (get/set).

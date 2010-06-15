@@ -6,9 +6,7 @@
  |                                                                       |
  | Copyright (C) 2009 Boris HUISGEN <bhuisgen@hbis.fr>                   |
  | Licensed under the GNU GPL                                            |
- |                                                                       |
  +-----------------------------------------------------------------------+
-
 */
 
 $rcmail_config = array();
@@ -24,6 +22,9 @@ $rcmail_config['vacation_gui_vacationmessage_html'] = TRUE;
 
 // default vacation message
 $rcmail_config['vacation_gui_vacationmessage_default'] = "I'm currently out of office.";
+
+// allow vacation forwarder
+$rcmail_config['vacation_gui_vacationforwarder'] = FALSE;
 
 // driver used for backend storage
 $rcmail_config['vacation_driver'] = 'sql';
@@ -84,8 +85,7 @@ $rcmail_config['vacation_ldap_version'] = 3;
 $rcmail_config['vacation_ldap_basedn'] = 'dc=ldap,dc=my,dc=domain';
 
 // Bind DN
-$rcmail_config['vacation_ldap_binddn'] =
- 'cn=user,dc=ldap,dc=my,dc=domain';
+$rcmail_config['vacation_ldap_binddn'] = 'cn=user,dc=ldap,dc=my,dc=domain';
 
 // Bind password
 $rcmail_config['vacation_ldap_bindpw'] = 'pa$$w0rd';
@@ -115,6 +115,10 @@ $rcmail_config['vacation_ldap_attr_vacationsubject'] = null;
 $rcmail_config['vacation_ldap_attr_vacationmessage'] =
  'vacationInfo';
 
+// Attribute name to map vacation forwarder
+$rcmail_config['vacation_ldap_attr_vacationforwarder'] =
+ 'vacationForward';
+
 // Search base to read data
 $rcmail_config['vacation_ldap_search_base'] =
  'cn=%email_local,ou=Mailboxes,dc=%email_domain,ou=MailServer,dc=ldap,' .
@@ -132,10 +136,14 @@ $rcmail_config['vacation_ldap_modify_dns'] = array (
 );
 
 // array of operations required to write data.
-$rcmail_config['vacation_ldap_modify_ops'] = array (
- array (
-  'replace' => array ( 'vacationActive' => '%vacation_enable', 'vacationInfo' => '%vacation_message')
-  ),
+$rcmail_config['vacation_ldap_modify_ops'] = array(
+	array (
+		'replace' => array(
+			$rcmail_config['vacation_ldap_attr_vacationenable'] => '%vacation_enable',
+ 			$rcmail_config['vacation_ldap_attr_vacationmessage'] => '%vacation_message',
+ 			$rcmail_config['vacation_ldap_attr_vacationforwarder'] => '%vacation_forwarder'
+ 			)
+ 		)
 );
 
 // end vacation config file
