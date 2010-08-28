@@ -1,6 +1,7 @@
 INSTALL
 
 Requirements :
+- jQuery UI for vacation date support.
 - PEAR Net/LDAP2 module for LDAP driver.
 
 To install this plugin, copy his directory into the 'plugins' directory of your
@@ -10,6 +11,7 @@ array 'plugins' in config/main.inc.php :
 	// List of active plugins (in plugins/ directory)
 	$rcmail_config['plugins'] = array('vacation');
 
-Edit now the plugin configuration file 'config.inc.php'. You must choose the
-driver for your backend storage and configure his options. For more information,
-please take a look in the directory /doc.
+Edit the plugin configuration file 'config.inc.php'. You must choose the
+driver for your backend storage and configure his options.
+
+For more information, please take a look in the directory /doc.

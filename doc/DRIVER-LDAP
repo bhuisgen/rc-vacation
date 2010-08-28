@@ -2,7 +2,8 @@ DRIVER-SQL
 
 This driver is a LDAP backend storage.
 
-His configuration settings are :
+Configuration settings :
+
 - vacation_ldap_host : server hostname
 - vacation_ldap_port : server port
 - vacation_ldap_starttls : flag to use TLS transactions
@@ -16,6 +17,8 @@ His configuration settings are :
 - vacation_ldap_attr_vacationenable : attribute name to map vacation flag
 - vacation_ldap_attr_vacationenable_value_enabled : attribute value for enabled vacation flag
 - vacation_ldap_attr_vacationenable_value_disabled : attribute value for disabled vacation flag
+- vacation_ldap_attr_vacationstart : attribute name to map vacation start
+- vacation_ldap_attr_vacationend : attribute name to map vacation end
 - vacation_ldap_attr_vacationsubject : attribute name to map vacation subject
 - vacation_ldap_attr_vacationmessage : attribute name to map vacation message
 - vacation_ldap_attr_vacationforwarder : attribute name to map vacation forward address
@@ -28,12 +31,14 @@ His configuration settings are :
 Query syntax :
 
 The driver replaces the predefined keys into a query by the real values on
-input (get) and/or output (set). These keys are :
+input (get) and/or output (set). Available keys :
 - %username : the user mail or username (get).
 - %email : the email of the user (get/set).
 - %email_local : the email local part if username is a full email (get/set). 
 - %email_domain : the email domain if the username is a full email (get/set).
 - %vacation_enable : boolean, flag to enable disable the vacation message (get/set).
+- %vacation_start : integer, timestamp/date of the vacation start (get/set)
+- %vacation_stop : integer, timestamp/date of the vacation end (get/set)
 - %vacation_subject : string, subject of the vacation message (get/set).
 - %vacation_message : string, message of the vacation (get/set).
 - %vacation_forwarder : string, forward address of the vacation (get/set).

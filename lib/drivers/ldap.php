@@ -36,19 +36,30 @@ function vacation_read(array &$data)
 		return PLUGIN_ERROR_CONNECT;
 	}
 
-	$search = array('%username', '%email_local', '%email_domain', '%email',
-						'%vacation_enable', '%vacation_subject',
-						'%vacation_message');
-	$replace = array($data['username'], $data['email_local'],
-	$data['email_domain'], $data['email'], $data['vacation_enable'],
-	$data['vacation_subject'], $data['vacation_message']);
+	$search = array('%username',
+					'%email_local',
+					'%email_domain',
+					'%email',
+					'%vacation_enable',
+					'%vacation_start',
+					'%vacation_end',
+					'%vacation_subject',
+					'%vacation_message');
+	$replace = array($data['username'],
+					 $data['email_local'],
+					 $data['email_domain'],
+					 $data['email'],
+					 $data['vacation_enable'],
+					 $data['vacation_start'],
+					 $data['vacation_end'],
+					 $data['vacation_subject'],
+					 $data['vacation_message']);
 
 	$search_base = str_replace($search, $replace,
 	$rcmail->config->get('vacation_ldap_search_base'));
 	$search_filter = str_replace($search, $replace,
 	$rcmail->config->get('vacation_ldap_search_filter'));
-	$search_params = array(
-	 'attributes' => $rcmail->config->get('vacation_ldap_search_attrs'));
+	$search_params = array('attributes' => $rcmail->config->get('vacation_ldap_search_attrs'));
 
 	$search = $ldap->search($search_base, $search_filter, $search_params);
 	if (Net_LDAP2::isError($userEntry))
@@ -69,43 +80,45 @@ function vacation_read(array &$data)
 	
 	if ($entry->exists($rcmail->config->get('vacation_ldap_attr_email')))
 	{
-		$data['email'] = $entry->get_value(
-		$rcmail->config->get('vacation_ldap_search_attr_email'));
+		$data['email'] = $entry->get_value($rcmail->config->get('vacation_ldap_search_attr_email'));
 	}
 
 	if ($entry->exists($rcmail->config->get('vacation_ldap_attr_emaillocal')))
 	{
-		$data['email_local'] = $entry->get_value(
-		$rcmail->config->get('vacation_ldap_search_attr_emaillocal'));
+		$data['email_local'] = $entry->get_value($rcmail->config->get('vacation_ldap_search_attr_emaillocal'));
 	}
 
 	if ($entry->exists($rcmail->config->get('vacation_ldap_attr_emaildomain')))
 	{
-		$data['email_domain'] = $entry->get_value(
-		$rcmail->config->get('vacation_ldap_search_attr_emaildomain'));
+		$data['email_domain'] = $entry->get_value($rcmail->config->get('vacation_ldap_search_attr_emaildomain'));
 	}
 	
 	if ($entry->exists($rcmail->config->get('vacation_ldap_attr_vacationenable')))
 	{
-		if ($entry->get_value($rcmail->config->get('vacation_ldap_attr_vacationenable')) ==
-			$rcmail->config->get('vacation_ldap_attr_vacationenable_value_enabled'))
+		if ($entry->get_value($rcmail->config->get('vacation_ldap_attr_vacationenable')) ==	$rcmail->config->get('vacation_ldap_attr_vacationenable_value_enabled'))
 			$data['vacation_enable'] = 1;
 		else
 			$data['vacation_enable'] = 0;
 	}
 	
-	if ($entry->exists(
-	$rcmail->config->get('vacation_ldap_attr_vacationsubject')))
+	if ($entry->exists($rcmail->config->get('vacation_ldap_attr_vacationstart')))
 	{
-		$data['vacation_subject'] = $entry->get_value(
-		$rcmail->config->get('vacation_ldap_attr_vacationsubject'));
+		$data['vacation_start'] = $entry->get_value($rcmail->config->get('vacation_ldap_attr_vacationstart'));
+	}
+	
+	if ($entry->exists($rcmail->config->get('vacation_ldap_attr_vacationend')))
+	{
+		$data['vacation_end'] = $entry->get_value($rcmail->config->get('vacation_ldap_attr_vacationend'));
+	}
+	
+	if ($entry->exists($rcmail->config->get('vacation_ldap_attr_vacationsubject')))
+	{
+		$data['vacation_subject'] = $entry->get_value($rcmail->config->get('vacation_ldap_attr_vacationsubject'));
 	}
 
-	if ($entry->exists(
-	$rcmail->config->get('vacation_ldap_attr_vacationmessage')))
+	if ($entry->exists($rcmail->config->get('vacation_ldap_attr_vacationmessage')))
 	{
-		$data['vacation_message'] = $entry->get_value(
-		$rcmail->config->get('vacation_ldap_attr_vacationmessage'));
+		$data['vacation_message'] = $entry->get_value($rcmail->config->get('vacation_ldap_attr_vacationmessage'));
 	}
 
 	$ldap->done();
@@ -150,6 +163,8 @@ function vacation_write(array &$data)
 						'%email_domain',
 						'%email',
 						'%vacation_enable',
+						'%vacation_start',
+						'%vacation_end',
 						'%vacation_subject',
 						'%vacation_message',
 						'%vacation_forwarder',
@@ -159,6 +174,8 @@ function vacation_write(array &$data)
 						 $data['email_domain'],
 						 $data['email'],
 						 ($data['vacation_enable'] ? "TRUE" : "FALSE"),
+						 $data['vacation_start'],
+						 $data['vacation_end'],
 						 $data['vacation_subject'],
 						 $data['vacation_message'],
 						 $data['vacation_forwarder']
@@ -174,6 +191,8 @@ function vacation_write(array &$data)
 								'%email_domain',
 								'%email',
 								'%vacation_enable',
+								'%vacation_start',
+								'%vacation_end',
 								'%vacation_subject',
 								'%vacation_message',
 								'%vacation_forwarder'
@@ -185,6 +204,8 @@ function vacation_write(array &$data)
 								($data['vacation_enable'] ?
 									$rcmail->config->get('vacation_ldap_attr_vacationenable_value_enabled') :
 									$rcmail->config->get('vacation_ldap_attr_vacationenable_value_disabled')),
+								$data['vacation_start'],
+								$data['vacation_end'],
 								$data['vacation_subject'],
 								$data['vacation_message'],
 								$data['vacation_forwarder']

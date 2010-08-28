@@ -16,6 +16,8 @@ class rcube_vacation
 	public $email_local = '';
 	public $email_domain =  '';
 	public $vacation_enable = FALSE;
+	public $vacation_start = 0;
+	public $vacation_end = 0;
 	public $vacation_subject = '';
 	public $vacation_message = '';
 	public $vacation_forwarder = '';
@@ -95,6 +97,26 @@ class rcube_vacation
 	}
 
 	/*
+	 * Gets the vacation start date.
+	 *
+	 * @returng int the timestamp of the start date.
+	 */
+	public function get_vacation_start()
+	{
+		return $this->vacation_start;
+	}
+
+	/*
+	 * Gets the vacation end date.
+	 *
+	 * @returng int the timestamp of the end date.
+	 */
+	public function get_vacation_end()
+	{
+		return $this->vacation_end;
+	}
+	
+	/*
 	 * Gets the vacation subject.
 	 *
 	 * @return string the vacation subject.
@@ -123,7 +145,7 @@ class rcube_vacation
 	{
 		return $this->vacation_forwarder;
 	}
-	
+
 	/*
 	 * Sets the email of the user
 	 *
@@ -164,6 +186,26 @@ class rcube_vacation
 		$this->vacation_enable = $flag;
 	}
 
+	/*
+	 * Sets the vacation start date.
+	 *
+	 * @param int the timestamp of the vacation start date.
+	 */
+	public function set_vacation_start ($date)
+	{
+		$this->vacation_start = $date;
+	}
+
+	/*
+	 * Sets the vacation end date.
+	 *
+	 * @param int the timestamp of the vacation end date.
+	 */
+	public function set_vacation_end ($date)
+	{
+		$this->vacation_end = $date;
+	}
+	
 	/*
 	 * Sets the vacation subject.
 	 *

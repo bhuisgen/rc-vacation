@@ -11,6 +11,9 @@
 
 $rcmail_config = array();
 
+// allow vacation start/end dates
+$rcmail_config['vacation_gui_vacationdate'] = FALSE;
+
 // allow vacation subject
 $rcmail_config['vacation_gui_vacationsubject'] = TRUE;
 
@@ -29,13 +32,17 @@ $rcmail_config['vacation_gui_vacationforwarder'] = FALSE;
 // driver used for backend storage
 $rcmail_config['vacation_driver'] = 'sql';
 
+// calendar settings
+$rcmail_config['vacation_calendar_jquerydateformat'] = "dd-mm-yy";
+$rcmail_config['vacation_calendar_phpdateformat'] = "d-m-Y";
+
 /*
  * SQL driver
  */
 
 // database DSN
 $rcmail_config['vacation_sql_dsn'] =
-	'mysql://user:password@sql.my.domain/vacation';
+	'mysql://user:password@localhost/postfix';
 
 // read data queries
 $rcmail_config['vacation_sql_read'] =
@@ -107,6 +114,12 @@ $rcmail_config['vacation_ldap_attr_vacationenable_value_enabled'] = 'TRUE';
 
 // Attribute value for disabled vacation flag
 $rcmail_config['vacation_ldap_attr_vacationenable_value_disabled'] = 'FALSE';
+
+// Attribute name to map vacation start
+$rcmail_config['vacation_ldap_attr_vacationstart'] = null;
+
+// Attribute name to map vacation end
+$rcmail_config['vacation_ldap_attr_vacationend'] = null;
 
 // Attribute name to map vacation subject
 $rcmail_config['vacation_ldap_attr_vacationsubject'] = null;

@@ -52,6 +52,8 @@ function vacation_read(array &$data)
 						'%email_domain',
 						'%email',
 						'%vacation_enable',
+						'%vacation_start',
+						'%vacation_end',
 						'%vacation_subject',
 						'%vacation_message',
 						'%vacation_forwarder'
@@ -61,6 +63,8 @@ function vacation_read(array &$data)
 						 $db->quote($data['email_domain']),
 						 $db->quote($data['email']),
 						 $db->quote($data['vacation_enable'], 'boolean'),
+						 $db->quote($data['vacation_start']),
+						 $db->quote($data['vacation_end']),
 						 $db->quote($data['vacation_subject']),
 						 $db->quote($data['vacation_message']),
 						 $db->quote($data['vacation_forwarder'])
@@ -97,6 +101,16 @@ function vacation_read(array &$data)
 		if (isset($sql_arr['vacation_enable']))
 		{
 			$data['vacation_enable'] = $sql_arr['vacation_enable'];
+		}
+		
+		if (isset($sql_arr['vacation_start']))
+		{
+			$data['vacation_start'] = $sql_arr['vacation_start'];
+		}
+		
+		if (isset($sql_arr['vacation_end']))
+		{
+			$data['vacation_end'] = $sql_arr['vacation_end'];
 		}
 
 		if (isset($sql_arr['vacation_subject']))
@@ -161,6 +175,8 @@ function vacation_write(array &$data)
 						'%email_domain',
 						'%email',
 						'%vacation_enable',
+						'%vacation_start',
+						'%vacation_end',
 						'%vacation_subject',
 						'%vacation_message',
 						'%vacation_forwarder'
@@ -170,6 +186,8 @@ function vacation_write(array &$data)
 						 $db->quote($data['email_domain']),
 						 $db->quote($data['email']),
 						 $db->quote($data['vacation_enable'], 'boolean'),
+						 $db->quote($data['vacation_start']),
+						 $db->quote($data['vacation_end']),
 						 $db->quote($data['vacation_subject']),
 						 $db->quote($data['vacation_message']),
 						 $db->quote($data['vacation_forwarder'])

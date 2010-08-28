@@ -1,0 +1,11 @@
+INSTALL-POSTFIX
+
+If you want to configure a Postfix server with virtual users in SQL
+database, you can use PostfixAdmin which is a web administration panel. His
+package provides the needed SQL schema and the vacation script to manage your
+users. A copy of the schema is in contrib/ directory (postfix-schema.sql). Take
+a look in the directory VIRTUAL_VACATION/ of postfixadmin to configure the
+vacation responder on your server instance.
+
+The default configuration of rc-vacation is for this schema, so no change is
+necessary for the SQL requests.

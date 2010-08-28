@@ -1,5 +1,14 @@
 ChangeLog
 
+2010-08-28 Boris HUISGEN <bhuisgen@hbis.fr>
+	* add vacation start/end date support (Matthieu PATOU).
+	* fix POST values stripping.
+	* fix subject alert message.
+	* config.php : fix default database name to postfix.
+	* add postfixadmin SQL schema in contrib/ directory.
+	* add custom SQL schema in contrib/ directory (Matthieu PATOU).
+	* add INSTALL-POSTFIX, INSTALL-JQUERYUI documentation files.  
+	
 2010-06-15 Boris HUISGEN <bhuisgen@hbis.fr>
 	* add vacation forward support.
 

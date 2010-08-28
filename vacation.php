@@ -36,9 +36,19 @@ class vacation extends rcube_plugin
 		$this->include_script('vacation.js');
 
 		$this->load_config();
+		
+		if ($this->rc->config->get('vacation_gui_vacationdate', FALSE))
+		{
+			$format = $this->rc->config->get('vacation_calendar_jquerydateformat', 'mm-dd-yy');
+			if ($this->api->output instanceof rcube_template)
+			{
+				$this->api->output->add_header(html::tag("script", array('type' => "text/javascript"), "calendar_format='" . $format . "';"));
+			}
+			$this->include_script('vacation_calendar.js');
+		}
 			
 		require_once ($this->home . '/lib/rcube_vacation.php');
-		$this->obj = new rcube_vacation ();
+		$this->obj = new rcube_vacation();
 	}
 
 	/*
@@ -46,7 +56,7 @@ class vacation extends rcube_plugin
 	 */
 	public function vacation_init()
 	{
-		$this->read_data ();
+		$this->read_data();
 
 		$this->register_handler('plugin.body', array($this, 'vacation_form'));
 		$this->rc->output->set_pagetitle($this->gettext('vacation'));
@@ -58,7 +68,7 @@ class vacation extends rcube_plugin
 	 */
 	public function vacation_save()
 	{
-		$this->write_data ();
+		$this->write_data();
 
 		$this->register_handler('plugin.body', array($this, 'vacation_form'));
 		$this->rc->output->set_pagetitle($this->gettext('vacation'));
@@ -74,20 +84,43 @@ class vacation extends rcube_plugin
 		$table = new html_table(array('cols' => 2));
 
 		$field_id = 'vacationenable';
-		$input_vacationenable = new html_checkbox(array('name' => '_vacationenable',
-				 'id' => $field_id, 'value' => 1));
+		$input_vacationenable = new html_checkbox(array('name' => '_vacationenable', 'id' => $field_id, 'value' => 1));
 		$table->add('title', html::label($field_id, Q($this->gettext('vacationenable'))));
 		$table->add(null, $input_vacationenable->show($this->obj->is_vacation_enable() ? 1 : 0));
+		
+		if ($this->rc->config->get('vacation_gui_vacationdate', FALSE))
+		{
+			$format = $this->rc->config->get('vacation_calendar_phpdateformat', 'm-d-Y');
+			
+			$field_id = 'vacationstart';
+			$input_date1 = new html_inputfield(array('name' => '_vacationstart', 'id' => $field_id, 'size' => 10));
+			$table->add(null, html::label($date1, Q($this->gettext('vacationstart'))));
+			$val = $this->obj->get_vacation_start();
+			if ($val == 0)
+			{
+				$val = time();
+			}
+			$table->add(null, $input_date1->show(date($format, $val)));
+
+			$field_id = 'vacationend';
+			$input_date2 = new html_inputfield(array('name' => '_vacationend', 'id' => $field_id, 'size' => 10));
+			$table->add(null, html::label($date1, Q($this->gettext('vacationend'))));
+			$val = $this->obj->get_vacation_end();
+			if ($val == 0)
+			{
+				$val = time();
+			}
+			$table->add(null, $input_date2->show(date($format, $val)));
+		}
 
 		if ($this->rc->config->get('vacation_gui_vacationsubject', FALSE))
 		{
 			$field_id = 'vacationsubject';
-			$input_vacationsubject = new html_inputfield(array('name' => '_vacationsubject',
-				 'id' => $field_id, 'size' => 40));
+			$input_vacationsubject = new html_inputfield(array('name' => '_vacationsubject', 'id' => $field_id, 'size' => 40));
 			$table->add('title', html::label($field_id, Q($this->gettext('vacationsubject'))));
 			$table->add(null, $input_vacationsubject->show($this->obj->get_vacation_subject()));
 		}
-		
+
 		$field_id = 'vacationmessage';
 		if ($this->rc->config->get('vacation_gui_vacationmessage_html', FALSE))
 		{
@@ -95,23 +128,20 @@ class vacation extends rcube_plugin
 			// FIX: use identity mode for minimal functions
 			rcube_html_editor('identity');
 
-			$text_vacationmessage = new html_textarea(array('name' => '_vacationmessage',
-				 'id' => $field_id, 'spellcheck' => 1, 'rows' => 6, 'cols' => 40, 'class' => 'mce_editor'));
+			$text_vacationmessage = new html_textarea(array('name' => '_vacationmessage', 'id' => $field_id, 'spellcheck' => 1, 'rows' => 6, 'cols' => 40, 'class' => 'mce_editor'));
 		}
 		else
 		{
-			$text_vacationmessage = new html_textarea(array('name' => '_vacationmessage',
-				 'id' => $field_id, 'spellcheck' => 1, 'rows' => 6, 'cols' => 40));
+			$text_vacationmessage = new html_textarea(array('name' => '_vacationmessage', 'id' => $field_id, 'spellcheck' => 1, 'rows' => 6, 'cols' => 40));
 		}
 
 		$table->add('title', html::label($field_id, Q($this->gettext('vacationmessage'))));
 		$table->add(null, $text_vacationmessage->show($this->obj->get_vacation_message()));
-		
+
 		if ($this->rc->config->get('vacation_gui_vacationforwarder', FALSE))
 		{
 			$field_id = 'vacationforwarder';
-			$input_vacationforwarder = new html_inputfield(array('name' => '_vacationforwarder',
-				 'id' => $field_id, 'size' => 20));
+			$input_vacationforwarder = new html_inputfield(array('name' => '_vacationforwarder', 'id' => $field_id, 'size' => 20));
 			$table->add('title', html::label($field_id, Q($this->gettext('vacationforwarder'))));
 			$table->add(null, $input_vacationforwarder->show($this->obj->get_vacation_forwarder()));
 		}
@@ -136,8 +166,7 @@ class vacation extends rcube_plugin
 
 		if (!is_readable($driver))
 		{
-			raise_error(array('code' => 600, 'type' => 'php', 'file' => __FILE__,
-			 'message' => "Vacation plugin: Unable to open driver file $driver"), true, false);
+			raise_error(array('code' => 600, 'type' => 'php', 'file' => __FILE__, 'message' => "Vacation plugin: Unable to open driver file $driver"), true, false);
 
 			return $this->gettext('internalerror');
 		}
@@ -146,8 +175,7 @@ class vacation extends rcube_plugin
 
 		if (!function_exists('vacation_read'))
 		{
-			raise_error(array('code' => 600, 'type' => 'php', 'file' => __FILE__,
-			 'message' => "Vacation plugin: Broken driver: $driver"), true, false);
+			raise_error(array('code' => 600, 'type' => 'php', 'file' => __FILE__, 'message' => "Vacation plugin: Broken driver: $driver"), true, false);
 
 			return $this->gettext('internalerror');
 		}
@@ -157,12 +185,10 @@ class vacation extends rcube_plugin
 		$data['email_local'] = $this->obj->get_email_local();
 		$data['email_domain'] = $this->obj->get_email_domain();
 		$data['vacation_enable'] = $this->obj->is_vacation_enable();
-		$data['vacation_subject'] = ($this->obj->get_vacation_subject() == '' ?
-			$this->rc->config->get('vacation_gui_vacationsubject_default') :
-			$this->obj->get_vacation_subject());
-		$data['vacation_message'] = ($this->obj->get_vacation_message() == '' ?
-			$this->rc->config->get('vacation_gui_vacationmessage_default') :
-			$this->obj->get_vacation_message());
+		$data['vacation_start'] = $this->obj->get_vacation_start();
+		$data['vacation_end'] = $this->obj->get_vacation_end();
+		$data['vacation_subject'] = ($this->obj->get_vacation_subject() == '' ? $this->rc->config->get('vacation_gui_vacationsubject_default') : $this->obj->get_vacation_subject());
+		$data['vacation_message'] = ($this->obj->get_vacation_message() == '' ? $this->rc->config->get('vacation_gui_vacationmessage_default') : $this->obj->get_vacation_message());
 		$data['vacation_forwarder'] = $this->obj->get_vacation_forwarder();
 
 		$ret = vacation_read ($data);
@@ -170,25 +196,22 @@ class vacation extends rcube_plugin
 		{
 			case PLUGIN_ERROR_DEFAULT:
 				{
-					$this->rc->output->command('display_message',
-					$this->gettext('vacationdriverdefaulterror'), 'error');
-						
+					$this->rc->output->command('display_message', $this->gettext('vacationdriverdefaulterror'), 'error');
+
 					return FALSE;
 				}
 
 			case PLUGIN_ERROR_CONNECT:
 				{
-					$this->rc->output->command('display_message',
-					$this->gettext('vacationdriverconnecterror'), 'error');
-						
+					$this->rc->output->command('display_message', $this->gettext('vacationdriverconnecterror'), 'error');
+
 					return FALSE;
 				}
 
 			case PLUGIN_ERROR_PROCESS:
 				{
-					$this->rc->output->command('display_message',
-					$this->gettext('vacationdriverprocesserror'), 'error');
-						
+					$this->rc->output->command('display_message', $this->gettext('vacationdriverprocesserror'), 'error');
+
 					return FALSE;
 				}
 
@@ -203,32 +226,42 @@ class vacation extends rcube_plugin
 		{
 			$this->obj->set_email($data['email']);
 		}
-		
+
 		if (isset($data['email_local']))
 		{
 			$this->obj->set_email_local($data['email_local']);
 		}
-		
+
 		if (isset($data['email_domain']))
 		{
 			$this->obj->set_email_domain($data['email_domain']);
 		}
-		
+
 		if (isset($data['vacation_enable']))
 		{
 			$this->obj->set_vacation_enable($data['vacation_enable']);
+		}
+		
+		if (isset($data['vacation_start']))
+		{
+			$this->obj->set_vacation_start($data['vacation_start']);
+		}
+
+		if (isset($data['vacation_end']))
+		{
+			$this->obj->set_vacation_end($data['vacation_end']);
 		}
 		
 		if (isset($data['vacation_subject']))
 		{
 			$this->obj->set_vacation_subject($data['vacation_subject']);
 		}
-		
+
 		if (isset($data['vacation_message']))
 		{
 			$this->obj->set_vacation_message($data['vacation_message']);
 		}
-		
+
 		if (isset($data['vacation_forwarder']))
 		{
 			$this->obj->set_vacation_forwarder($data['vacation_forwarder']);
@@ -250,17 +283,47 @@ class vacation extends rcube_plugin
 		{
 			$this->obj->set_vacation_enable(FALSE);
 		}
-
-		$this->obj->set_vacation_subject($_POST['_vacationsubject']);
-		$this->obj->set_vacation_message($_POST['_vacationmessage']);
-		$this->obj->set_vacation_forwarder($_POST['_vacationforwarder']);
+		
+		if ($this->rc->config->get('vacation_gui_vacationdate', FALSE))
+		{
+			$date = get_input_value('_vacationstart', RCUBE_INPUT_POST);
+			$tab = explode("-", $date);
+			if (!is_array($tab) || count($tab) != 3)
+			{
+				$this->rc->output->command('display_message', $this->gettext('vacationinvalidstartdate'), 'error');
+				
+				return FALSE;
+			}
+			$this->obj->set_vacation_start(mktime(0,0,0,$tab[1], $tab[0], $tab[2]));
+			
+			$date = get_input_value('_vacationend', RCUBE_INPUT_POST);
+			$tab = explode("-", $date); 
+			if (!is_array($tab) || count($tab) != 3)
+			{
+				$this->rc->output->command('display_message', $this->gettext('vacationinvalidenddate'), 'error');
+			
+				return FALSE;
+			}
+			$this->obj->set_vacation_end(mktime(0,0,0,$tab[1], $tab[0], $tab[2]));
+		}
+		
+		$text = get_input_value('_vacationsubject', RCUBE_INPUT_POST);
+		if ($this->obj->is_vacation_enable() && (!is_string($text) || (strlen($text) < 1)))
+		{
+			$this->rc->output->command('display_message', $this->gettext('vacationnosubject'), 'error');
+			
+			return FALSE;
+		}
+		
+		$this->obj->set_vacation_subject(get_input_value('_vacationsubject', RCUBE_INPUT_POST));
+		$this->obj->set_vacation_message(get_input_value('_vacationmessage', RCUBE_INPUT_POST),	!$this->rc->config->get('vacation_gui_vacationmessage_html', FALSE));
+		$this->obj->set_vacation_forwarder(get_input_value('_vacationforwarder', RCUBE_INPUT_POST));
 
 		$driver = $this->home . '/lib/drivers/' . $this->rc->config->get('vacation_driver', 'sql').'.php';
 
 		if (!is_readable($driver))
 		{
-			raise_error(array('code' => 600, 'type' => 'php', 'file' => __FILE__,
-			 'message' => "Vacation plugin: Unable to open driver file $driver"), true, false);
+			raise_error(array('code' => 600, 'type' => 'php', 'file' => __FILE__, 'message' => "Vacation plugin: Unable to open driver file $driver"), true, false);
 
 			return $this->gettext('internalerror');
 		}
@@ -269,8 +332,7 @@ class vacation extends rcube_plugin
 
 		if (!function_exists('vacation_write'))
 		{
-			raise_error(array('code' => 600, 'type' => 'php', 'file' => __FILE__,
-			 'message' => "Vacation plugin: Broken driver: $driver"), true, false);
+			raise_error(array('code' => 600, 'type' => 'php', 'file' => __FILE__, 'message' => "Vacation plugin: Broken driver: $driver"), true, false);
 
 			return $this->gettext('internalerror');
 		}
@@ -280,6 +342,8 @@ class vacation extends rcube_plugin
 		$data['email_local'] = $this->obj->get_email_local();
 		$data['email_domain'] = $this->obj->get_email_domain();
 		$data['vacation_enable'] = $this->obj->is_vacation_enable();
+		$data['vacation_start'] = $this->obj->get_vacation_start();
+		$data['vacation_end'] = $this->obj->get_vacation_end();
 		$data['vacation_subject'] = $this->obj->get_vacation_subject();
 		$data['vacation_message'] = $this->obj->get_vacation_message();
 		$data['vacation_forwarder'] = $this->obj->get_vacation_forwarder();
@@ -289,33 +353,29 @@ class vacation extends rcube_plugin
 		{
 			case PLUGIN_ERROR_DEFAULT:
 				{
-					$this->rc->output->command('display_message',
-					$this->gettext('vacationdriverdefaulterror'), 'error');
-						
+					$this->rc->output->command('display_message', $this->gettext('vacationdriverdefaulterror'), 'error');
+
 					return FALSE;
 				}
 
 			case PLUGIN_ERROR_CONNECT:
 				{
-					$this->rc->output->command('display_message',
-					$this->gettext('vacationdriverconnecterror'), 'error');
-						
+					$this->rc->output->command('display_message', $this->gettext('vacationdriverconnecterror'), 'error');
+
 					return FALSE;
 				}
 
 			case PLUGIN_ERROR_PROCESS:
 				{
-					$this->rc->output->command('display_message',
-					$this->gettext('vacationdriverprocesserror'), 'error');
-						
+					$this->rc->output->command('display_message', $this->gettext('vacationdriverprocesserror'), 'error');
+
 					return FALSE;
 				}
 
 			case PLUGIN_NOERROR:
 			default:
 				{
-					$this->rc->output->command('display_message',
-					$this->gettext('successfullysaved'), 'confirmation');
+					$this->rc->output->command('display_message', $this->gettext('successfullysaved'), 'confirmation');
 
 					break;
 				}
@@ -325,32 +385,42 @@ class vacation extends rcube_plugin
 		{
 			$this->obj->set_email($data['email']);
 		}
-		
+
 		if (isset($data['email_local']))
 		{
 			$this->obj->set_email_local($data['email_local']);
 		}
-		
+
 		if (isset($data['email_domain']))
 		{
 			$this->obj->set_email_domain($data['email_domain']);
 		}
-		
+
 		if (isset($data['vacation_enable']))
 		{
 			$this->obj->set_vacation_enable($data['vacation_enable']);
+		}
+	
+		if (isset($data['vacation_start']))
+		{
+			$this->obj->set_vacation_start($data['vacation_start']);
+		}
+
+		if (isset($data['vacation_end']))
+		{
+			$this->obj->set_vacation_end($data['vacation_end']);
 		}
 		
 		if (isset($data['vacation_subject']))
 		{
 			$this->obj->set_vacation_subject($data['vacation_subject']);
 		}
-		
+
 		if (isset($data['vacation_message']))
 		{
 			$this->obj->set_vacation_message($data['vacation_message']);
 		}
-		
+
 		if (isset($data['vacation_forwarder']))
 		{
 			$this->obj->set_vacation_forwarder($data['vacation_forwarder']);

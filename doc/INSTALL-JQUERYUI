@@ -1,0 +1,16 @@
+INSTALL-JQUERYUI
+
+The plugin Jquery UI for roundcube is needed if you must use jQuery datepicker
+to select vacation start / end dates.
+
+- Download it from his website : http://code.google.com/p/roundcube-plugins/
+
+- Copy and extract the plugin archive in plugins/ directory of your roundcube
+  installation.
+
+- Activate the plugin in config/main.inc.php :
+
+  	// List of active plugins (in plugins/ directory)
+	$rcmail_config['plugins'] = array('jqueryui', 'vacation');
+
+- The jQuery datepickers will be shown for the vacation start/end.
