@@ -39,7 +39,7 @@ class vacation extends rcube_plugin
 		
 		if ($this->rc->config->get('vacation_gui_vacationdate', FALSE))
 		{
-			$format = $this->rc->config->get('vacation_calendar_jquerydateformat', 'mm-dd-yy');
+			$format = $this->rc->config->get('vacation_calendar_jquerydateformat', 'mm/dd/yy');
 			if ($this->api->output instanceof rcube_template)
 			{
 				$this->api->output->add_header(html::tag("script", array('type' => "text/javascript"), "calendar_format='" . $format . "';"));
@@ -90,7 +90,7 @@ class vacation extends rcube_plugin
 		
 		if ($this->rc->config->get('vacation_gui_vacationdate', FALSE))
 		{
-			$format = $this->rc->config->get('vacation_calendar_phpdateformat', 'm-d-Y');
+			$format = $this->rc->config->get('vacation_calendar_dateformat', 'm/d/Y');
 			
 			$field_id = 'vacationstart';
 			$input_date1 = new html_inputfield(array('name' => '_vacationstart', 'id' => $field_id, 'size' => 10));
@@ -287,24 +287,24 @@ class vacation extends rcube_plugin
 		if ($this->rc->config->get('vacation_gui_vacationdate', FALSE))
 		{
 			$date = get_input_value('_vacationstart', RCUBE_INPUT_POST);
-			$tab = explode("-", $date);
-			if (!is_array($tab) || count($tab) != 3)
+			$d = date_parse_from_format($this->rc->config->get('vacation_calendar_dateformat', 'm/d/Y'), $date);
+			if (!is_array($d) && !is_set($d['month']) && !is_set($d['day']) && !is_set($d['year']))
 			{
 				$this->rc->output->command('display_message', $this->gettext('vacationinvalidstartdate'), 'error');
 				
 				return FALSE;
 			}
-			$this->obj->set_vacation_start(mktime(0,0,0,$tab[1], $tab[0], $tab[2]));
+			$this->obj->set_vacation_start(mktime(0, 0, 0, $d['month'], $d['day'], $d['year']));
 			
 			$date = get_input_value('_vacationend', RCUBE_INPUT_POST);
-			$tab = explode("-", $date); 
-			if (!is_array($tab) || count($tab) != 3)
+			$d = date_parse_from_format($this->rc->config->get('vacation_calendar_dateformat', 'm/d/Y'), $date);
+			if (!is_array($d) && !is_set($d['month']) && !is_set($d['day']) && !is_set($d['year']))
 			{
 				$this->rc->output->command('display_message', $this->gettext('vacationinvalidenddate'), 'error');
-			
+				
 				return FALSE;
 			}
-			$this->obj->set_vacation_end(mktime(0,0,0,$tab[1], $tab[0], $tab[2]));
+			$this->obj->set_vacation_end(mktime(0, 0, 0, $d['month'], $d['day'], $d['year']));
 		}
 		
 		if ($this->rc->config->get('vacation_gui_vacationsubject', FALSE))

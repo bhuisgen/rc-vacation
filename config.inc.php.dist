@@ -33,8 +33,8 @@ $rcmail_config['vacation_gui_vacationforwarder'] = FALSE;
 $rcmail_config['vacation_driver'] = 'sql';
 
 // calendar settings
-$rcmail_config['vacation_calendar_jquerydateformat'] = "dd-mm-yy";
-$rcmail_config['vacation_calendar_phpdateformat'] = "d-m-Y";
+$rcmail_config['vacation_calendar_dateformat'] = "m/d/Y";
+$rcmail_config['vacation_calendar_jquerydateformat'] = "mm/dd/yy";
 
 /*
  * SQL driver
