@@ -37,7 +37,7 @@ API :
      - vacation_enable : boolean, flag to enable disable the vacation message
        (get/set).
      - vacation_start : integer, timestamp/date of the vacation start (get/set)
-     - vacation_stop : integer, timestamp/date of the vacation end (get/set)
+     - vacation_end : integer, timestamp/date of the vacation end (get/set)
      - vacation_subject : string, subject of the vacation message (get/set).
      - vacation_message : string, message of the vacation (get/set).
      - vacation_forwarder : string, forward address of the vacation (get/set).

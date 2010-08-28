@@ -18,4 +18,3 @@ $messages['vacationinvalidforwarder'] = 'Please provide a valid forward address.
 $messages['vacationdriverdefaulterror'] = 'Unknown execution error';
 $messages['vacationdriverconnecterror'] = 'Error during connection';
 $messages['vacationdriverprocesserror'] = 'Error during processing';
-?>

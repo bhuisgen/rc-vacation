@@ -160,4 +160,3 @@ $rcmail_config['vacation_ldap_modify_ops'] = array(
 );
 
 // end vacation config file
-?>

@@ -18,5 +18,3 @@ $messages['vacationinvalidforwarder'] = 'Veuillez fournir une adresse de redirec
 $messages['vacationdriverdefaulterror'] = 'Erreur d\'exécution non spécifiée';
 $messages['vacationdriverconnecterror'] = 'Erreur de connexion';
 $messages['vacationdriverprocesserror'] = 'Erreur de traitement';
-?>
-

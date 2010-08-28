@@ -12,4 +12,3 @@ $messages['vacationnomessage'] = 'Por favor, escribe un mensaje para tus vacacio
 $messages['vacationdriverdefaulterror'] = 'Error desconocido.';
 $messages['vacationdriverconnecterror'] = 'Error durante la conexion.';
 $messages['vacationdriverprocesserror'] = 'Error en el proceso.';
-?> 

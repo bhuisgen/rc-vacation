@@ -1,4 +1,4 @@
--- SQL custom table schema sample
+-- SQL custom table sample
 
 CREATE TABLE vacation (
   email varchar(255) NOT NULL PRIMARY KEY,

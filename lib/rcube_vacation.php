@@ -236,4 +236,3 @@ class rcube_vacation
 		$this->vacation_forwarder = $forwarder;
 	}
 }
-?>

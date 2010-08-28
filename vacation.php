@@ -275,7 +275,7 @@ class vacation extends rcube_plugin
 	 */
 	public function write_data()
 	{
-		if (isset($_POST['_vacationenable']))
+		if (get_input_value('_vacationenable', RCUBE_INPUT_POST))
 		{
 			$this->obj->set_vacation_enable(TRUE);
 		}
@@ -307,17 +307,24 @@ class vacation extends rcube_plugin
 			$this->obj->set_vacation_end(mktime(0,0,0,$tab[1], $tab[0], $tab[2]));
 		}
 		
-		$text = get_input_value('_vacationsubject', RCUBE_INPUT_POST);
-		if ($this->obj->is_vacation_enable() && (!is_string($text) || (strlen($text) < 1)))
+		if ($this->rc->config->get('vacation_gui_vacationsubject', FALSE))
 		{
-			$this->rc->output->command('display_message', $this->gettext('vacationnosubject'), 'error');
-			
-			return FALSE;
+			$text = get_input_value('_vacationsubject', RCUBE_INPUT_POST);
+			if (!is_string($text) || (strlen($text) < 1))
+			{
+				$this->rc->output->command('display_message', $this->gettext('vacationnosubject'), 'error');
+				
+				return FALSE;
+			}
+			$this->obj->set_vacation_subject($text);
 		}
 		
-		$this->obj->set_vacation_subject(get_input_value('_vacationsubject', RCUBE_INPUT_POST));
-		$this->obj->set_vacation_message(get_input_value('_vacationmessage', RCUBE_INPUT_POST),	!$this->rc->config->get('vacation_gui_vacationmessage_html', FALSE));
-		$this->obj->set_vacation_forwarder(get_input_value('_vacationforwarder', RCUBE_INPUT_POST));
+		$this->obj->set_vacation_message(get_input_value('_vacationmessage', RCUBE_INPUT_POST, !$this->rc->config->get('vacation_gui_vacationmessage_html', FALSE)));
+
+		if ($this->rc->config->get('vacation_gui_vacationforwarder', FALSE))
+		{
+			$this->obj->set_vacation_forwarder(get_input_value('_vacationforwarder', RCUBE_INPUT_POST));
+		}
 
 		$driver = $this->home . '/lib/drivers/' . $this->rc->config->get('vacation_driver', 'sql').'.php';
 
@@ -429,4 +436,3 @@ class vacation extends rcube_plugin
 		return TRUE;
 	}
 }
-?>

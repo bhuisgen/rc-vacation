@@ -203,5 +203,3 @@ function vacation_write(array &$data)
 
 	return PLUGIN_NOERROR;
 }
-
-?>
