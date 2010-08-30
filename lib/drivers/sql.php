@@ -129,7 +129,7 @@ function vacation_read(array &$data)
 		}
 	}
 
-	return PLUGIN_NOERROR;
+	return PLUGIN_SUCCESS;
 }
 
 /*
@@ -201,5 +201,5 @@ function vacation_write(array &$data)
 		}
 	}
 
-	return PLUGIN_NOERROR;
+	return PLUGIN_SUCCESS;
 }

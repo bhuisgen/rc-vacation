@@ -9,10 +9,10 @@
  +-----------------------------------------------------------------------+
  */
 
-define ('PLUGIN_NOERROR', 0);
-define ('PLUGIN_ERROR_DEFAULT', -1);
-define ('PLUGIN_ERROR_CONNECT', -2);
-define ('PLUGIN_ERROR_PROCESS', -3);
+define ('PLUGIN_SUCCESS', 0);
+define ('PLUGIN_ERROR_DEFAULT', 1);
+define ('PLUGIN_ERROR_CONNECT', 2);
+define ('PLUGIN_ERROR_PROCESS', 3);
 
 class vacation extends rcube_plugin
 {
@@ -27,10 +27,9 @@ class vacation extends rcube_plugin
 	{
 		$rcmail = rcmail::get_instance();
 		$this->rc = &$rcmail;
-
 		$this->add_texts('localization/', true);
-		$this->rc->output->add_label('vacation');
 
+		$this->rc->output->add_label('vacation');
 		$this->register_action('plugin.vacation', array($this, 'vacation_init'));
 		$this->register_action('plugin.vacation-save', array($this, 'vacation_save'));
 		$this->include_script('vacation.js');
@@ -146,11 +145,7 @@ class vacation extends rcube_plugin
 			$table->add(null, $input_vacationforwarder->show($this->obj->get_vacation_forwarder()));
 		}
 
-		$out = html::div(array('class' => "settingsbox", 'style' => "margin:0"),
-		html::div(array('id' => "prefs-title", 'class' => 'boxtitle'), $this->gettext('vacation')) .
-		html::div(array('style' => "padding:15px"), $table->show() .
-		html::p(null, $this->rc->output->button(array(
-		      'command' => 'plugin.vacation-save', 'type' => 'input', 'class' => 'button mainaction', 'label' => 'save')))));
+		$out = html::div(array('class' => "box"), html::div(array('id' => "prefs-title", 'class' => 'boxtitle'), $this->gettext('vacation')) . html::div(array('class' => "boxcontent"), $table->show() . html::p(null, $this->rc->output->button(array('command' => 'plugin.vacation-save', 'type' => 'input', 'class' => 'button mainaction', 'label' => 'save')))));
 
 		$this->rc->output->add_gui_object('vacationform', 'vacation-form');
 
@@ -215,7 +210,7 @@ class vacation extends rcube_plugin
 					return FALSE;
 				}
 
-			case PLUGIN_NOERROR:
+			case PLUGIN_SUCCESS:
 			default:
 				{
 					break;
@@ -403,7 +398,7 @@ class vacation extends rcube_plugin
 					return FALSE;
 				}
 
-			case PLUGIN_NOERROR:
+			case PLUGIN_SUCCESS:
 			default:
 				{
 					$this->rc->output->command('display_message', $this->gettext('successfullysaved'), 'confirmation');

@@ -23,7 +23,7 @@ API :
      This function writes the data from the array given in argument.
      
      Each function must return a status code which can be :
-     - PLUGIN_NOERROR : success status.
+     - PLUGIN_SUCCESS : success status.
      - PLUGIN_ERROR_DEFAULT : status for generic error.
      - PLUGIN_ERROR_CONNECT : status for connection error.
      - PLUGIN_ERROR_PROCESS : status for processing error.
@@ -74,7 +74,7 @@ function vacation_read(array &$data)
      * driver read all needed data and store them in $data (output values)
      */
 
-    return PLUGIN_NOERROR;
+    return PLUGIN_SUCCESS;
 }
 
 /*
@@ -93,5 +93,5 @@ function vacation_write(array &$data)
      * driver save the data from $data (input values)
      */
 
-   return PLUGIN_NOERROR;
+   return PLUGIN_SUCCESS;
 }

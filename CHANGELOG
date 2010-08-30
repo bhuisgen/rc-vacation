@@ -1,5 +1,12 @@
 CHANGELOG
 
+2010-08-31 Boris HUISGEN <bhuisgen@hbis.fr>
+	* vacation.php : rename PLUGIN_NOERROR to PLUGIN_SUCCESS and change
+	  PLUGIN_ERRORXXX values. Fix CSS bug with box.
+	* lib/drivers/sql.php, lib/drivers/ldap.php : fix PLUGIN_XXX values.
+	* doc/* : fix PLUGIN_XXX values.
+	* vacation.js, vacation_calendar.js : add comments.
+
 2010-08-30 Boris HUISGEN <bhuisgen@hbis.fr>
 	* implement date_parse_format() for compatibility with < PHP 5.3.
 	* add SQL requests for custom schema (Matthieu PATOU).
