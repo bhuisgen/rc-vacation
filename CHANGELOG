@@ -1,4 +1,8 @@
-ChangeLog
+CHANGELOG
+
+2010-08-30 Boris HUISGEN <bhuisgen@hbis.fr>
+	* implement date_parse_format() for compatibility with < PHP 5.3.
+	* add SQL requests for custom schema (Matthieu PATOU).
 
 2010-08-28 Boris HUISGEN <bhuisgen@hbis.fr>
 	* add vacation start/end date support (Matthieu PATOU).

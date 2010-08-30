@@ -287,24 +287,24 @@ class vacation extends rcube_plugin
 		if ($this->rc->config->get('vacation_gui_vacationdate', FALSE))
 		{
 			$date = get_input_value('_vacationstart', RCUBE_INPUT_POST);
-			$d = date_parse_from_format($this->rc->config->get('vacation_calendar_dateformat', 'm/d/Y'), $date);
-			if (!is_array($d) && !is_set($d['month']) && !is_set($d['day']) && !is_set($d['year']))
+			$d = $this->my_date_parse_from_format($this->rc->config->get('vacation_calendar_dateformat', 'm/d/Y'), $date);
+			if (!is_array($d) || !isset($d['month']) || !isset($d['day']) || !isset($d['year']))
 			{
 				$this->rc->output->command('display_message', $this->gettext('vacationinvalidstartdate'), 'error');
 				
 				return FALSE;
 			}
-			$this->obj->set_vacation_start(mktime(0, 0, 0, $d['month'], $d['day'], $d['year']));
+			$this->obj->set_vacation_start(gmmktime(0, 0, 0, $d['month'], $d['day'], $d['year']));
 			
 			$date = get_input_value('_vacationend', RCUBE_INPUT_POST);
-			$d = date_parse_from_format($this->rc->config->get('vacation_calendar_dateformat', 'm/d/Y'), $date);
-			if (!is_array($d) && !is_set($d['month']) && !is_set($d['day']) && !is_set($d['year']))
+			$d = $this->my_date_parse_from_format($this->rc->config->get('vacation_calendar_dateformat', 'm/d/Y'), $date);
+			if (!is_array($d) || !isset($d['month']) || !isset($d['day']) || !isset($d['year']))
 			{
 				$this->rc->output->command('display_message', $this->gettext('vacationinvalidenddate'), 'error');
 				
 				return FALSE;
 			}
-			$this->obj->set_vacation_end(mktime(0, 0, 0, $d['month'], $d['day'], $d['year']));
+			$this->obj->set_vacation_end(gmmktime(0, 0, 0, $d['month'], $d['day'], $d['year']));
 		}
 		
 		if ($this->rc->config->get('vacation_gui_vacationsubject', FALSE))
@@ -434,5 +434,64 @@ class vacation extends rcube_plugin
 		}
 
 		return TRUE;
+	}
+	
+	/*
+	 * Returns the informations of a given date.
+	 * 
+	 * @param string the date format.
+	 * @param string the date.
+	 * @return array the array of asscociated formats.
+	 */
+	private function my_date_parse_from_format($format, $date)
+	{
+		if (function_exists("date_parse_from_format"))
+			return date_parse_from_format($format, $value);
+
+		$ret = array();
+
+		$formats = preg_split('/[:\/.\ \-]/', $format);
+		$dates = preg_split('/[:\/.\ \-]/', $date);
+
+		foreach($formats as $key =>$value)
+		{
+			switch ($value) 
+			{
+				case 'd':
+				case 'j':
+					$ret['day'] = $dates[$key];
+					break;
+
+				case 'F':
+				case 'M':
+				case 'm':
+				case 'n':
+					$ret['month'] = $dates[$key];
+					break;
+
+				case 'o':
+				case 'Y':
+				case 'y':
+					$ret['year'] = $dates[$key];
+					break;
+
+				case 'g':
+				case 'G':
+				case 'h':
+				case 'H':
+					$ret['hour'] = $dates[$key];
+					break;
+
+				case 'i':
+					$ret['minute'] = $dates[$key];
+					break;
+
+				case 's':
+					$ret['second'] = $dates[$key];
+					break;
+			}
+		}
+
+		return $ret;
 	}
 }
