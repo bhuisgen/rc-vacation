@@ -319,11 +319,35 @@ class vacation extends rcube_plugin
 			$this->obj->set_vacation_subject($text);
 		}
 		
-		$this->obj->set_vacation_message(get_input_value('_vacationmessage', RCUBE_INPUT_POST, !$this->rc->config->get('vacation_gui_vacationmessage_html', FALSE)));
+		$this->obj->set_vacation_message(get_input_value('_vacationmessage', RCUBE_INPUT_POST, $this->rc->config->get('vacation_gui_vacationmessage_html', FALSE)));
 
 		if ($this->rc->config->get('vacation_gui_vacationforwarder', FALSE))
 		{
-			$this->obj->set_vacation_forwarder(get_input_value('_vacationforwarder', RCUBE_INPUT_POST));
+			$forwarder = get_input_value('_vacationforwarder', RCUBE_INPUT_POST);
+						
+			if ($this->rc->config->get('vacation_forwarder_multiple', FALSE))
+			{
+				$emails = preg_split('/' . $this->rc->config->get('vacation_forwarder_separator', ',') .'/', $forwarder);
+			}
+			else
+			{
+				$emails[] = $forwarder;
+			}
+			
+			foreach ($emails as $email)
+			{
+				if (!preg_match('#^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,6}$#', $email))
+				{
+					if ($this->rc->config->get('vacation_forwarder_multiple', FALSE))
+						$this->rc->output->command('display_message', $this->gettext('vacationinvalidforwarders'), 'error');
+					else
+						$this->rc->output->command('display_message', $this->gettext('vacationinvalidforwarder'), 'error');
+					
+					return FALSE;
+				}
+			}
+			
+			$this->obj->set_vacation_forwarder($forwarder);
 		}
 
 		$driver = $this->home . '/lib/drivers/' . $this->rc->config->get('vacation_driver', 'sql').'.php';
@@ -453,7 +477,7 @@ class vacation extends rcube_plugin
 		$formats = preg_split('/[:\/.\ \-]/', $format);
 		$dates = preg_split('/[:\/.\ \-]/', $date);
 
-		foreach($formats as $key =>$value)
+		foreach($formats as $key=>$value)
 		{
 			switch ($value) 
 			{
