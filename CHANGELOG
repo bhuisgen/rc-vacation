@@ -2,7 +2,9 @@ CHANGELOG
 
 2010-08-31 Boris HUISGEN <bhuisgen@hbis.fr>
 	* vacation.php : rename PLUGIN_NOERROR to PLUGIN_SUCCESS and change
-	  PLUGIN_ERRORXXX values. Fix CSS bug with box.
+	  PLUGIN_ERRORXXX values. Fix CSS bug with box. Fix date control ID
+	  and class. Validate date interval. Add option to disable jquery
+	  date selectors.
 	* lib/drivers/sql.php, lib/drivers/ldap.php : fix PLUGIN_XXX values.
 	* doc/* : fix PLUGIN_XXX values.
 	* vacation.js, vacation_calendar.js : add comments.

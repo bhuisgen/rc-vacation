@@ -29,9 +29,12 @@ $rcmail_config['vacation_gui_vacationmessage_default'] = "I'm currently out of o
 // allow vacation forwarder
 $rcmail_config['vacation_gui_vacationforwarder'] = FALSE;
 
-// calendar date format
-$rcmail_config['vacation_calendar_dateformat'] = "m/d/Y";
-$rcmail_config['vacation_calendar_jquerydateformat'] = "mm/dd/yy";
+// vacation start/end date format
+$rcmail_config['vacation_dateformat'] = "m/d/Y";
+
+// jquery calendar (jqueryui plugin must be enabled)
+$rcmail_config['vacation_jquery_calendar'] = FALSE;
+$rcmail_config['vacation_jquery_dateformat'] = "mm/dd/yy";
 
 // allow multiple forwarders
 $rcmail_config['vacation_forwarder_multiple'] = FALSE;

@@ -6,12 +6,13 @@ $labels['vacationenable'] = 'Enable';
 $labels['vacationsubject'] = 'Subject:';
 $labels['vacationmessage'] = 'Message:';
 $labels['vacationforwarder'] = 'Forward address:';
-$labels['vacationstart'] = 'Start date:';
-$labels['vacationend'] = 'End date:';
+$labels['vacationstart'] = 'Start:';
+$labels['vacationend'] = 'End:';
 
 $messages = array();
 $messages['vacationinvalidstartdate'] = 'Please select a valid start date.';
 $messages['vacationinvalidenddate'] = 'Please select a valid end date.';
+$messages['vacationinvaliddateinterval'] = 'The date interval is not valid.';
 $messages['vacationnosubject'] = 'Please fill the subject of your vacation.';
 $messages['vacationnomessage'] = 'Please fill the message of your vacation.';
 $messages['vacationinvalidforwarder'] = 'The forward address is not valid.';
