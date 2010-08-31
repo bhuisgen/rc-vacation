@@ -182,8 +182,8 @@ class vacation extends rcube_plugin
 		$data['vacation_enable'] = $this->obj->is_vacation_enable();
 		$data['vacation_start'] = $this->obj->get_vacation_start();
 		$data['vacation_end'] = $this->obj->get_vacation_end();
-		$data['vacation_subject'] = ($this->obj->get_vacation_subject() == '' ? $this->rc->config->get('vacation_gui_vacationsubject_default') : $this->obj->get_vacation_subject());
-		$data['vacation_message'] = ($this->obj->get_vacation_message() == '' ? $this->rc->config->get('vacation_gui_vacationmessage_default') : $this->obj->get_vacation_message());
+		$data['vacation_subject'] = ($this->obj->get_vacation_subject() == '' ? $this->rc->config->get('vacation_subject_default') : $this->obj->get_vacation_subject());
+		$data['vacation_message'] = ($this->obj->get_vacation_message() == '' ? $this->rc->config->get('vacation_message_default') : $this->obj->get_vacation_message());
 		$data['vacation_forwarder'] = $this->obj->get_vacation_forwarder();
 
 		$ret = vacation_read ($data);

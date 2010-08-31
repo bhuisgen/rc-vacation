@@ -1,5 +1,10 @@
 CHANGELOG
 
+2010-09-01 Boris HUISGEN <bhuisgen@hbis.fr>
+	* lib/drivers/maildrop.php : maildrop driver by Sylvain LANGLADE.
+	* contrib/xams.sql : SQL requests for XAMS (http://www.xams.org)
+	  by Stephane LECLERC.
+
 2010-08-31 Boris HUISGEN <bhuisgen@hbis.fr>
 	* vacation.php : rename PLUGIN_NOERROR to PLUGIN_SUCCESS and change
 	  PLUGIN_ERRORXXX values. Fix CSS bug with box. Fix date control ID
