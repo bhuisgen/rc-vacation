@@ -18,23 +18,26 @@ $rcmail_config['vacation_gui_vacationdate'] = FALSE;
 $rcmail_config['vacation_gui_vacationsubject'] = TRUE;
 
 // allow HTML for vacation message 
-$rcmail_config['vacation_gui_vacationmessage_html'] = TRUE;
+$rcmail_config['vacation_gui_vacationmessage_html'] = FALSE;
 
 // allow vacation forwarder
 $rcmail_config['vacation_gui_vacationforwarder'] = FALSE;
 
 // default vacation subject
-$rcmail_config['vacation_subject_default'] = "Out of office";
+$rcmail_config['vacation_subject_default'] = 'Out of office';
 
 // default vacation message
-$rcmail_config['vacation_message_default'] = "I'm currently out of office.";
+$rcmail_config['vacation_message_default'] = 'I\'m currently out of office.';
 
 // vacation start/end date format
-$rcmail_config['vacation_dateformat'] = "m/d/Y";
+$rcmail_config['vacation_dateformat'] = 'm/d/Y';
 
 // jquery calendar (jqueryui plugin must be enabled)
 $rcmail_config['vacation_jquery_calendar'] = FALSE;
-$rcmail_config['vacation_jquery_dateformat'] = "mm/dd/yy";
+$rcmail_config['vacation_jquery_dateformat'] = 'mm/dd/yy';
+
+// add MIME header before the message
+$rcmail_config['vacation_message_mime'] = 'MIME-version: 1.0\nContent-type: text/plain\n\n';
 
 // allow multiple forwarders
 $rcmail_config['vacation_forwarder_multiple'] = FALSE;
@@ -67,11 +70,8 @@ $rcmail_config['vacation_sql_write'] =
           "DELETE FROM alias WHERE address=%email AND " .
 	         "domain=%email_domain;",
 	      "INSERT INTO vacation (email,domain,subject,body,created," .
-	         "active) " .
-	         "SELECT %email,%email_domain,%vacation_subject," .
-	            "%vacation_message,NOW(),1 FROM mailbox " .
-	         "WHERE username=%email AND domain=%email_domain AND " .
-	            "%vacation_enable=1;",
+	         "active) VALUES (%email,%email_domain,%vacation_subject," .
+	            "%vacation_message,NOW(),%vacation_enable);",
           "INSERT INTO alias (address,goto,domain,created,modified," .
 	         "active) " .
              "SELECT %email,CONCAT(%email_local,'#',%email_domain,'@'," .
@@ -149,7 +149,9 @@ $rcmail_config['vacation_ldap_search_base'] =
 $rcmail_config['vacation_ldap_search_filter'] = '(objectClass=mailAccount)';
 
 // Search attributes to read data
-$rcmail_config['vacation_ldap_search_attrs'] = array ('vacationActive', 'vacationInfo');
+$rcmail_config['vacation_ldap_search_attrs'] = array (
+												'vacationActive',
+												'vacationInfo');
 
 // array of DN to use for modify operations required to write data.
 $rcmail_config['vacation_ldap_modify_dns'] = array (
@@ -158,13 +160,12 @@ $rcmail_config['vacation_ldap_modify_dns'] = array (
 
 // array of operations required to write data.
 $rcmail_config['vacation_ldap_modify_ops'] = array(
-	array (
-		'replace' => array(
+	array ('replace' => array(
 			$rcmail_config['vacation_ldap_attr_vacationenable'] => '%vacation_enable',
  			$rcmail_config['vacation_ldap_attr_vacationmessage'] => '%vacation_message',
  			$rcmail_config['vacation_ldap_attr_vacationforwarder'] => '%vacation_forwarder'
- 			)
- 		)
+ 		  )
+	)
 );
 
 /*
@@ -179,9 +180,5 @@ $rcmail_config['vacation_maildrop_enabled'] = 'vacation.enabled';
 
 // filename of the vacation message when disabled
 $rcmail_config['vacation_maildrop_disabled'] = 'vacation.disabled';
-
-// MIME header, added before the message content when sent using mailbot (-m option).
-// Should be empty with plain text messages
-$rcmail_config['vacation_maildrop_mime'] = "MIME-Version: 1.0\nContent-Type: text/html\n\n";
 
 // end vacation config file

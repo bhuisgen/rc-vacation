@@ -1,0 +1,44 @@
+Configuration for XAMS (http://www.xams.org)
+by Stéphane LECLERC <sleclerc@actionweb.fr>
+
+// allow vacation start/end dates
+$rcmail_config['vacation_gui_vacationdate'] = FALSE;
+
+// allow vacation subject
+$rcmail_config['vacation_gui_vacationsubject'] = FALSE;
+
+// allow HTML for vacation message 
+$rcmail_config['vacation_gui_vacationmessage_html'] = FALSE;
+
+// allow vacation forwarder
+$rcmail_config['vacation_gui_vacationforwarder'] = FALSE;
+
+[...]
+
+// driver used for backend storage
+$rcmail_config['vacation_driver'] = 'sql';
+
+// database DSN
+$rcmail_config['vacation_sql_dsn'] =	'mysql://user:password@localhost/postfix';
+
+// read data queries
+$rcmail_config['vacation_sql_read'] =
+        array("SELECT pm_users.AutoReplySubject AS vacation_subject, " .
+                 "pm_users.AutoReplyText AS vacation_message, " .
+                 "pm_users.AutoReply AS vacation_enable " .
+                 "FROM xams.pm_sites " .
+                 "INNER JOIN xams.pm_domains ON pm_sites.id = pm_domains.siteid" .
+                 "INNER JOIN xams.pm_users ON pm_sites.id = pm_users.siteid " .
+                 "WHERE pm_users.name = %email_local AND pm_domains.name = %email_domain;"
+        );
+
+// write data queries
+$rcmail_config['vacation_sql_write'] =
+        array("UPDATE xams.pm_users " .
+                 "INNER JOIN xams.pm_sites ON pm_sites.id = pm_users.siteid " .
+                 "INNER JOIN xams.pm_domains ON pm_sites.id = pm_domains.siteid" .
+                 "SET pm_users.AutoReplySubject = %vacation_subject, " .
+                 "pm_users.AutoReplyText = %vacation_message, " .
+                 "pm_users.AutoReply = %vacation_enable " .
+                 "WHERE pm_users.name = %email_local AND pm_domains.name = %email_domain;"
+        );

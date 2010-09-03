@@ -62,8 +62,6 @@ function vacation_read(array &$data)
 		}
 	}
 
-	$data['vacation_message'] = str_replace($rcmail->config->get('vacation_maildrop_mime'), "", $data['vacation_message']);
-
 	return PLUGIN_SUCCESS;
 }
 
@@ -120,7 +118,7 @@ function vacation_write(array &$data)
 	}
 
 	// Create the vacation message, using the correct filename
-	if (file_put_contents($fcreate, $rcmail->config->get('vacation_maildrop_mime').$data['vacation_message']) === false)
+	if (file_put_contents($fcreate, $data['vacation_message']) === false)
 		return PLUGIN_ERROR_DEFAULT;
 
 	return PLUGIN_SUCCESS;

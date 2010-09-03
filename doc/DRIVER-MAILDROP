@@ -1,0 +1,124 @@
+DRIVER-SQL
+
+This driver is a maildrop backend storage, for virtual mailboxes.
+
+Configuration settings  :
+
+- vacation_maildrop_maildirpath : Root path of the users' mailboxes
+- vacation_maildrop_enabled : Filename of the vacation message (when enabled)
+- vacation_maildrop_disabled : Filename of the vacation message (when disabled)
+- vacation_maildrop_mime : MIME headers, when using the "-m" option of mailbot
+
+maildirpath syntax :
+
+The driver replaces the predefined keys into a path by the real values on
+input (get) and/or output (set). These keys are :
+- %username : the user mail or username (get).
+- %email : the email of the user (get/set).
+- %email_local : the email local part if username is a full email (get/set). 
+- %email_domain : the email domain if the username is a full email (get/set).
+- %vacation_enable : boolean, 'enabled' or 'disabled' accordingly (get/set).
+
+Synopsis:
+
+Vacation message is stored in a file in each user mailbox. Two filenames are
+used : one for an enabled message, the other for a disabled message. The
+maildrop config (sample one below) has to look for the enabled one in order
+to determine if a vacation message needs to be sent.
+
+Messages can be plain text or html, using the MIME headers. Please note that
+you can have a plain text message combined with text/html MIME header, but
+you will then lose plain text formating (everything is HTML-interpreted by the
+email reader).
+
+Details :
+
+You must enable maildrop support in Postfix. To do this (YMMV), uncomment the
+maildrop line in the master.cf file. It could look like the following one :
+
+> maildrop  unix  -       n       n       -       -       pipe
+> 		flags=DRhu user=vmail argv=/usr/bin/maildrop-mysql \
+> 		 -w 90 -d ${recipient} ${extension} ${recipient} ${user} \
+> 		 ${nexthop} ${sender}
+
+Then add the following in the main.cf file :
+
+> virtual_transport = maildrop
+
+maildrop is now delivering email to the mailboxes of your users, instead of
+postfix's default delivery agent. The plugin is based on a maildir folder
+structure like this (e.g. for user@domain.com) :
+
+/yourmaildirpath/domain.com/user
+
+WARNING : your apache user has to be able to write to this directory. You could
+duplicate the real maildir folder structure to another one dedicated to vacation
+message, thus avoiding apache access to your maildir folders.
+
+You finally need a maildroprc (or .mailfilter) that is testing and using the
+vacation message created by the maildrop.php plugin. Like the following :
+
+
+#logfile "/var/log/maildrop.log"
+	
+MAILDIR="$HOME$DEFAULT"
+VACATION="vacation.enabled"
+RESPONSEDB="vacation.db"
+	
+> # PASSAGE DE PARAMETRES DEPUIS POSTFIX
+> #
+> # La ligne suivante dans /etc/postfix/master.cf permet de preciser des parametres a envoyer a maildrop :
+> #	maildrop  unix  -       n       n       -       -       pipe
+> #		flags=DRhu user=vmail argv=/usr/bin/maildrop-mysql -w 90 -d ${recipient} ${extension} ${recipient} ${user} ${nexthop} ${sender}
+> #
+> # Ensuite, il faut dÈclarer dans /etc/postfix/main.cf l'utilisation de maildrop, via:
+> #		virtual_transport = maildrop
+> #
+> # Tout ce qui est present apres le "-d {recipient}" est recupere en parametres de ligne de commande. Selon l'exemple donne ci-dessus
+> # cela donne:
+> #
+> # LISTE DES VARIABLES UTILES ICI ET PASSEES EN PARAMETRE :
+> #  $1 = extensions (?? vide a priori ??)
+> #  $2 = adresse destinataire final (apres forward eventuel) complete
+> #  $3 = utilisateur (partie a gauche du '@')
+> #  $4 = domaine (partie a droite du '@')
+> #  $5 = adresse expediteur (au niveau enveloppe SMTP)
+> #
+> 
+> #log "Parametres : $1 // $2 // $3 // $4 // $5 :: sender=$SENDER :: recipient=$RECIPIENT :: home=$HOME :: maildir=$MAILDIR :: default=$DEFAULT :: logname=$LOGNAME :: recipient=$RECIPIENT"
+> 
+> # Tester si le fichier de repondeur automatique existe dans la boite aux lettres du destinataire
+> `test -f $MAILDIR$VACATION`
+> if ($RETURNCODE==0)
+> {
+> 	# Tester si le message ne contient pas des indications sur le fait que le message est deja une reponse automatisee, du spam ou autre
+> 	if ( ! /^Precedence: (bulk|list|junk)/ && \ 
+> 	     ! /^Return-Path:.*<#@\[\]>/ && \
+> 	     ! /^Return-Path:.*<>/ && \
+> 	     ! /^From:.*MAILER-DAEMON/ && \
+> 	     ! /^X-ClamAV-Notice-Flag: *YES/ && \
+> 	     ! /^(X-BeenThere|X-Loop|Mailing-List):.*/ && \ 
+> 	     ! /^Content-Type:.*message\/delivery-status/ && \
+> 	     ! /^Subject:.*Delivery Status Notification/ && \
+> 	     ! /^Subject:.*Undelivered Mail Returned to Sender/ && \
+> 	     ! /^Subject:.*Delivery failure/ && \
+> 	     ! /^Subject:.*Message delay/ && \
+> 	     ! /^Subject:.*Mail Delivery Subsystem/ && \
+> 	     ! /^Subject:.*Mail System Error.*Returned Mail/ && \
+> 	     ! /^X-Spam-Flag: YES/ )
+> 	{
+> 		log "Vacation message pour $LOGNAME"
+> 		# Envoyer le message avec mailbot:
+> 		#	-t $MAILDIR$VACATION pour dire que le contenu du fichier est texte brut (-m $MAILDIR$VACATION si c'est du mime)
+> 		#	-D 1 pour dire qu'il ne faut envoyer de message qu'une fois par jour et par expediteur
+> 		#	-d $MAILDIR$RESPONSEDB pour indiquer la base de donnee utilisee pour gerer l'option -d
+> 		#	-s "Titre du message" N'EST PAS UTILISEE, donc mailbot fabrique un "Re : sujet original" bien pratique
+> 		#	-A '....' pour modifier/Rajouter l'entete d'expediteur du message 
+> 		cc "| mailbot -m $MAILDIR$VACATION -d $MAILDIR$RESPONSEDB -D 1 -A 'From: $LOGNAME' /usr/sbin/sendmail -t -f ''"
+> 	}
+> }
+
+PLEASE NOTE that the subject of the message is not set in the mailbot
+parameters. It is using a default "Re: original subject" pattern. The mailbot
+driver DOES NOT set or use the subject message, in its current version. You
+should disabled it in the config.inc.php file of the vacation plugin.

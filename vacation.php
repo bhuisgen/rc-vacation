@@ -182,10 +182,10 @@ class vacation extends rcube_plugin
 		$data['vacation_enable'] = $this->obj->is_vacation_enable();
 		$data['vacation_start'] = $this->obj->get_vacation_start();
 		$data['vacation_end'] = $this->obj->get_vacation_end();
-		$data['vacation_subject'] = ($this->obj->get_vacation_subject() == '' ? $this->rc->config->get('vacation_subject_default') : $this->obj->get_vacation_subject());
-		$data['vacation_message'] = ($this->obj->get_vacation_message() == '' ? $this->rc->config->get('vacation_message_default') : $this->obj->get_vacation_message());
+		$data['vacation_subject'] = ($this->obj->get_vacation_subject() ? $this->obj->get_vacation_subject() : $this->rc->config->get('vacation_subject_default', ''));
+		$data['vacation_message'] = $this->rc->config->get('vacation_message_mime', 'MIME-Version: 1.0\nContent-Type: text/plain\n\n') . ($this->obj->get_vacation_message() ? $this->obj->get_vacation_message() : $this->rc->config->get('vacation_message_default', ''));
 		$data['vacation_forwarder'] = $this->obj->get_vacation_forwarder();
-
+	
 		$ret = vacation_read ($data);
 		switch ($ret)
 		{
@@ -251,12 +251,21 @@ class vacation extends rcube_plugin
 		{
 			$this->obj->set_vacation_subject($data['vacation_subject']);
 		}
+		else
+		{
+			$this->obj->set_vacation_subject($this->rc->config->get('vacation_subject_default', ''));
+		}
 
 		if (isset($data['vacation_message']))
 		{
+			$data['vacation_message'] = str_replace($this->rc->config->get('vacation_message_mime', 'MIME-Version: 1.0\nContent-Type: text/plain\n\n'), "", $data['vacation_message']);						
 			$this->obj->set_vacation_message($data['vacation_message']);
 		}
-
+		else
+		{
+			$this->obj->set_vacation_message($this->rc->config->get('vacation_message_default', ''));
+		}
+		
 		if (isset($data['vacation_forwarder']))
 		{
 			$this->obj->set_vacation_forwarder($data['vacation_forwarder']);
@@ -313,7 +322,7 @@ class vacation extends rcube_plugin
 		if ($this->rc->config->get('vacation_gui_vacationsubject', FALSE))
 		{
 			$subject = get_input_value('_vacationsubject', RCUBE_INPUT_POST);
-			if (!is_string($subject) || (strlen($subject) < 1))
+			if (!is_string($subject) || (strlen($subject) == 0))
 			{
 				$this->rc->output->command('display_message', $this->gettext('vacationnosubject'), 'error');
 				
@@ -380,9 +389,9 @@ class vacation extends rcube_plugin
 		$data['vacation_start'] = $this->obj->get_vacation_start();
 		$data['vacation_end'] = $this->obj->get_vacation_end();
 		$data['vacation_subject'] = $this->obj->get_vacation_subject();
-		$data['vacation_message'] = $this->obj->get_vacation_message();
+		$data['vacation_message'] = $this->rc->config->get('vacation_message_mime', 'MIME-version: 1.0\nContent-type: text/plain\n\n') . ($this->obj->get_vacation_message() ? $this->obj->get_vacation_message() : $this->rc->config->get('vacation_message_default', ''));
 		$data['vacation_forwarder'] = $this->obj->get_vacation_forwarder();
-
+		
 		$ret = vacation_write ($data);
 		switch ($ret)
 		{
@@ -450,10 +459,19 @@ class vacation extends rcube_plugin
 		{
 			$this->obj->set_vacation_subject($data['vacation_subject']);
 		}
+		else
+		{
+			$this->obj->set_vacation_subject($this->rc->config->get('vacation_subject_default', ''));
+		}
 
 		if (isset($data['vacation_message']))
 		{
+			$data['vacation_message'] = str_replace($this->rc->config->get('vacation_message_mime', 'MIME-version: 1.0\nContent-type: text/plain\n\n'), "", $data['vacation_message']);						
 			$this->obj->set_vacation_message($data['vacation_message']);
+		}
+		else
+		{
+			$this->obj->set_vacation_message($this->rc->config->get('vacation_message_default', ''));
 		}
 
 		if (isset($data['vacation_forwarder']))

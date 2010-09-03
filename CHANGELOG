@@ -1,5 +1,11 @@
 CHANGELOG
 
+2010-09-02 Boris HUISGEN <bhuisgen@hbis.fr>
+	* vacation.php : add MIME support. Fix default subject/message when
+	  drivers returns NULL values.
+	* contrib/maildrop-config.sql : add maildrop configuration sample.
+	* contrib/xams-config.txt : add XAMS configuration sample.
+
 2010-09-01 Boris HUISGEN <bhuisgen@hbis.fr>
 	* lib/drivers/maildrop.php : maildrop driver by Sylvain LANGLADE.
 	* contrib/xams.sql : SQL requests for XAMS (http://www.xams.org)

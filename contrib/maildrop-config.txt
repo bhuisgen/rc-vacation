@@ -1,0 +1,22 @@
+Configuration for maildrop
+by Sylvain LANGLADE <slanglade@elanz.fr>
+
+// allow HTML for vacation message 
+$rcmail_config['vacation_gui_vacationmessage_html'] = TRUE;
+
+// driver used for backend storage
+$rcmail_config['vacation_driver'] = 'maildrop';
+
+// add HTML MIME header before the message when HTML is allowed
+$rcmail_config['vacation_message_html_mime'] = 'MIME-version: 1.0\nContent-type: text/plain\n\n';
+
+/*
+ * maildrop driver
+ */
+
+// Path of the maildir folder
+$rcmail_config['vacation_maildrop_maildirpath'] = '/var/vmail/%email_domain/%email_local';
+// Filename of the vacation message, when enabled
+$rcmail_config['vacation_maildrop_enabled'] = 'vacation.enabled';
+// Filename of the vacation message, when disabled
+$rcmail_config['vacation_maildrop_disabled'] = 'vacation.disabled';
