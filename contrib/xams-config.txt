@@ -22,7 +22,7 @@ $rcmail_config['vacation_message_mime'] = '';
 $rcmail_config['vacation_driver'] = 'sql';
 
 // database DSN
-$rcmail_config['vacation_sql_dsn'] =	'mysql://user:password@localhost/xams';
+$rcmail_config['vacation_sql_dsn'] = 'mysql://user:password@localhost/xams';
 
 // read data queries
 $rcmail_config['vacation_sql_read'] =

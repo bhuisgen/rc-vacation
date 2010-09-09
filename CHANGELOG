@@ -1,5 +1,8 @@
 CHANGELOG
 
+2010-09-09 Boris HUISGEN <bhuisgen@hbis.fr>
+	[RELEASE]: version 0.4
+
 2010-09-06 Boris HUISGEN <bhuisgen@hbis.fr>
 	* vacation.php : force message validity.
 	* config.inc.php.dist : disable MIME for default postfixadmin
