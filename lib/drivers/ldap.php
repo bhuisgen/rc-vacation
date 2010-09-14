@@ -55,10 +55,8 @@ function vacation_read(array &$data)
 					 $data['vacation_subject'],
 					 $data['vacation_message']);
 
-	$search_base = str_replace($search, $replace,
-	$rcmail->config->get('vacation_ldap_search_base'));
-	$search_filter = str_replace($search, $replace,
-	$rcmail->config->get('vacation_ldap_search_filter'));
+	$search_base = str_replace($search, $replace, $rcmail->config->get('vacation_ldap_search_base'));
+	$search_filter = str_replace($search, $replace, $rcmail->config->get('vacation_ldap_search_filter'));
 	$search_params = array('attributes' => $rcmail->config->get('vacation_ldap_search_attrs'));
 
 	$search = $ldap->search($search_base, $search_filter, $search_params);
