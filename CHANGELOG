@@ -1,5 +1,8 @@
 CHANGELOG
 
+2010-09-23 Boris HUISGEN <bhuisgen@hbis.fr>
+	* lib/drivers/ldap.php : add vacation_forwarder in vacation_read().
+
 2010-09-15 Boris HUISGEN <bhuisgen@hbis.fr>
 	* vacation.php : fix vacation forwarder validation.
 	* add de_DE localization (Stéphane LECLERC).

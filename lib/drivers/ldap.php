@@ -26,7 +26,7 @@ function vacation_read(array &$data)
         'starttls'  => $rcmail->config->get('vacation_ldap_starttls'),
         'version'   => $rcmail->config->get('vacation_ldap_version'),
         'basedn'    => $rcmail->config->get('vacation_ldap_basedn'),
-		'binddn'    => $rcmail->config->get('vacation_ldap_binddn'),
+        'binddn'    => $rcmail->config->get('vacation_ldap_binddn'),
         'bindpw'    => $rcmail->config->get('vacation_ldap_bindpw'),
 	);
 
@@ -44,7 +44,8 @@ function vacation_read(array &$data)
 					'%vacation_start',
 					'%vacation_end',
 					'%vacation_subject',
-					'%vacation_message');
+					'%vacation_message',
+					'%vacation_forwarder');
 	$replace = array($data['username'],
 					 $data['email_local'],
 					 $data['email_domain'],
@@ -53,7 +54,8 @@ function vacation_read(array &$data)
 					 $data['vacation_start'],
 					 $data['vacation_end'],
 					 $data['vacation_subject'],
-					 $data['vacation_message']);
+					 $data['vacation_message'],
+					 $data['vacation_forwarder']);
 
 	$search_base = str_replace($search, $replace, $rcmail->config->get('vacation_ldap_search_base'));
 	$search_filter = str_replace($search, $replace, $rcmail->config->get('vacation_ldap_search_filter'));
@@ -117,6 +119,11 @@ function vacation_read(array &$data)
 	if ($entry->exists($rcmail->config->get('vacation_ldap_attr_vacationmessage')))
 	{
 		$data['vacation_message'] = $entry->get_value($rcmail->config->get('vacation_ldap_attr_vacationmessage'));
+	}
+	
+	if ($entry->exists($rcmail->config->get('vacation_ldap_attr_vacationforwarder')))
+	{
+		$data['vacation_forwarder'] = $entry->get_value($rcmail->config->get('vacation_ldap_attr_vacationforwarder'));
 	}
 
 	$ldap->done();
