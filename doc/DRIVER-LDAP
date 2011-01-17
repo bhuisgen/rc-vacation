@@ -28,17 +28,31 @@ Configuration settings :
 - vacation_ldap_modify_dns : array of DN to use for writing data.
 - vacation_ldap_modify_ops : array of operations for writing data.
 
-Query syntax :
+Configuration syntax :
 
-The driver replaces the predefined keys into a query by the real values on
-input (get) and/or output (set). Available keys :
-- %username : the user mail or username (get).
-- %email : the email of the user (get/set).
-- %email_local : the email local part if username is a full email (get/set). 
-- %email_domain : the email domain if the username is a full email (get/set).
-- %vacation_enable : boolean, flag to enable disable the vacation message (get/set).
-- %vacation_start : integer, timestamp/date of the vacation start (get/set)
-- %vacation_end : integer, timestamp/date of the vacation end (get/set)
-- %vacation_subject : string, subject of the vacation message (get/set).
-- %vacation_message : string, message of the vacation (get/set).
-- %vacation_forwarder : string, forward address of the vacation (get/set).
+The driver replaces these predefined keys by the real value :
+
+* for vacation_ldap_basedn, vacation_ldap_binddn options :
+- %username : the user mail or username.
+- %email : the email of the user.
+- %email_local : the email local part if username is a full email. 
+- %email_domain : the email domain if the username is a full email.
+
+* for vacation_ldap_bindpw options :
+- %username : the user mail or username.
+- %password : the user password.
+- %email : the email of the user.
+- %email_local : the email local part if username is a full email. 
+- %email_domain : the email domain if the username is a full email.
+
+* for search (read) and modify (write) operations :
+- %username : the user mail or username (read).
+- %email : the email of the user (read/write).
+- %email_local : the email local part if username is a full email (read/write). 
+- %email_domain : the email domain if the username is a full email (read/write).
+- %vacation_enable : boolean, flag to enable disable the vacation message (read/write).
+- %vacation_start : integer, timestamp/date of the vacation start (read/write)
+- %vacation_end : integer, timestamp/date of the vacation end (read/write)
+- %vacation_subject : string, subject of the vacation message (read/write).
+- %vacation_message : string, message of the vacation (read/write).
+- %vacation_forwarder : string, forward address of the vacation (read/write).

@@ -20,14 +20,38 @@ function vacation_read(array &$data)
 {
 	require_once ('Net/LDAP2.php');
 	$rcmail = rcmail::get_instance();
+	
+	$search = array('%username',
+					'%email_local',
+					'%email_domain',
+					'%email');
+	$replace = array($data['username'],
+					 $data['email_local'],
+					 $data['email_domain'],
+					 $data['email']);	
+	$ldap_basedn = str_replace($search, $replace, $rcmail->config->get('vacation_ldap_basedn'));
+	$ldap_binddn = str_replace($search, $replace, $rcmail->config->get('vacation_ldap_binddn'));
+
+	$search = array('%username',
+					'%password',
+					'%email_local',
+					'%email_domain',
+					'%email');
+	$replace = array($data['username'],
+					 $rcmail->decrypt($_SESSION['password']),
+					 $data['email_local'],
+					 $data['email_domain'],
+					 $data['email']);
+	$ldap_bindpw = str_replace($search, $replace, $rcmail->config->get('vacation_ldap_bindpw'));
+	
 	$ldapConfig = array (
         'host'      => $rcmail->config->get('vacation_ldap_host'),
         'port'      => $rcmail->config->get('vacation_ldap_port'),
         'starttls'  => $rcmail->config->get('vacation_ldap_starttls'),
         'version'   => $rcmail->config->get('vacation_ldap_version'),
-        'basedn'    => $rcmail->config->get('vacation_ldap_basedn'),
-        'binddn'    => $rcmail->config->get('vacation_ldap_binddn'),
-        'bindpw'    => $rcmail->config->get('vacation_ldap_bindpw'),
+        'basedn'    => $ldap_basedn,
+        'binddn'    => $ldap_binddn,
+        'bindpw'    => $ldap_bindpw,
 	);
 
 	$ldap = Net_LDAP2::connect($ldapConfig);
@@ -142,14 +166,38 @@ function vacation_write(array &$data)
 {
 	require_once ('Net/LDAP2.php');
 	$rcmail = rcmail::get_instance();
+	
+	$search = array('%username',
+					'%email_local',
+					'%email_domain',
+					'%email');
+	$replace = array($data['username'],
+					 $data['email_local'],
+					 $data['email_domain'],
+					 $data['email']);	
+	$ldap_basedn = str_replace($search, $replace, $rcmail->config->get('vacation_ldap_basedn'));
+	$ldap_binddn = str_replace($search, $replace, $rcmail->config->get('vacation_ldap_binddn'));
+
+	$search = array('%username',
+					'%password',
+					'%email_local',
+					'%email_domain',
+					'%email');
+	$replace = array($data['username'],
+					 $rcmail->decrypt($_SESSION['password']),
+					 $data['email_local'],
+					 $data['email_domain'],
+					 $data['email']);
+	$ldap_bindpw = str_replace($search, $replace, $rcmail->config->get('vacation_ldap_bindpw'));
+	
 	$ldapConfig = array (
         'host'      => $rcmail->config->get('vacation_ldap_host'),
         'port'      => $rcmail->config->get('vacation_ldap_port'),
         'starttls'  => $rcmail->config->get('vacation_ldap_starttls'),
         'version'   => $rcmail->config->get('vacation_ldap_version'),
-        'basedn'    => $rcmail->config->get('vacation_ldap_basedn'),
-	    'binddn'    => $rcmail->config->get('vacation_ldap_binddn'),
-        'bindpw'    => $rcmail->config->get('vacation_ldap_bindpw'),
+        'basedn'    => $ldap_basedn,
+        'binddn'    => $ldap_binddn,
+        'bindpw'    => $ldap_bindpw,
 	);
 
 	$ldap = Net_LDAP2::connect($ldapConfig);
