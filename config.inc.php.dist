@@ -181,4 +181,10 @@ $rcmail_config['vacation_maildrop_enabled'] = 'vacation.enabled';
 // filename of the vacation message when disabled
 $rcmail_config['vacation_maildrop_disabled'] = 'vacation.disabled';
 
+// value for enabled vacation flag
+$rcmail_config['vacation_maildrop_vactionenable_value_enabled'] = 'enabled';
+
+// value for disabled vacation flag
+$rcmail_config['vacation_maildrop_vacationenable_value_disabled'] = 'disabled';
+
 // end vacation config file

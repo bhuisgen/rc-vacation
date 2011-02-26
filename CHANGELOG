@@ -1,5 +1,9 @@
 CHANGELOG
 
+2011-02-26 Boris HUISGEN <bhuisgen@hbis.fr>
+	* lib/drivers/maildrop.php : allow custom enabled/disabled values.
+	* config.php : add maildrop enabled/disabled custom values support.
+
 2011-01-16 Boris HUISGEN <bhuisgen@hbis.fr>
 	* lib/drivers/ldap.php : search/replace on bind settings to allow custom
 	user authentication.

@@ -86,7 +86,7 @@ function vacation_write(array &$data)
 					 $data['email_local'],
 					 $data['email_domain'],
 					 $data['email'],
-					 $data['vacation_enable'] ? 'enabled' : 'disabled');
+					 $data['vacation_enable'] ? $rcmail->config->get('vacation_maildrop_vactionenable_value_enabled') : $rcmail->config->get('vacation_maildrop_vacationenable_value_disabled'));
 					 
 	$path = str_replace($search, $replace, $rcmail->config->get('vacation_maildrop_maildirpath'));
 	if (substr($path, -1, 1) != '/')
@@ -97,7 +97,7 @@ function vacation_write(array &$data)
 		return PLUGIN_ERROR_PROCESS;
 
 	// Whether the user enabled the vacation message, choose the right filename to delete and create
-	if ($data['vacation_enable'] && $data['vacation_message']>"")
+	if ($data['vacation_enable'] && ($data['vacation_message'] > ""))
 	{
 		$fdelete = $path.$rcmail->config->get('vacation_maildrop_disabled');
 		$fcreate = $path.$rcmail->config->get('vacation_maildrop_enabled');

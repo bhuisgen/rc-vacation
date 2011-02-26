@@ -4,10 +4,12 @@ This driver is a maildrop backend storage, for virtual mailboxes.
 
 Configuration settings  :
 
-- vacation_maildrop_maildirpath : Root path of the users' mailboxes
-- vacation_maildrop_enabled : Filename of the vacation message (when enabled)
-- vacation_maildrop_disabled : Filename of the vacation message (when disabled)
+- vacation_maildrop_maildirpath : root path of the users' mailboxes
+- vacation_maildrop_enabled : filename of the vacation message (when enabled)
+- vacation_maildrop_disabled : filename of the vacation message (when disabled)
 - vacation_maildrop_mime : MIME headers, when using the "-m" option of mailbot
+- vacation_maildrop_vacationenable_value_enabled : value for enabled vacation flag
+- vacation_maildrop_vacationenable_value_disabled : value for disabled vacation flag
 
 maildirpath syntax :
 
@@ -17,7 +19,7 @@ input (get) and/or output (set). These keys are :
 - %email : the email of the user (get/set).
 - %email_local : the email local part if username is a full email (get/set). 
 - %email_domain : the email domain if the username is a full email (get/set).
-- %vacation_enable : boolean, 'enabled' or 'disabled' accordingly (get/set).
+- %vacation_enable : boolean, flag to enable disable the vacation message (get/set).
 
 Synopsis:
 
