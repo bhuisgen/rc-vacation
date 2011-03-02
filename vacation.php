@@ -89,7 +89,7 @@ class vacation extends rcube_plugin
 		
 		if ($this->rc->config->get('vacation_gui_vacationdate', FALSE))
 		{
-			$format = $this->rc->config->get('vacation_calendar_dateformat', 'm/d/Y');
+			$format = $this->rc->config->get('vacation_dateformat', 'm/d/Y');
 			
 			$field_id = 'vacationstart';
 			$input_vacationstart = new html_inputfield(array('name' => '_vacationstart', 'id' => $field_id, 'size' => 10));
@@ -500,7 +500,7 @@ class vacation extends rcube_plugin
 	private function my_date_parse_from_format($format, $date)
 	{
 		if (function_exists("date_parse_from_format"))
-			return date_parse_from_format($format, $value);
+			return date_parse_from_format($format, $date);
 
 		$ret = array();
 
