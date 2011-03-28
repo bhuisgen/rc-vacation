@@ -1,5 +1,12 @@
 CHANGELOG
 
+2011-03-28 Boris HUISGEN <bhuisgen@hbis.fr>
+	* lib/drivers/ldap.php, lib/drivers/mysql.php :  add vacation keep copy in
+	  inbox flag.
+	* lib/rcube_vacation.php : add vacation keep copy in inbox flag.
+	* vacation.php : add vacation keep copy in inbox flag.
+	* config.inc.php.dist : add vacation keep copy in inbox flag.
+
 2011-03-02 Boris HUISGEN <bhuisgen@hbis.fr>
 	* vacation.php : fix for vacation dates support.
 

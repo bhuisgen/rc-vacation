@@ -20,6 +20,7 @@ class rcube_vacation
 	public $vacation_end = 0;
 	public $vacation_subject = '';
 	public $vacation_message = '';
+	public $vacation_keepcopyininbox = TRUE;
 	public $vacation_forwarder = '';
 
 	/**
@@ -137,6 +138,16 @@ class rcube_vacation
 	}
 	
 	/*
+	 * Checks if a copy in inbox must be keep when the vacation is enabled.
+	 *
+	 * @return boolean TRUE if a copy must be keeped; FALSE otherwise.
+	 */
+	public function is_vacation_keep_copy_in_inbox()
+	{
+		return $this->vacation_keepcopyininbox;
+	}
+	
+	/*
 	 * Gets the vacation forward address.
 	 * 
 	 * @return string the vacation forward address.
@@ -224,6 +235,16 @@ class rcube_vacation
 	public function set_vacation_message($message)
 	{
 		$this->vacation_message = $message;
+	}
+	
+	/*
+	 * Sets the vacation keep copy in inbox flag.
+	 *
+	 * @param boolean the flag.
+	 */
+	public function set_vacation_keep_copy_in_inbox($flag)
+	{
+		$this->vacation_keepcopyininbox = $flag;
 	}
 	
 	/*

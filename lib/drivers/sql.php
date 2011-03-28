@@ -56,6 +56,7 @@ function vacation_read(array &$data)
 						'%vacation_end',
 						'%vacation_subject',
 						'%vacation_message',
+						'%vacation_keepcopyininbox',
 						'%vacation_forwarder'
 		);
 		$replace = array($db->quote($data['username']),
@@ -67,6 +68,7 @@ function vacation_read(array &$data)
 						 $db->quote($data['vacation_end']),
 						 $db->quote($data['vacation_subject']),
 						 $db->quote($data['vacation_message']),
+						 $db->quote($data['vacation_keepcopyininbox']),
 						 $db->quote($data['vacation_forwarder'])
 		);
 		$query = str_replace($search, $replace, $query);
@@ -121,6 +123,11 @@ function vacation_read(array &$data)
 		if (isset($sql_arr['vacation_message']))
 		{
 			$data['vacation_message'] = $sql_arr['vacation_message'];
+		}
+		
+		if (isset($sql_arr['vacation_keepcopyininbox']))
+		{
+			$data['vacation_keepcopyininbox'] = $sql_arr['vacation_keepcopyininbox'];
 		}
 		
 		if (isset($sql_arr['vacation_forwarder']))
@@ -179,6 +186,7 @@ function vacation_write(array &$data)
 						'%vacation_end',
 						'%vacation_subject',
 						'%vacation_message',
+						'%vacation_keepcopyininbox',
 						'%vacation_forwarder'
 		);
 		$replace = array($db->quote($data['username']),
@@ -190,6 +198,7 @@ function vacation_write(array &$data)
 						 $db->quote($data['vacation_end']),
 						 $db->quote($data['vacation_subject']),
 						 $db->quote($data['vacation_message']),
+						 $db->quote($data['vacation_keepcopyininbox']),
 						 $db->quote($data['vacation_forwarder'])
 		);
 		$query = str_replace($search, $replace, $query);

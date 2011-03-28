@@ -16,9 +16,12 @@ input (get) and/or output (set). Available keys :
 - %email : the email of the user (get/set).
 - %email_local : the email local part if username is a full email (get/set). 
 - %email_domain : the email domain if the username is a full email (get/set).
-- %vacation_enable : boolean, flag to enable disable the vacation message (get/set).
+- %vacation_enable : boolean, flag to enable/disable the vacation message
+  (get/set).
 - %vacation_start : integer, timestamp/date of the vacation start (get/set)
 - %vacation_end : integer, timestamp/date of the vacation end (get/set)
 - %vacation_subject : string, subject of the vacation message (get/set).
 - %vacation_message : string, message of the vacation (get/set).
+- %vacation_keepcopyininbox : boolean, flag to enable/disable the vacation keep
+  copy in inbox flag (get/set).
 - %vacation_forwarder : string, forward address of the vacation (get/set).

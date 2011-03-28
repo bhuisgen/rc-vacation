@@ -14,14 +14,24 @@ Configuration settings :
 - vacation_ldap_attr_email : attribute name to map email address
 - vacation_ldap_attr_emaillocal : attribute name to map email local part
 - vacation_ldap_attr_emaildomain : attribute name to map email domain
-- vacation_ldap_attr_vacationenable : attribute name to map vacation flag
-- vacation_ldap_attr_vacationenable_value_enabled : attribute value for enabled vacation flag
-- vacation_ldap_attr_vacationenable_value_disabled : attribute value for disabled vacation flag
+- vacation_ldap_attr_vacationenable : attribute name to map vacation enable 
+  flag
+- vacation_ldap_attr_vacationenable_value_enabled : attribute value for enabled
+  vacation flag
+- vacation_ldap_attr_vacationenable_value_disabled : attribute value for
+  disabled vacation flag
 - vacation_ldap_attr_vacationstart : attribute name to map vacation start
 - vacation_ldap_attr_vacationend : attribute name to map vacation end
 - vacation_ldap_attr_vacationsubject : attribute name to map vacation subject
 - vacation_ldap_attr_vacationmessage : attribute name to map vacation message
-- vacation_ldap_attr_vacationforwarder : attribute name to map vacation forward address
+- vacation_ldap_attr_vacationkeepcopyininbox : attribute name to map vacation
+  keep copy in inbox flag
+- vacation_ldap_attr_vacationkeepcopyininbox_value_enabled : attribute value
+  for enabled vacation keep copy in inbox flag
+- vacation_ldap_attr_vacationkeepcopyininbox_value_disabled : attribute value
+  for disabled vacation keep copy in inbox flag
+- vacation_ldap_attr_vacationforwarder : attribute name to map vacation forward
+  address
 - vacation_ldap_search_base : search base for reading data.
 - vacation_ldap_search_filter : search filter for reading data.
 - vacation_ldap_search_attrs : array of attributes for reading data.
@@ -50,7 +60,8 @@ The driver replaces these predefined keys by the real value :
 - %email : the email of the user (read/write).
 - %email_local : the email local part if username is a full email (read/write). 
 - %email_domain : the email domain if the username is a full email (read/write).
-- %vacation_enable : boolean, flag to enable disable the vacation message (read/write).
+- %vacation_enable : boolean, flag to enable disable the vacation message
+  (read/write).
 - %vacation_start : integer, timestamp/date of the vacation start (read/write)
 - %vacation_end : integer, timestamp/date of the vacation end (read/write)
 - %vacation_subject : string, subject of the vacation message (read/write).

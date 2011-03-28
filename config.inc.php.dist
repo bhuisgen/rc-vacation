@@ -20,6 +20,9 @@ $rcmail_config['vacation_gui_vacationsubject'] = TRUE;
 // allow HTML for vacation message 
 $rcmail_config['vacation_gui_vacationmessage_html'] = FALSE;
 
+// allow sending message to be keep in inbox
+$rcmail_config['vacation_gui_vacationkeepcopyininbox'] = FALSE;
+
 // allow vacation forwarder
 $rcmail_config['vacation_gui_vacationforwarder'] = FALSE;
 
@@ -74,7 +77,7 @@ $rcmail_config['vacation_sql_write'] =
 	            "%vacation_message,NOW(),%vacation_enable);",
           "INSERT INTO alias (address,goto,domain,created,modified," .
 	         "active) " .
-             "SELECT %email,CONCAT(%email_local,'#',%email_domain,'@'," .
+             "SELECT %email,CONCAT(%email,',',%email_local,'#',%email_domain,'@'," .
                 "'autoreply.my.domain'),%email_domain,NOW(),NOW(),1 " .
              "FROM mailbox WHERE username=%email AND " .
                 "domain=%email_domain AND %vacation_enable=1;"
@@ -135,6 +138,15 @@ $rcmail_config['vacation_ldap_attr_vacationsubject'] = null;
 // Attribute name to map vacation message
 $rcmail_config['vacation_ldap_attr_vacationmessage'] =
  'vacationInfo';
+
+// Attribute name to map vacation keep copy in inbox flag
+$rcmail_config['vacation_ldap_attr_vacationkeepcopyininbox'] = 'vacationKeepCopyInInbox';
+
+// Attribute value for enabled vacation keep copy in inbox flag
+$rcmail_config['vacation_ldap_attr_vacationkeepcopyininbox_value_enabled'] = 'TRUE';
+
+// Attribute value for disabled vacation keep copy in inbox flag
+$rcmail_config['vacation_ldap_attr_vacationkeepcopyininbox_value_disabled'] = 'FALSE';
 
 // Attribute name to map vacation forwarder
 $rcmail_config['vacation_ldap_attr_vacationforwarder'] =

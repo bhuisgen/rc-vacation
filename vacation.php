@@ -137,6 +137,14 @@ class vacation extends rcube_plugin
 		$table->add('title', html::label($field_id, Q($this->gettext('vacationmessage'))));
 		$table->add(null, $text_vacationmessage->show($this->obj->get_vacation_message()));
 
+		if ($this->rc->config->get('vacation_gui_vacationkeepcopyininbox', FALSE))
+		{
+			$field_id = 'keepcopyininbox';
+			$input_vacationkeepcopyininbox = new html_checkbox(array('name' => '_vacationkeepcopyininbox', 'id' => $field_id, 'value' => 1));
+			$table->add('title', html::label($field_id, Q($this->gettext('vacationkeepcopyininbox'))));
+			$table->add(null, $input_vacationkeepcopyininbox->show($this->obj->is_vacation_keep_copy_in_inbox() ? 1 : 0));
+		}
+
 		if ($this->rc->config->get('vacation_gui_vacationforwarder', FALSE))
 		{
 			$field_id = 'vacationforwarder';
@@ -184,6 +192,7 @@ class vacation extends rcube_plugin
 		$data['vacation_end'] = $this->obj->get_vacation_end();
 		$data['vacation_subject'] = ($this->obj->get_vacation_subject() ? $this->obj->get_vacation_subject() : $this->rc->config->get('vacation_subject_default', ''));
 		$data['vacation_message'] = $this->rc->config->get('vacation_message_mime', '') . ($this->obj->get_vacation_message() ? $this->obj->get_vacation_message() : $this->rc->config->get('vacation_message_default', ''));
+		$date['vacation_keepcopyininbox'] = $this->obj->is_vacation_keep_copy_in_inbox();
 		$data['vacation_forwarder'] = $this->obj->get_vacation_forwarder();
 	
 		$ret = vacation_read ($data);
@@ -266,6 +275,11 @@ class vacation extends rcube_plugin
 			$this->obj->set_vacation_message($this->rc->config->get('vacation_message_default', ''));
 		}
 		
+		if (isset($data['vacation_keepcopyininbox']))
+		{
+			$this->obj->set_vacation_keep_copy_in_inbox($data['vacation_keepcopyininbox']);
+		}
+		
 		if (isset($data['vacation_forwarder']))
 		{
 			$this->obj->set_vacation_forwarder($data['vacation_forwarder']);
@@ -328,6 +342,7 @@ class vacation extends rcube_plugin
 				
 				return FALSE;
 			}
+			
 			$this->obj->set_vacation_subject($subject);
 		}
 		
@@ -339,6 +354,18 @@ class vacation extends rcube_plugin
 			return FALSE;
 		}
 		$this->obj->set_vacation_message($message);
+		
+		if ($this->rc->config->get('vacation_gui_keepcopyininbox', FALSE))
+		{
+			if (get_input_value('_vacationkeepcopyininbox', RCUBE_INPUT_POST))
+			{
+				$this->obj->set_vacation_keep_copy_in_inbox(TRUE);
+			}
+			else
+			{
+				$this->obj->set_vacation_keep_copy_in_inbox(FALSE);
+			}
+		}
 
 		if ($this->rc->config->get('vacation_gui_vacationforwarder', FALSE))
 		{
@@ -398,6 +425,7 @@ class vacation extends rcube_plugin
 		$data['vacation_end'] = $this->obj->get_vacation_end();
 		$data['vacation_subject'] = $this->obj->get_vacation_subject();
 		$data['vacation_message'] = $this->rc->config->get('vacation_message_mime', '') . ($this->obj->get_vacation_message() ? $this->obj->get_vacation_message() : $this->rc->config->get('vacation_message_default', ''));
+		$data['vacation_keepcopyininbox'] = $this->obj->is_vacation_keep_copy_in_inbox();
 		$data['vacation_forwarder'] = $this->obj->get_vacation_forwarder();
 		
 		$ret = vacation_write ($data);
@@ -480,6 +508,11 @@ class vacation extends rcube_plugin
 		else
 		{
 			$this->obj->set_vacation_message($this->rc->config->get('vacation_message_default', ''));
+		}
+		
+		if (isset($data['vacation_keepcopyininbox']))
+		{
+			$this->obj->set_vacation_keep_copy_in_inbox($data['vacation_keepcopyininbox']);
 		}
 
 		if (isset($data['vacation_forwarder']))

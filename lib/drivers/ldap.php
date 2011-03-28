@@ -69,6 +69,7 @@ function vacation_read(array &$data)
 					'%vacation_end',
 					'%vacation_subject',
 					'%vacation_message',
+					'%vacation_keepcopyininbox',
 					'%vacation_forwarder');
 	$replace = array($data['username'],
 					 $data['email_local'],
@@ -79,6 +80,7 @@ function vacation_read(array &$data)
 					 $data['vacation_end'],
 					 $data['vacation_subject'],
 					 $data['vacation_message'],
+					 $data['vacation_keepcopyininbox'],
 					 $data['vacation_forwarder']);
 
 	$search_base = str_replace($search, $replace, $rcmail->config->get('vacation_ldap_search_base'));
@@ -143,6 +145,14 @@ function vacation_read(array &$data)
 	if ($entry->exists($rcmail->config->get('vacation_ldap_attr_vacationmessage')))
 	{
 		$data['vacation_message'] = $entry->get_value($rcmail->config->get('vacation_ldap_attr_vacationmessage'));
+	}
+	
+	if ($entry->exists($rcmail->config->get('vacation_ldap_attr_vacationkeepcopyininbox')))
+	{
+		if ($entry->get_value($rcmail->config->get('vacation_ldap_attr_vacationkeepcopyininbox')) ==	$rcmail->config->get('vacation_ldap_attr_vacationkeepcopyininbox_value_enabled'))
+			$data['vacation_keepcopyininbox'] = 1;
+		else
+			$data['vacation_keepcopyininbox'] = 0;
 	}
 	
 	if ($entry->exists($rcmail->config->get('vacation_ldap_attr_vacationforwarder')))
@@ -220,6 +230,7 @@ function vacation_write(array &$data)
 						'%vacation_end',
 						'%vacation_subject',
 						'%vacation_message',
+						'%vacation_keepcopyininbox',
 						'%vacation_forwarder',
 		);
 		$replace = array($data['username'],
@@ -231,6 +242,7 @@ function vacation_write(array &$data)
 						 $data['vacation_end'],
 						 $data['vacation_subject'],
 						 $data['vacation_message'],
+						 $data['vacation_keepcopyininbox'],
 						 $data['vacation_forwarder']
 		);
 		$dns[$i] = str_replace($search, $replace, $dns[$i]);
@@ -248,6 +260,7 @@ function vacation_write(array &$data)
 								'%vacation_end',
 								'%vacation_subject',
 								'%vacation_message',
+								'%vacation_keepcopyininbox',
 								'%vacation_forwarder'
 				);
 				$replace = array($data['username'],
@@ -261,6 +274,7 @@ function vacation_write(array &$data)
 								$data['vacation_end'],
 								$data['vacation_subject'],
 								$data['vacation_message'],
+								$data['vacation_keepcopyininbox'],
 								$data['vacation_forwarder']
 				);
 				$ops[$i][$op][$key] = str_replace($search, $replace, $value);				
