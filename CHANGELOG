@@ -1,5 +1,9 @@
 CHANGELOG
 
+2011-05-10 Boris HUISGEN <bhuisgen@hbis.fr>
+	* localization/cs_CZ.inc : czech translation by Libor Klepac.
+	* localization/pl_PL.inc : polish translation by Marcin Mirosław.
+
 2011-03-28 Boris HUISGEN <bhuisgen@hbis.fr>
 	* lib/drivers/ldap.php, lib/drivers/mysql.php :  add vacation keep copy in
 	  inbox flag.
