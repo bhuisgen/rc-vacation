@@ -72,18 +72,23 @@ $rcmail_config['vacation_sql_write'] =
 	array("DELETE FROM vacation WHERE email=%email AND " .
 	         "domain=%email_domain;",
           "DELETE from vacation_notification WHERE on_vacation=%email;",
-          "UPDATE alias SET goto=%vacation_forwarder " .
-                 "WHERE address=%email AND domain=%email_domain;",
+          "DELETE FROM alias WHERE address=%email AND " .
+                 "domain=%email_domain;",
           "INSERT INTO vacation (email,domain,subject,body,created," .
 	         "active) VALUES (%email,%email_domain,%vacation_subject," .
 	            "%vacation_message,NOW(),%vacation_enable);",
           "INSERT INTO alias (address,goto,domain,created,modified," .
 	         "active) " .
              "SELECT %email,CONCAT(%email,',',%email_local,'#',%email_domain,'@'," .
-                "'autoreply.my.domain,',%vacation_forwarder)," .
+                "'autoreply.%email_domain,',%vacation_forwarder)," .
                 "%email_domain,NOW(),NOW(),1 " .
              "FROM mailbox WHERE username=%email AND " .
                 "domain=%email_domain AND %vacation_enable=1;"
+          "INSERT INTO alias (address,goto,domain,created,modified," .
+                 "active) " .
+             "SELECT %email,%vacation_forwarder,%email_domain,NOW(),NOW(),1 " .
+             "FROM mailbox WHERE username=%email AND " .
+                "domain=%email_domain AND %vacation_enable=0;"
     );
 
 /*
