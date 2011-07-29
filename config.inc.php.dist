@@ -63,7 +63,9 @@ $rcmail_config['vacation_sql_read'] =
 	array("SELECT subject AS vacation_subject, body AS vacation_message, " .
 	          "active AS vacation_enable FROM vacation " .
 	      "WHERE email=%username AND domain=%email_domain;",
-              "SELECT goto AS vacation_forwarder FROM alias " .
+              "SELECT SUBSTRING(goto,INSTR(goto,'autoreply.%email_domain')" .
+                  "+CHAR_LENGTH('autoreply.%email_domain')+1) " .
+                  "AS vacation_forwarder FROM alias " .
               "WHERE address=%username AND domain=%email_domain;"
 	     );
 
