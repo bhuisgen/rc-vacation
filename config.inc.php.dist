@@ -63,8 +63,8 @@ $rcmail_config['vacation_sql_read'] =
 	array("SELECT subject AS vacation_subject, body AS vacation_message, " .
 	          "active AS vacation_enable FROM vacation " .
 	      "WHERE email=%username AND domain=%email_domain;",
-              "SELECT SUBSTRING(goto,INSTR(goto,'autoreply.%email_domain')" .
-                  "+CHAR_LENGTH('autoreply.%email_domain')+1) " .
+              "SELECT SUBSTRING(goto,INSTR(goto,'autoreply.my.domain')" .
+                  "+CHAR_LENGTH('autoreply.my.domain')+1) " .
                   "AS vacation_forwarder FROM alias " .
               "WHERE address=%username AND domain=%email_domain;"
 	     );
@@ -82,7 +82,7 @@ $rcmail_config['vacation_sql_write'] =
           "INSERT INTO alias (address,goto,domain,created,modified," .
 	         "active) " .
              "SELECT %email,CONCAT(%email,',',%email_local,'#',%email_domain,'@'," .
-                "'autoreply.%email_domain,',%vacation_forwarder)," .
+                "'autoreply.my.domain,',%vacation_forwarder)," .
                 "%email_domain,NOW(),NOW(),1 " .
              "FROM mailbox WHERE username=%email AND " .
                 "domain=%email_domain AND %vacation_enable=1;"
