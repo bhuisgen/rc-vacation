@@ -322,7 +322,9 @@ class vacation extends rcube_plugin
 				return FALSE;
 			}
 
-			if (($d_start['year'] > $d_end['year']) || ($d_start['month'] > $d_end['month']) || ($d_start['day'] > $d_end['day']))
+			$d_start_time = mktime(0,0,0, $d_start['month'], $d_start['day'], $d_start['year']);
+			$d_end_time = mktime(0,0,0, $d_end['month'], $d_end['day'], $d_end['year']); 
+			if ($d_start_time > $d_end_time)
 			{
 				$this->rc->output->command('display_message', $this->gettext('vacationinvaliddateinterval'), 'error');
 
