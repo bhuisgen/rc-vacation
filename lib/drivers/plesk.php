@@ -46,6 +46,35 @@ function parse_output($output, $strkey)
         return substr($output[$key], 20);
     else
         return false;
+
+
+    $key = array_find($strkey, $output);
+    if ($strkey=='Answer text:')
+    {
+        //need to check if reply is over multiple lines
+        $reply = substr($output[$key], 20);
+        for ($i=($key+1); $i<=sizeof($output); $i++)
+        {
+            if (substr($output[$i],0,20) == 'Attach files:       ')
+            {
+                //If the next line of the output begins with "Attach files", we know the reply has completed and can exit the loop
+                break;
+            }
+            else
+            {
+                //Not yet at the next key, so add it to the reply text variable
+                $reply .= "\n" . $output[$i];
+            }
+        }
+        return $reply;
+    }
+    else
+    {
+        if ($key !== false)
+            return substr($output[$key], 20);
+        else
+            return false;
+    }
 }
 
 

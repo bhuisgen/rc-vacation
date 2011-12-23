@@ -337,7 +337,7 @@ class vacation extends rcube_plugin
 		
 		if ($this->rc->config->get('vacation_gui_vacationsubject', FALSE))
 		{
-			$subject = get_input_value('_vacationsubject', RCUBE_INPUT_POST);
+			$subject = get_input_value('_vacationsubject', RCUBE_INPUT_POST, TRUE);
 			if (!is_string($subject) || (strlen($subject) == 0))
 			{
 				$this->rc->output->command('display_message', $this->gettext('vacationnosubject'), 'error');
