@@ -41,7 +41,7 @@ function vacation_read(array &$data)
 		return PLUGIN_ERROR_PROCESS;
 
 	// Test whether the 'enabled' or 'disabled' vacation message file exists
-	$file = $rcmail->config->get('vacation_maildrop_enabled');
+	$file = str_replace($search, $replace, $rcmail->config->get('vacation_maildrop_enabled'));
 	if (is_readable($path.$file))
 	{
 		$data['vacation_enable'] = true;	// The 'enabled' file exists
@@ -99,13 +99,13 @@ function vacation_write(array &$data)
 	// Whether the user enabled the vacation message, choose the right filename to delete and create
 	if ($data['vacation_enable'] && ($data['vacation_message'] > ""))
 	{
-		$fdelete = $path.$rcmail->config->get('vacation_maildrop_disabled');
-		$fcreate = $path.$rcmail->config->get('vacation_maildrop_enabled');
+		$fdelete = str_replace($search, $replace, $path.$rcmail->config->get('vacation_maildrop_disabled'));
+		$fcreate = str_replace($search, $replace, $path.$rcmail->config->get('vacation_maildrop_enabled'));
 	}
 	else
 	{
-		$fdelete = $path.$rcmail->config->get('vacation_maildrop_enabled');
-		$fcreate = $path.$rcmail->config->get('vacation_maildrop_disabled');
+		$fdelete = str_replace($search, $replace, $path.$rcmail->config->get('vacation_maildrop_enabled'));
+		$fcreate = str_replace($search, $replace, $path.$rcmail->config->get('vacation_maildrop_disabled'));
 	}
 
 	// Delete the correct filename (if it exists)
