@@ -1,5 +1,8 @@
 CHANGELOG
 
+2012-02-18 Boris HUISGEN <bhuisgen@hbis.fr>
+	* lib/drivers/forward.php : driver for .forward file.
+
 2012-01-13 Boris HUISGEN <bhuisgen@hbis.fr>
 	* lib/drivers/plesk.php : plesk driver from Vicente D. Monroig Climent (vmonroig@digitaldisseny.com).
 	[RELEASE]: version 0.5

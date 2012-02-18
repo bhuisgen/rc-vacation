@@ -1,0 +1,69 @@
+DRIVER-FORWARD
+
+This driver is a backend storage for user '.forward' file and the vacation
+program.
+
+It will generate these files :
+- .forward
+- .vacation.msg
+- .vacation.db
+
+But they must normally be owned by the local user. To allow your web user
+to create them, you need to configure your MTA to disable rights and owner
+checks. A safe method is to create a custom directory to store them :
+
+	/var/spool/forward/							rwxr-xr-x www-data:www-data
+	/var/spool/forward/bhuisgen/				rwxr-xr-x www-data:www-data
+	/var/spool/forward/bhuisgen/.forward 		rw-r--r-- www-data:www-data
+	/var/spool/forward/bhuisgen/.vacation.msg 	rw-r--r-- www-data:www-data
+	/var/spool/forward/bhuisgen/.vacation.db	rw-rw-rw- www-data:www-data
+
+For Sendmail MTA, you can use DontBlameSendmail option to allow unsafe
+rights on .forward file :
+
+	DontBlameSendmail=forwardfileinunsafedirpath,forwardfileinunsafedirpathsafe
+
+For changing the forward path use this setting :
+
+	define(`confFORWARD_PATH',`/var/spool/forward/$u')dnl
+
+For Postfix MTA, a patch is needed to disable the owner/rights checks. The 
+patch is in contrib/ directory. The forward_path variable need to be set :
+
+	forward_path=/var/spool/forward/$user/.forward
+
+Finally use the settings vacation_forward_create_dir_mode and
+vacation_forward_database_file_mode of this driver. The vacation dates and 
+forwarding address are not supported so disable them for the GUI.
+
+Configuration settings :
+
+- vacation_forward_path : path of the forward file.
+- vacation_forward_file : forward filename.
+- vacation_forward_create_dir : create the forward path if not exists.
+- vacation_forward_message_file : the user vacation message file.
+- vacation_forward_create_dir_mode : the rights to set for the forward path.
+- vacation_forward_database_file : the user vacation message database.
+- vacation_forward_database_file_mode : the rights to set for the vacation
+message database. 
+- vacation_forward_vacation_command : the vacation binary command.
+- vacation_forward_message_template : the vacation message template. Each line
+must be ended by \r\n. A empty line must separate the headers from the content.
+
+Configuration syntax :
+
+The driver replaces these predefined keys into each variable except 
+vacation_forward_message_template :
+- %username : the user mail or username.
+- %email : the email of the user.
+- %email_local : the email local part if username is a full email. 
+- %email_domain : the email domain if the username is a full email.
+
+The driver replaces these predefined keys into
+vacation_forward_message_template :
+- %username : the user mail or username.
+- %email : the email of the user.
+- %email_local : the email local part if username is a full email. 
+- %email_domain : the email domain if the username is a full email.
+- %vacation_subject : the vacation subject.
+- %vacation_message : the vacation message.

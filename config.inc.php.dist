@@ -199,4 +199,44 @@ $rcmail_config['vacation_maildrop_vactionenable_value_enabled'] = 'enabled';
 // value for disabled vacation flag
 $rcmail_config['vacation_maildrop_vacationenable_value_disabled'] = 'disabled';
 
+/*
+ * Forward vacation driver
+ */
+ 
+// path of the user's forward file readed by the MTA
+$rcmail_config['vacation_forward_path'] = '/var/spool/forward/%email_local';
+
+// forward filename
+$rcmail_config['vacation_forward_file'] = '.forward';
+
+// create forward path if not exists
+$rcmail_config['vacation_forward_create_dir'] = FALSE;
+
+// create forward path with this rights
+$rcmail_config['vacation_forward_create_dir_mode'] = 0755;
+
+// vacation message file
+$rcmail_config['vacation_forward_message_file'] = '.vacation.msg';
+
+// vacation database file
+$rcmail_config['vacation_forward_database_file'] = '.vacation.db';
+
+// vacation database file rights
+$rcmail_config['vacation_forward_database_file_mode'] = 0666;
+
+// vacation binary command
+$rcmail_config['vacation_forward_vacation_command'] = '/usr/bin/vacation';
+
+// vacation reply interval in days
+$rcmail_config['vacation_forward_vacation_reply_interval'] = 0;
+
+// vacation message template
+$rcmail_config['vacation_forward_message_template'] = 
+"From: %email\r\n" .
+"Subject: %vacation_subject\r\n" .
+"Delivered-By-The-Graces-Of: Vacation\r\n" .
+"Precedence: bulk\r\n" .
+"\r\n" .
+"%vacation_message";
+
 // end vacation config file
