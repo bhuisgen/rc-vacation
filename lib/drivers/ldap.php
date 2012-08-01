@@ -106,17 +106,17 @@ function vacation_read(array &$data)
 	
 	if ($entry->exists($rcmail->config->get('vacation_ldap_attr_email')))
 	{
-		$data['email'] = $entry->get_value($rcmail->config->get('vacation_ldap_search_attr_email'));
+		$data['email'] = $entry->get_value($rcmail->config->get('vacation_ldap_attr_email'));
 	}
 
 	if ($entry->exists($rcmail->config->get('vacation_ldap_attr_emaillocal')))
 	{
-		$data['email_local'] = $entry->get_value($rcmail->config->get('vacation_ldap_search_attr_emaillocal'));
+		$data['email_local'] = $entry->get_value($rcmail->config->get('vacation_ldap_attr_emaillocal'));
 	}
 
 	if ($entry->exists($rcmail->config->get('vacation_ldap_attr_emaildomain')))
 	{
-		$data['email_domain'] = $entry->get_value($rcmail->config->get('vacation_ldap_search_attr_emaildomain'));
+		$data['email_domain'] = $entry->get_value($rcmail->config->get('vacation_ldap_attr_emaildomain'));
 	}
 	
 	if ($entry->exists($rcmail->config->get('vacation_ldap_attr_vacationenable')))
