@@ -25,7 +25,7 @@ rights on .forward file :
 
 For changing the forward path use this setting :
 
-	define(`confFORWARD_PATH',`/var/spool/forward/$u')dnl
+	define(`confFORWARD_PATH',`/var/spool/forward/$u/.forward')dnl
 
 For Postfix MTA, a patch is needed to disable the owner/rights checks. The 
 patch is in contrib/ directory. The forward_path variable need to be set :
