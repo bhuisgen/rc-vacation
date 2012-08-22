@@ -8,6 +8,7 @@ $labels['vacationmessage'] = 'Message:';
 $labels['vacationforwarder'] = 'Forward address:';
 $labels['vacationstart'] = 'Start:';
 $labels['vacationend'] = 'End:';
+$labels['vacationkeepcopyininbox'] = 'Keep copy in inbox';
 
 $messages = array();
 $messages['vacationinvalidstartdate'] = 'Please select a valid start date.';
