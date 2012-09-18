@@ -1,112 +1,401 @@
-CHANGELOG
+commit bdb8fc846a243b3244a1320fdbf5db36225e4d3c
+Author: Boris HUISGEN <bhuisgen@hbis.fr>
+Date:   Tue Sep 18 15:09:44 2012 +0200
 
-2012-02-18 Boris HUISGEN <bhuisgen@hbis.fr>
-	* lib/drivers/forward.php : driver for .forward file.
+    Fix default SQL configuration.
+    
+    - config.inc.php.dist: fix SQL request for Postfixadmin.
+    
+    Signed-off-by: Boris HUISGEN <bhuisgen@hbis.fr>
 
-2012-01-13 Boris HUISGEN <bhuisgen@hbis.fr>
-	* lib/drivers/plesk.php : plesk driver from Vicente D. Monroig Climent (vmonroig@digitaldisseny.com).
-	[RELEASE]: version 0.5
+commit 1cf3896f0b1e013559ddeedc7fbfb9b0e278af0a
+Merge: dadb328 e913044
+Author: Boris HUISGEN <bhuisgen@hbis.fr>
+Date:   Wed Sep 12 04:40:46 2012 -0700
 
-2011-05-10 Boris HUISGEN <bhuisgen@hbis.fr>
-	* localization/cs_CZ.inc : czech translation by Libor Klepac.
-	* localization/pl_PL.inc : polish translation by Marcin Mirosław.
+    Merge pull request #14 from wpoely86/master
+    
+    Added dutch localization
 
-2011-03-28 Boris HUISGEN <bhuisgen@hbis.fr>
-	* lib/drivers/ldap.php, lib/drivers/mysql.php :  add vacation keep copy in
-	  inbox flag.
-	* lib/rcube_vacation.php : add vacation keep copy in inbox flag.
-	* vacation.php : add vacation keep copy in inbox flag.
-	* config.inc.php.dist : add vacation keep copy in inbox flag.
+commit e9130445fe51d3d9d2eac17ea71ec5ffd0e47c64
+Author: Ward Poelmans <ward.poelmans@ugent.be>
+Date:   Wed Sep 12 13:08:56 2012 +0200
 
-2011-03-02 Boris HUISGEN <bhuisgen@hbis.fr>
-	* vacation.php : fix for vacation dates support.
+    Added dutch localization
 
-2011-02-26 Boris HUISGEN <bhuisgen@hbis.fr>
-	* lib/drivers/maildrop.php : allow custom enabled/disabled values.
-	* config.php : add maildrop enabled/disabled custom values support.
+commit dadb328aa72d2ee811f7224b140d03036fd40ff3
+Merge: 971be11 86729d9
+Author: Boris HUISGEN <bhuisgen@hbis.fr>
+Date:   Wed Aug 22 13:48:59 2012 -0700
 
-2011-01-16 Boris HUISGEN <bhuisgen@hbis.fr>
-	* lib/drivers/ldap.php : search/replace on bind settings to allow custom
-	user authentication.
+    Merge pull request #12 from ScOut3R/master
+    
+    en_US localization updated
 
-2010-09-23 Boris HUISGEN <bhuisgen@hbis.fr>
-	* lib/drivers/ldap.php : add vacation_forwarder in vacation_read().
+commit 971be113b65d3a7f087196f9789f10489c8a8234
+Merge: fd49a38 04940ae
+Author: Boris HUISGEN <bhuisgen@hbis.fr>
+Date:   Wed Aug 22 13:48:48 2012 -0700
 
-2010-09-15 Boris HUISGEN <bhuisgen@hbis.fr>
-	* vacation.php : fix vacation forwarder validation.
-	* add de_DE localization (Stéphane LECLERC).
+    Merge pull request #11 from teodorescuserban/master
+    
+    added romanian localization
 
-2010-09-09 Boris HUISGEN <bhuisgen@hbis.fr>
-	[RELEASE]: version 0.4
+commit 86729d92fdd6d518fb9c8e71391c27c004f53804
+Author: GABRI Mate <gabrimate@duosol.hu>
+Date:   Wed Aug 22 10:14:46 2012 +0200
 
-2010-09-06 Boris HUISGEN <bhuisgen@hbis.fr>
-	* vacation.php : force message validity.
-	* config.inc.php.dist : disable MIME for default postfixadmin
-	  configuration.
-	* contrib/xams-config.txt : fix SQL requests.
+    keepcopyininbox localization string in en_US
 
-2010-09-02 Boris HUISGEN <bhuisgen@hbis.fr>
-	* vacation.php : add MIME support. Fix default subject/message when
-	  drivers returns NULL values.
-	* contrib/maildrop-config.sql : add maildrop configuration sample.
-	* contrib/xams-config.txt : add XAMS configuration sample.
+commit 0d9d4ffd9097d05441e2c2a2022361aef0929047
+Merge: 1182693 fd49a38
+Author: GABRI Mate <gabrimate@duosol.hu>
+Date:   Wed Aug 22 10:13:12 2012 +0200
 
-2010-09-01 Boris HUISGEN <bhuisgen@hbis.fr>
-	* lib/drivers/maildrop.php : maildrop driver by Sylvain LANGLADE.
-	* contrib/xams.sql : SQL requests for XAMS (http://www.xams.org)
-	  by Stéphane LECLERC.
+    Merge remote-tracking branch 'bhuisgen/master'
 
-2010-08-31 Boris HUISGEN <bhuisgen@hbis.fr>
-	* vacation.php : rename PLUGIN_NOERROR to PLUGIN_SUCCESS and change
-	  PLUGIN_ERRORXXX values. Fix CSS bug with box. Fix date control ID
-	  and class. Validate date interval. Add option to disable jquery
-	  date selectors.
-	* lib/drivers/sql.php, lib/drivers/ldap.php : fix PLUGIN_XXX values.
-	* doc/* : fix PLUGIN_XXX values.
-	* vacation.js, vacation_calendar.js : add comments.
+commit 04940ae455e7a4c0a403c013f6caa04c711ec331
+Author: Serban Teodorescu <teodorescu.serban@gmail.com>
+Date:   Sat Aug 18 02:10:50 2012 +0300
 
-2010-08-30 Boris HUISGEN <bhuisgen@hbis.fr>
-	* implement date_parse_format() for compatibility with < PHP 5.3.
-	* add SQL requests for custom schema (Matthieu PATOU).
-	* add multiple forwarders support and email check.
+    Added romanian localization
 
-2010-08-28 Boris HUISGEN <bhuisgen@hbis.fr>
-	* add vacation start/end date support (Matthieu PATOU).
-	* fix POST values stripping.
-	* fix subject alert message.
-	* config.php : fix default database name to postfix.
-	* add postfixadmin SQL schema in contrib/ directory.
-	* add custom SQL schema in contrib/ directory (Matthieu PATOU).
-	* add INSTALL-POSTFIX, INSTALL-JQUERYUI documentation files.  
-	
-2010-06-15 Boris HUISGEN <bhuisgen@hbis.fr>
-	* add vacation forward support.
+commit fd49a38d5a966928547cb7c16f24acb0517c1302
+Author: Boris HUISGEN <bhuisgen@hbis.fr>
+Date:   Thu Mar 22 19:21:47 2012 +0100
 
-2010-01-26 Boris HUISGEN <bhuisgen@hbis.fr>
-	* fix variable vacation_sql_dsn.
-	* remove javascript onclick event.
-	[RELEASE]: version 0.3.2
+    add hu_HU localization
 
-2009-12-17 Boris HUISGEN <bhuisgen@hbis.fr>
-	* fix overwriting values bug.
-	* add es_ES localization (Patricio MARTINEZ).
+commit 784aa58f8dd3e8317bbe97126b40dbaf4cb8e62f
+Author: Boris HUISGEN <bhuisgen@hbis.fr>
+Date:   Thu Mar 22 19:20:20 2012 +0100
 
-2009-11-07 Boris HUISGEN <bhuisgen@hbis.fr
-	* fix configuration value name.
-	[RELEASE]: version 0.3.1
+    fix confFORWARD_PATH.
+    
+    Signed-off-by: Boris HUISGEN <bhuisgen@hbis.fr>
 
-2009-10-07 Boris HUISGEN <bhuisgen@hbis.fr>
-	* allow to disable vacation subject.
-	* add HTML message support.
-	* lib/drivers/ldap.php: LDAP driver.
-	[RELEASE]: version 0.3
+commit 118269303bc7037e133acfa6a5959304dd043799
+Author: GABRI Mate <gabrimate@duosol.hu>
+Date:   Sat Mar 3 01:04:03 2012 +0100
 
-2009-09-16 Boris HUISGEN <bhuisgen@hbis.fr>
-	* vacation.php: support plugin API, add backend storage through drivers.
-	* rcube_vacation.php: remove all storage code and add it to lib/drivers/sql.php
-	* lib/drivers/sql.php: SQL driver.
-	* config.inc.php: move to SQL queries blocks (postfixAdmin default queries).
-	[RELEASE]: version 0.2
+    hungarian localization added
 
-2008-05-28 Boris HUISGEN <bhuisgen@hbis.fr>
-	[RELEASE]: version 0.1
+commit d32266e263290bf85cc295a0d17c580a228d6119
+Author: Boris HUISGEN <bhuisgen@hbis.fr>
+Date:   Sat Feb 18 01:08:01 2012 +0100
+
+    add forward driver
+
+commit ab51ec6bb699285efb92b12b0d009c1e98085395
+Merge: 151592f 10ca864
+Author: Boris HUISGEN <bhuisgen@hbis.fr>
+Date:   Fri Feb 10 15:29:17 2012 -0800
+
+    Merge pull request #6 from timesselens/maildrop_driver_file_str_replace
+    
+    Feature: maildrop driver: also allow vacation_maildrop files to contain %vars
+
+commit 151592f92be211b95f2b70ca0592fda18231781d
+Author: Boris HUISGEN <bhuisgen@hbis.fr>
+Date:   Fri Jan 13 22:42:55 2012 +0100
+
+    update ChangeLog
+    
+    Signed-off-by: Boris HUISGEN <bhuisgen@hbis.fr>
+
+commit 10ca8645166d7f42377869585d55b841ee010200
+Author: Tim Esselens <tim.esselens@gmail.com>
+Date:   Fri Dec 9 18:27:52 2011 +0100
+
+    Feature: maildrop driver: also allow vacation_maildrop files to contain %-variables
+
+commit 6ae15b3a55957db9a7725a9e61e19f5a00f1b23d
+Author: Boris HUISGEN <bhuisgen@hbis.fr>
+Date:   Thu Nov 3 22:34:43 2011 +0100
+
+    fix time range check
+    
+    Signed-off-by: Boris HUISGEN <bhuisgen@hbis.fr>
+
+commit c9d064584a0574c383621c59dbba0cb896dc1745
+Merge: 9f92406 9e577e9
+Author: Boris HUISGEN <bhuisgen@hbis.fr>
+Date:   Wed Oct 26 15:36:34 2011 -0700
+
+    Merge pull request #5 from did-vmonroig/master
+    
+    Added driver for Plesk integration
+
+commit 9f92406bc7c5ce675496176bbfd00d3144b4409c
+Merge: b4101fc 336d495
+Author: Boris HUISGEN <bhuisgen@hbis.fr>
+Date:   Wed Oct 26 15:30:06 2011 -0700
+
+    Merge pull request #4 from lota/master
+    
+    Italian translation of rc-vacation
+
+commit 9e577e9b83ce6d212022656d02f7ed75073a9e39
+Author: Vicente <vicente@VicentePC.(none)>
+Date:   Wed Oct 26 11:54:09 2011 +0200
+
+    Added driver for Plesk 10.3 CLI integration
+
+commit 336d495fd03362a341c587bd4f38ea14b69c8d28
+Author: Alessandro De Zorzi <lota@nonlontano.it>
+Date:   Tue Aug 9 14:05:07 2011 +0200
+
+    added 'grazie' in some lines
+
+commit 4dbcfb573a6cebc4f1a9136e3aed89ab9b8a01fd
+Author: Alessandro De Zorzi <lota@nonlontano.it>
+Date:   Tue Aug 9 14:00:40 2011 +0200
+
+    initial italian translation
+
+commit b4101fcfb6b65a790376e36e0e55c263e5fb3885
+Author: Boris HUISGEN <bhuisgen@hbis.fr>
+Date:   Tue May 10 19:51:26 2011 +0200
+
+    - add czech and polish translations.
+    
+    Signed-off-by: Boris HUISGEN <bhuisgen@hbis.fr>
+
+commit 21c955143e45bc5cbbe8e7c6bdc722efa945ea7a
+Author: Boris HUISGEN <bhuisgen@hbis.fr>
+Date:   Mon Mar 28 19:42:02 2011 +0200
+
+    - add vacation keep copy in inbox flag support.
+    
+    Signed-off-by: Boris HUISGEN <bhuisgen@hbis.fr>
+
+commit 3ffb52cf9b11f39011178b7a3bd1863ebabcbb84
+Author: Boris HUISGEN <bhuisgen@hbis.fr>
+Date:   Wed Mar 2 21:04:24 2011 +0100
+
+    - fix for vacation dates support.
+    
+    Signed-off-by: Boris HUISGEN <bhuisgen@hbis.fr>
+
+commit c82dbfde4dae77b1a7ab4436b3edd305f07b16b5
+Author: Boris HUISGEN <bhuisgen@hbis.fr>
+Date:   Sat Feb 26 20:17:26 2011 +0100
+
+    - add maildrop enabled/disabled custom values support.
+    
+    Signed-off-by: Boris HUISGEN <bhuisgen@hbis.fr>
+
+commit 667553503234dfb9cb6b8abb31ae3beacf576f6a
+Author: Boris HUISGEN <bhuisgen@hbis.fr>
+Date:   Tue Jan 18 00:53:53 2011 +0100
+
+    - search/replace bind settings to allow custom user authentication.
+    
+    Signed-off-by: Boris HUISGEN <bhuisgen@hbis.fr>
+
+commit 799d0eaca1bdccd3c0bb223c7eb03589046820ab
+Author: Boris HUISGEN <bhuisgen@hbis.fr>
+Date:   Thu Sep 23 19:33:32 2010 +0200
+
+    - add vacation_forwarder in vacation_read().
+    
+    Signed-off-by: Boris HUISGEN <bhuisgen@hbis.fr>
+
+commit 788d1842b0cf70a84792cb2811ed79fd22a9a570
+Author: Boris HUISGEN <bhuisgen@hbis.fr>
+Date:   Wed Sep 15 00:20:45 2010 +0200
+
+    - vacation.php : fix vacation forwarder validation.
+    - add de_DE localization (Stéphane LECLERC).
+    
+    Signed-off-by: Boris HUISGEN <bhuisgen@hbis.fr>
+
+commit 2450b8d404d1c7f0c12c49c5b654dcc2ad138a00
+Author: Boris HUISGEN <bhuisgen@hbis.fr>
+Date:   Thu Sep 9 19:58:26 2010 +0200
+
+    - release 0.4
+    
+    Signed-off-by: Boris HUISGEN <bhuisgen@hbis.fr>
+
+commit 0564bdf5a0ab1fd9dd38bbc618082e930172c789
+Author: Boris HUISGEN <bhuisgen@hbis.fr>
+Date:   Mon Sep 6 00:28:53 2010 +0200
+
+    - vacation.php : force message validity.
+    - contrib/xams-config.txt : fix requests.
+    - config.inc.php.dist : disable default MIME for postfixadmin.
+    
+    Signed-off-by: Boris HUISGEN <bhuisgen@hbis.fr>
+
+commit b76da69d310960ce5e455bfe3b1c6ccb4a5e806b
+Author: Boris HUISGEN <bhuisgen@hbis.fr>
+Date:   Fri Sep 3 19:34:49 2010 +0200
+
+    - vacation.php : add MIME support. Fix default subject/message when
+       drivers returns NULL values.
+    - contrib/maildrop-config.sql : add maildrop configuration sample.
+    - contrib/xams-config.txt : add XAMS configuration sample.
+    
+    Signed-off-by: Boris HUISGEN <bhuisgen@hbis.fr>
+
+commit a4df3fe50820f6f71f216ad5a4cb513dd81dd3e7
+Author: Boris HUISGEN <bhuisgen@hbis.fr>
+Date:   Wed Sep 1 00:23:14 2010 +0200
+
+    - lib/drivers/maildrop.php : maildrop driver by Sylvain LANGLADE.
+    - contrib/xams.sql : SQL requests for XAMS (http://www.xams.org) by Stephane LECLERC.
+    - config.inc.php.dist : add maildrop options.
+    
+    Signed-off-by: Boris HUISGEN <bhuisgen@hbis.fr>
+
+commit 320e0e9cdb21ffcd94bca8687a46df19070b2baa
+Author: Boris HUISGEN <bhuisgen@hbis.fr>
+Date:   Tue Aug 31 09:37:51 2010 +0200
+
+    - fix date control ID
+    - validate date interval
+    - add configuration option to disable jquery date selectors.
+    
+    Signed-off-by: Boris HUISGEN <bhuisgen@hbis.fr>
+
+commit 65bfd00905bceb5033ea454aad45b577904e742e
+Author: Boris HUISGEN <bhuisgen@hbis.fr>
+Date:   Tue Aug 31 00:22:25 2010 +0200
+
+    - vacation.php : rename PLUGIN_NOERROR to PLUGIN_SUCCESS and change PLUGIN_ERRORXXX values.
+    - lib/drivers/sql.php, lib/drivers/ldap.php : fix PLUGIN_XXX values.
+    - doc/* : fix PLUGIN_XXX values.
+    - vacation.php : fix CSS bug.
+    - *.js : add comments.
+    
+    Signed-off-by: Boris HUISGEN <bhuisgen@hbis.fr>
+
+commit dd0d442c5d6dea81caef7d83bfa899248c45c8de
+Author: Boris HUISGEN <bhuisgen@hbis.fr>
+Date:   Mon Aug 30 23:23:14 2010 +0200
+
+    - add multiple forwarders support.
+    - add mail regex check.
+    - update fr_FR and en_US localizations.
+    
+    Signed-off-by: Boris HUISGEN <bhuisgen@hbis.fr>
+
+commit 12bd2bb22e4a974f3220c1bab16459959eca46c3
+Author: Boris HUISGEN <bhuisgen@hbis.fr>
+Date:   Mon Aug 30 19:56:05 2010 +0200
+
+    - fix isset() and operator for validation check.
+    - change mktime(). to gmmktime().
+    - add my_date_parse_from_format() for compatibilty with PHP < 5.3.
+    - add Matthieu PATOU to AUTHORS for his work.
+    
+    Signed-off-by: Boris HUISGEN <bhuisgen@hbis.fr>
+
+commit 2c48d263b92de6d96227c327093dc963e5a4c6d7
+Author: Boris HUISGEN <bhuisgen@hbis.fr>
+Date:   Sat Aug 28 16:56:11 2010 +0200
+
+    - add custom date format support.
+    
+    Signed-off-by: Boris HUISGEN <bhuisgen@hbis.fr>
+
+commit 2c0dcd6d3185cb9ecd711b2fd068621f2d75b3db
+Author: Boris HUISGEN <bhuisgen@hbis.fr>
+Date:   Sat Aug 28 13:59:57 2010 +0200
+
+    - rename config.inc.php to config.inc.php.dist.
+    
+    Signed-off-by: Boris HUISGEN <bhuisgen@hbis.fr>
+
+commit 2a61b43bced48a5dc4c4d5c9bd4fbbe8eb191896
+Author: Boris HUISGEN <bhuisgen@hbis.fr>
+Date:   Sat Aug 28 13:54:53 2010 +0200
+
+    - fix form values validation.
+    - fix PHP directives.
+    - fix vacation_end in doc/*
+    
+    Signed-off-by: Boris HUISGEN <bhuisgen@hbis.fr>
+
+commit eefe60359a89e3d3c10624ecd5c4483d1b30d939
+Author: Boris HUISGEN <bhuisgen@hbis.fr>
+Date:   Sat Aug 28 12:48:49 2010 +0200
+
+    - add vacation start/end support (Matthieu PATOU)
+    - fix POST values stripping.
+    - fix subject alert message.
+    - fix default database name to postfix.
+    - add postfixadmin SQL schema in contrib/ directory.
+    - add custom SQL schema in contrib/ directory (Matthieu PATOU).
+    - add INSTALL-POSTFIX, INSTALL-JQUERYUI documentation files.
+    
+    Signed-off-by: Boris HUISGEN <bhuisgen@hbis.fr>
+
+commit 84638ff22d91107aa87be5b11a32a74cb1616708
+Author: Boris HUISGEN <bhuisgen@hbis.fr>
+Date:   Tue Jun 15 19:38:20 2010 +0200
+
+    - add vacation forwarder support.
+    - fix html textarea size.
+    - add requirements to README.
+    
+    Signed-off-by: Boris HUISGEN <bhuisgen@hbis.fr>
+
+commit 73f92cd3d6346adf498fbd9ffbd924adbc48bc50
+Author: Boris HUISGEN <bhuisgen@hbis.fr>
+Date:   Tue Jan 26 19:33:30 2010 +0100
+
+    - fix variable vacation_sql_dsn name in sql driver.
+    - remove javascript onclick event.
+    
+    Signed-off-by: Boris HUISGEN <bhuisgen@hbis.fr>
+
+commit 6feb6689a7a239ff2b5c33bc407a5f50cc258785
+Author: Boris HUISGEN <bhuisgen@hbis.fr>
+Date:   Thu Dec 17 19:52:08 2009 +0100
+
+    - fix overwrite values bug when values are not set.
+    
+    Signed-off-by: Boris HUISGEN <bhuisgen@hbis.fr>
+
+commit 2cb87cbdeb82c828c0a1b6bdb16afca7de3d7e00
+Author: Boris HUISGEN <bhuisgen@hbis.fr>
+Date:   Thu Dec 17 19:18:23 2009 +0100
+
+    - spanish localization by Patricio Martinez <gpatricio@gmail.com>.
+    - fix english localization.
+    
+    Signed-off-by: Boris HUISGEN <bhuisgen@hbis.fr>
+
+commit 93c4e0ae2853811be764e5d6ea9678ebcd8a9c0b
+Author: Boris HUISGEN <bhuisgen@hbis.fr>
+Date:   Sun Nov 29 14:42:29 2009 +0100
+
+    - fix localizations.
+    - fix vacation box.
+    - fix sql.php.
+    
+    Signed-off-by: Boris HUISGEN <bhuisgen@hbis.fr>
+
+commit 96c28dfbb962dc0823804023de3e35b1535233bc
+Author: Boris HUISGEN <bhuisgen@hbis.fr>
+Date:   Sat Nov 7 16:59:58 2009 +0100
+
+    - release 0.3.1
+
+commit c460467e9bd792919fa026135a5913c31023989f
+Author: bhuisgen <bhuisgen@hbis.fr>
+Date:   Sat Nov 7 16:49:20 2009 +0100
+
+    - fix vacation_ldap_basedn.
+    
+    Signed-off-by: bhuisgen <bhuisgen@hbis.fr>
+
+commit faf1524501def3d602eb0e103c23bf9e1c710e46
+Author: bhuisgen <bhuisgen@hbis.fr>
+Date:   Wed Oct 28 19:28:30 2009 +0100
+
+    - import version 0.3
+    
+    Signed-off-by: bhuisgen <bhuisgen@hbis.fr>
