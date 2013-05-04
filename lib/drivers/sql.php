@@ -31,7 +31,15 @@ function vacation_read(array &$data)
 			$dsn .= '?new_link=true';
 		}
 		
-		$db = new rcube_mdb2($dsn, '', FALSE);
+		// to avoid error with version 0.9 and maintain backward compatibility
+		if (!class_exists('rcube_db')) 
+		{
+                	$db = new rcube_mdb2($dsn, '', FALSE);
+            	} 
+            	else 
+            	{
+                	$db = rcube_db::factory($dsn, '', FALSE);
+		}
 		$db->set_debug((bool)$rcmail->config->get('sql_debug'));
 		$db->db_connect('w');
 	}
@@ -161,7 +169,15 @@ function vacation_write(array &$data)
 			$dsn .= '?new_link=true';
 		}
 		
-		$db = new rcube_mdb2($dsn, '', FALSE);
+		// to avoid error with version 0.9 and maintain backward compatibility
+		if (!class_exists('rcube_db')) 
+		{
+                	$db = new rcube_mdb2($dsn, '', FALSE);
+            	} 
+            	else 
+            	{
+                	$db = rcube_db::factory($dsn, '', FALSE);
+		}
 		$db->set_debug((bool)$rcmail->config->get('sql_debug'));
 		$db->db_connect('w');
 	}
