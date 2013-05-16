@@ -31,7 +31,7 @@ function vacation_read(array &$data)
 			$dsn .= '?new_link=true';
 		}
 		
-		$db = new rcube_mdb2($dsn, '', FALSE);
+		$db = new rcube_db($dsn, '', FALSE);
 		$db->set_debug((bool)$rcmail->config->get('sql_debug'));
 		$db->db_connect('w');
 	}
@@ -161,7 +161,7 @@ function vacation_write(array &$data)
 			$dsn .= '?new_link=true';
 		}
 		
-		$db = new rcube_mdb2($dsn, '', FALSE);
+		$db = new rcube_db($dsn, '', FALSE);
 		$db->set_debug((bool)$rcmail->config->get('sql_debug'));
 		$db->db_connect('w');
 	}
