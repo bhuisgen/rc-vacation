@@ -16,8 +16,8 @@ class rcube_vacation
 	public $email_local = '';
 	public $email_domain =  '';
 	public $vacation_enable = FALSE;
-	public $vacation_start = 0;
-	public $vacation_end = 0;
+	public $vacation_start = null;
+	public $vacation_end = null;
 	public $vacation_subject = '';
 	public $vacation_message = '';
 	public $vacation_keepcopyininbox = TRUE;
