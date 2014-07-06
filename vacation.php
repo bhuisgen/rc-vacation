@@ -113,7 +113,7 @@ class vacation extends rcube_plugin
 		if ($this->rc->config->get('vacation_gui_vacationsubject', FALSE))
 		{
 			$field_id = 'vacationsubject';
-			$input_vacationsubject = new html_inputfield(array('name' => '_vacationsubject', 'id' => $field_id, 'size' => 40));
+			$input_vacationsubject = new html_inputfield(array('name' => '_vacationsubject', 'id' => $field_id, 'size' => 95));
 			$table->add('title', html::label($field_id, Q($this->gettext('vacationsubject'))));
 			$table->add(null, $input_vacationsubject->show($this->obj->get_vacation_subject()));
 		}
@@ -125,11 +125,11 @@ class vacation extends rcube_plugin
 			// FIX: use identity mode for minimal functions
 			rcube_html_editor('identity');
 
-			$text_vacationmessage = new html_textarea(array('name' => '_vacationmessage', 'id' => $field_id, 'spellcheck' => 1, 'rows' => 6, 'cols' => 40, 'class' => 'mce_editor'));
+			$text_vacationmessage = new html_textarea(array('name' => '_vacationmessage', 'id' => $field_id, 'spellcheck' => 1, 'rows' => 12, 'cols' => 70, 'class' => 'mce_editor'));
 		}
 		else
 		{
-			$text_vacationmessage = new html_textarea(array('name' => '_vacationmessage', 'id' => $field_id, 'spellcheck' => 1, 'rows' => 6, 'cols' => 40));
+			$text_vacationmessage = new html_textarea(array('name' => '_vacationmessage', 'id' => $field_id, 'spellcheck' => 1, 'rows' => 12, 'cols' => 70));
 		}
 
 		$table->add('title', html::label($field_id, Q($this->gettext('vacationmessage'))));
@@ -146,12 +146,12 @@ class vacation extends rcube_plugin
 		if ($this->rc->config->get('vacation_gui_vacationforwarder', FALSE))
 		{
 			$field_id = 'vacationforwarder';
-			$input_vacationforwarder = new html_inputfield(array('name' => '_vacationforwarder', 'id' => $field_id, 'size' => 20));
+			$input_vacationforwarder = new html_inputfield(array('name' => '_vacationforwarder', 'id' => $field_id, 'size' => 95));
 			$table->add('title', html::label($field_id, Q($this->gettext('vacationforwarder'))));
 			$table->add(null, $input_vacationforwarder->show($this->obj->get_vacation_forwarder()));
 		}
 
-		$out = html::div(array('class' => "box"), html::div(array('id' => "prefs-title", 'class' => 'boxtitle'), $this->gettext('vacation')) . html::div(array('class' => "boxcontent"), $table->show() . html::p(null, $this->rc->output->button(array('command' => 'plugin.vacation-save', 'type' => 'input', 'class' => 'button mainaction', 'label' => 'save')))));
+		$out = html::div(array('class' => "box"), html::div(array('id' => "prefs-title", 'class' => 'boxtitle'), $this->gettext('vacation')) . html::div(array('class' => "boxcontent scroller"), $table->show() . html::p(null, $this->rc->output->button(array('command' => 'plugin.vacation-save', 'type' => 'input', 'class' => 'button mainaction', 'label' => 'save')))));
 
 		$this->rc->output->add_gui_object('vacationform', 'vacation-form');
 
