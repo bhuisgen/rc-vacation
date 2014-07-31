@@ -39,10 +39,8 @@ class vacation extends rcube_plugin
 		if ($this->rc->config->get('vacation_gui_vacationdate', FALSE) && $this->rc->config->get('vacation_jquery_calendar', FALSE))
 		{
 			$format = $this->rc->config->get('vacation_jquery_dateformat', 'mm/dd/yy');
-			if ($this->api->output instanceof rcube_template)
-			{
-				$this->api->output->add_header(html::tag("script", array('type' => "text/javascript"), "calendar_format='" . $format . "';"));
-			}
+			if($rcmail->output->type === "html")
+			    $this->rc->output->add_script("calendar_format='" . $format . "';");
 			$this->include_script('vacation_calendar.js');
 		}
 			
