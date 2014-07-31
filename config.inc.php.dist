@@ -70,22 +70,20 @@ $rcmail_config['vacation_sql_write'] =
         array("DELETE FROM vacation WHERE email=%email AND " .
                  "domain=%email_domain;",
           "DELETE from vacation_notification WHERE on_vacation=%email;",
-          "DELETE FROM alias WHERE address=%email AND " .
-                 "domain=%email_domain;", 
               "INSERT INTO vacation (email,domain,subject,body,created," .
                  "active) VALUES (%email,%email_domain,%vacation_subject," .
-                    "%vacation_message,NOW(),%vacation_enable);",
-          "INSERT INTO alias (address,goto,domain,created,modified," .
-                 "active) " .
-             "SELECT %email,CONCAT(%email,',',%email_local,'#',%email_domain,'@'," .
-                "'autoreply.my.domain'),%email_domain,NOW(),NOW(),1 " .
-             "FROM mailbox WHERE username=%email AND " .
-                "domain=%email_domain AND %vacation_enable=1;",
-          "INSERT INTO alias (address,goto,domain,created,modified," .
-                 "active) " .
-             "SELECT %email,%email,%email_domain,NOW(),NOW(),1 " .
-             "FROM mailbox WHERE username=%email AND " .
-                "domain=%email_domain AND %vacation_enable=0;"
+                 "%vacation_message,NOW(),%vacation_enable);",
+
+          "UPDATE alias " .
+          "SET goto = replace(goto, CONCAT(',',%email_local,'#',%email_domain,'@','autoreply.my.domain'),'') " .
+          "WHERE address=%email " .
+          "AND domain=%email_domain ",
+
+          "UPDATE alias " .
+          "SET goto = CONCAT(goto,',',%email_local,'#',%email_domain,'@','autoreply.my.domain') " .
+          "WHERE address=%email " .
+          "AND domain=%email_domain " .
+          "AND %vacation_enable=1;"
          );
 
 /*
