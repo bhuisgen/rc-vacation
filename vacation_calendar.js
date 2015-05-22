@@ -9,9 +9,18 @@
 
 $(function() {
 	$('#vacationstart').datepicker( {
-		dateFormat : calendar_format
+		dateFormat : calendar_format,
+		changeMonth: true,
+		changeYear: true,
+		showOtherMonths: true,
+		selectOtherMonths: true
+
 	});
 	$('#vacationend').datepicker( {
-		dateFormat : calendar_format
+		dateFormat : calendar_format,
+		changeMonth: true,
+		changeYear: true,
+		showOtherMonths: true,
+		selectOtherMonths: true
 	});
 });
