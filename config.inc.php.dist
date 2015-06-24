@@ -120,10 +120,10 @@ $rcmail_config['vacation_sql_write'] =
 			"DELETE from vacation_notification WHERE on_vacation=%email;",
 
 			//remove auto, but keep custom aliases
-			"UPDATE alias SET goto = replace(goto, ','||%email_local||'#'||%email_domain||'@'||'autoreply.isqweb.it',''), modified = NOW()
+			"UPDATE alias SET goto = replace(goto, ','||%email_local||'#'||%email_domain||'@'||'autoreply.my.domain',''), modified = NOW()
 				WHERE address=%email AND domain=%email_domain;",
 			//add auto
-			"UPDATE alias SET goto = goto||','||%email_local||'#'||%email_domain||'@'||'autoreply.isqweb.it', modified = NOW()
+			"UPDATE alias SET goto = goto||','||%email_local||'#'||%email_domain||'@'||'autoreply.my.domain', modified = NOW()
 				WHERE address=%email AND domain=%email_domain AND %vacation_enable=true;",
 
 			//remove fwd, but keep the other stuff  -- good would be some variable with the old forwarder!..
