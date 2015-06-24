@@ -105,7 +105,7 @@ $rcmail_config['vacation_sql_write'] =
 
 			//remove fwd, but keep the other stuff  -- good would be some variable with the old forwarder!..
 			"UPDATE alias SET goto = replace(goto, CONCAT(',',%vacation_forwarder),''), modified = NOW() 
-				WHERE address=%email AND domain=%email_domain;",
+				WHERE address=%email AND domain=%email_domain AND %vacation_forwarder!='';",
 			//add fwd
 			"UPDATE alias SET goto = CONCAT(goto,',',%vacation_forwarder), modified = NOW() 
 				WHERE address=%email AND domain=%email_domain AND %vacation_forwarder!='' AND %vacation_enable=1;",
@@ -120,10 +120,10 @@ $rcmail_config['vacation_sql_write'] =
 			"DELETE from vacation_notification WHERE on_vacation=%email;",
 
 			//remove auto, but keep custom aliases
-			"UPDATE alias SET goto = replace(goto, ','||%email_local||'#'||%email_domain||'@'||'autoreply.isqweb.it',''), modified = NOW()
+			"UPDATE alias SET goto = replace(goto, ','||%email_local||'#'||%email_domain||'@'||'autoreply.my.domain',''), modified = NOW()
 				WHERE address=%email AND domain=%email_domain;",
 			//add auto
-			"UPDATE alias SET goto = goto||','||%email_local||'#'||%email_domain||'@'||'autoreply.isqweb.it', modified = NOW()
+			"UPDATE alias SET goto = goto||','||%email_local||'#'||%email_domain||'@'||'autoreply.my.domain', modified = NOW()
 				WHERE address=%email AND domain=%email_domain AND %vacation_enable=true;",
 
 			//remove fwd, but keep the other stuff  -- good would be some variable with the old forwarder!..
