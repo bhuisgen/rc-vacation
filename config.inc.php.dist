@@ -183,6 +183,9 @@ $rcmail_config['vacation_ldap_attr_vacationstart'] = null;
 // Attribute name to map vacation end
 $rcmail_config['vacation_ldap_attr_vacationend'] = null;
 
+// Attributes mapped to vacation start and vacation end use generalized time format
+$rcmail_config['vacation_ldap_date_use_generalized_time_format'] = True;
+
 // Attribute name to map vacation subject
 $rcmail_config['vacation_ldap_attr_vacationsubject'] = null;
 

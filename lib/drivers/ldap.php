@@ -132,12 +132,16 @@ function vacation_read(array &$data)
 	
 	if ($entry->exists($rcmail->config->get('vacation_ldap_attr_vacationstart')))
 	{
-		$data['vacation_start'] = $entry->get_value($rcmail->config->get('vacation_ldap_attr_vacationstart'));
+		$data['vacation_start'] = ($rcmail->config->get('vacation_ldap_date_use_generalized_time_format') ?
+										generalizedtime2timestamp($entry->get_value($rcmail->config->get('vacation_ldap_attr_vacationstart'))):
+										$entry->get_value($rcmail->config->get('vacation_ldap_attr_vacationstart')));
 	}
 	
 	if ($entry->exists($rcmail->config->get('vacation_ldap_attr_vacationend')))
 	{
-		$data['vacation_end'] = $entry->get_value($rcmail->config->get('vacation_ldap_attr_vacationend'));
+		$data['vacation_end'] = ($rcmail->config->get('vacation_ldap_date_use_generalized_time_format') ?
+										generalizedtime2timestamp($entry->get_value($rcmail->config->get('vacation_ldap_attr_vacationend'))):
+										$entry->get_value($rcmail->config->get('vacation_ldap_attr_vacationend')));
 	}
 	
 	if ($entry->exists($rcmail->config->get('vacation_ldap_attr_vacationsubject')))
@@ -238,8 +242,12 @@ function vacation_write(array &$data)
 					($data['vacation_enable'] ?
 						$rcmail->config->get('vacation_ldap_attr_vacationenable_value_enabled') :
 						$rcmail->config->get('vacation_ldap_attr_vacationenable_value_disabled')),
-					$data['vacation_start'],
-					$data['vacation_end'],
+					($rcmail->config->get('vacation_ldap_date_use_generalized_time_format') ?
+						timestamp2generalizedtime($data['vacation_start']):
+						$data['vacation_start']),
+					($rcmail->config->get('vacation_ldap_date_use_generalized_time_format') ?
+						timestamp2generalizedtime($data['vacation_end']):
+						$data['vacation_end']),
 					$data['vacation_subject'],
 					$data['vacation_message'],
 					$data['vacation_keepcopyininbox'],
@@ -321,4 +329,32 @@ function vacation_write(array &$data)
 	$ldap->done();
 
 	return PLUGIN_SUCCESS;
+}
+
+/*
+ * Convert date from generalized time format to timestamp
+ *
+ * @param string $val the date in generalized time format
+ *
+ * @return string The date in timestamp format if input date successfully parse; orignal input data otherwise.
+ */
+function generalizedtime2timestamp($val) {
+	date_default_timezone_set('UTC');
+	$date = strptime($val,"%Y%m%d%H%M%SZ");
+	if (is_array($date)) {
+		return mktime($date['tm_hour'],$date['tm_min'],$date['tm_sec'],$date['tm_mon']+1,$date['tm_mday'],$date['tm_year']+1900);
+	}
+	return $val;
+}
+
+/*
+ * Convert date from timestamp to generalized time format
+ *
+ * @param string $val the date in timestamp format
+ *
+ * @return string The date in generalized time format if input date successfully parse; orignal input data otherwise.
+ */
+function timestamp2generalizedtime($time) {
+	date_default_timezone_set('UTC');
+	return strftime("%Y%m%d%H%M%SZ",$time);
 }
