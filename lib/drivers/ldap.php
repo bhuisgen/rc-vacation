@@ -20,7 +20,7 @@ function vacation_read(array &$data)
 {
 	require_once ('Net/LDAP2.php');
 	$rcmail = rcmail::get_instance();
-	
+
 	$search = array('%username',
 					'%email_local',
 					'%email_domain',
@@ -28,7 +28,7 @@ function vacation_read(array &$data)
 	$replace = array($data['username'],
 					 $data['email_local'],
 					 $data['email_domain'],
-					 $data['email']);	
+					 $data['email']);
 	$ldap_basedn = str_replace($search, $replace, $rcmail->config->get('vacation_ldap_basedn'));
 	$ldap_binddn = str_replace($search, $replace, $rcmail->config->get('vacation_ldap_binddn'));
 
@@ -43,7 +43,7 @@ function vacation_read(array &$data)
 					 $data['email_domain'],
 					 $data['email']);
 	$ldap_bindpw = str_replace($search, $replace, $rcmail->config->get('vacation_ldap_bindpw'));
-	
+
 	$ldapConfig = array (
         'host'      => $rcmail->config->get('vacation_ldap_host'),
         'port'      => $rcmail->config->get('vacation_ldap_port'),
@@ -106,7 +106,7 @@ function vacation_read(array &$data)
 	}
 
 	$entry = $search->shiftEntry();
-	
+
 	if ($entry->exists($rcmail->config->get('vacation_ldap_attr_email')))
 	{
 		$data['email'] = $entry->get_value($rcmail->config->get('vacation_ldap_search_attr_email'));
@@ -121,7 +121,7 @@ function vacation_read(array &$data)
 	{
 		$data['email_domain'] = $entry->get_value($rcmail->config->get('vacation_ldap_search_attr_emaildomain'));
 	}
-	
+
 	if ($entry->exists($rcmail->config->get('vacation_ldap_attr_vacationenable')))
 	{
 		if ($entry->get_value($rcmail->config->get('vacation_ldap_attr_vacationenable')) ==	$rcmail->config->get('vacation_ldap_attr_vacationenable_value_enabled'))
@@ -129,21 +129,21 @@ function vacation_read(array &$data)
 		else
 			$data['vacation_enable'] = False;
 	}
-	
+
 	if ($entry->exists($rcmail->config->get('vacation_ldap_attr_vacationstart')))
 	{
 		$data['vacation_start'] = ($rcmail->config->get('vacation_ldap_date_use_generalized_time_format') ?
 										generalizedtime2timestamp($entry->get_value($rcmail->config->get('vacation_ldap_attr_vacationstart'))):
 										$entry->get_value($rcmail->config->get('vacation_ldap_attr_vacationstart')));
 	}
-	
+
 	if ($entry->exists($rcmail->config->get('vacation_ldap_attr_vacationend')))
 	{
 		$data['vacation_end'] = ($rcmail->config->get('vacation_ldap_date_use_generalized_time_format') ?
 										generalizedtime2timestamp($entry->get_value($rcmail->config->get('vacation_ldap_attr_vacationend'))):
 										$entry->get_value($rcmail->config->get('vacation_ldap_attr_vacationend')));
 	}
-	
+
 	if ($entry->exists($rcmail->config->get('vacation_ldap_attr_vacationsubject')))
 	{
 		$data['vacation_subject'] = $entry->get_value($rcmail->config->get('vacation_ldap_attr_vacationsubject'));
@@ -153,7 +153,7 @@ function vacation_read(array &$data)
 	{
 		$data['vacation_message'] = $entry->get_value($rcmail->config->get('vacation_ldap_attr_vacationmessage'));
 	}
-	
+
 	if ($entry->exists($rcmail->config->get('vacation_ldap_attr_vacationkeepcopyininbox')))
 	{
 		if ($entry->get_value($rcmail->config->get('vacation_ldap_attr_vacationkeepcopyininbox')) ==	$rcmail->config->get('vacation_ldap_attr_vacationkeepcopyininbox_value_enabled'))
@@ -161,7 +161,7 @@ function vacation_read(array &$data)
 		else
 			$data['vacation_keepcopyininbox'] = False;
 	}
-	
+
 	if ($entry->exists($rcmail->config->get('vacation_ldap_attr_vacationforwarder')))
 	{
 		$data['vacation_forwarder'] = $entry->get_value($rcmail->config->get('vacation_ldap_attr_vacationforwarder'));
@@ -183,7 +183,7 @@ function vacation_write(array &$data)
 {
 	require_once ('Net/LDAP2.php');
 	$rcmail = rcmail::get_instance();
-	
+
 	$search = array('%username',
 					'%email_local',
 					'%email_domain',
@@ -191,7 +191,7 @@ function vacation_write(array &$data)
 	$replace = array($data['username'],
 					 $data['email_local'],
 					 $data['email_domain'],
-					 $data['email']);	
+					 $data['email']);
 	$ldap_basedn = str_replace($search, $replace, $rcmail->config->get('vacation_ldap_basedn'));
 	$ldap_binddn = str_replace($search, $replace, $rcmail->config->get('vacation_ldap_binddn'));
 
@@ -206,7 +206,7 @@ function vacation_write(array &$data)
 					 $data['email_domain'],
 					 $data['email']);
 	$ldap_bindpw = str_replace($search, $replace, $rcmail->config->get('vacation_ldap_bindpw'));
-	
+
 	$ldapConfig = array (
         'host'      => $rcmail->config->get('vacation_ldap_host'),
         'port'      => $rcmail->config->get('vacation_ldap_port'),
