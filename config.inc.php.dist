@@ -211,6 +211,9 @@ $rcmail_config['vacation_ldap_search_base'] =
 // Search filter to read data
 $rcmail_config['vacation_ldap_search_filter'] = '(objectClass=mailAccount)';
 
+// Search scope (sub, one, or base)
+$rcmail_config['vacation_ldap_search_scope'] = 'sub';
+
 // Search attributes to read data
 $rcmail_config['vacation_ldap_search_attrs'] = array (
 												'vacationActive',

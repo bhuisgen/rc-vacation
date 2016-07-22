@@ -85,7 +85,10 @@ function vacation_read(array &$data)
 
 	$search_base = str_replace($search, $replace, $rcmail->config->get('vacation_ldap_search_base'));
 	$search_filter = str_replace($search, $replace, $rcmail->config->get('vacation_ldap_search_filter'));
-	$search_params = array('attributes' => $rcmail->config->get('vacation_ldap_search_attrs'));
+	$search_params = array(
+		'attributes' => $rcmail->config->get('vacation_ldap_search_attrs'),
+		'scope' => $rcmail->config->get('vacation_ldap_search_scope')
+	);
 
 	$search = $ldap->search($search_base, $search_filter, $search_params);
 	if (Net_LDAP2::isError($userEntry))
@@ -272,7 +275,10 @@ function vacation_write(array &$data)
 	else {
 		$search_base = str_replace($searchkeys, $replaceby, $rcmail->config->get('vacation_ldap_search_base'));
 		$search_filter = str_replace($searchkeys, $replaceby, $rcmail->config->get('vacation_ldap_search_filter'));
-		$search_params = array( 'attributes' => $rcmail->config->get('vacation_ldap_search_attrs') );
+		$search_params = array(
+			'attributes' => $rcmail->config->get('vacation_ldap_search_attrs'),
+			'scope' => $rcmail->config->get('vacation_ldap_search_scope')
+		);
 
 		$search = $ldap->search($search_base, $search_filter, $search_params);
 		if (PEAR::isError($search))
