@@ -91,7 +91,7 @@ function vacation_read(array &$data)
 	);
 
 	$search = $ldap->search($search_base, $search_filter, $search_params);
-	if (Net_LDAP2::isError($userEntry))
+	if (PEAR::isError($search))
 	{
 		$ldap->done();
 
