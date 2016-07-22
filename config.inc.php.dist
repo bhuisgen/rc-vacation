@@ -216,12 +216,14 @@ $rcmail_config['vacation_ldap_search_attrs'] = array (
 												'vacationActive',
 												'vacationInfo');
 
-// array of DN to use for modify operations required to write data.
+// array of DN to use for modify operations required to write data. Leave array empty
+// if you want to search user in LDAP directory like to read data.
 $rcmail_config['vacation_ldap_modify_dns'] = array (
  'cn=%email_local,ou=Mailboxes,dc=%email_domain,ou=MailServer,dc=ldap,dc=my,dc=domain'
 );
 
-// array of operations required to write data.
+// array of operations required to write data. If you use feature to search user in LDAP
+// directory like to read data, put ops at array root
 $rcmail_config['vacation_ldap_modify_ops'] = array(
 	array ('replace' => array(
 			$rcmail_config['vacation_ldap_attr_vacationenable'] => '%vacation_enable',

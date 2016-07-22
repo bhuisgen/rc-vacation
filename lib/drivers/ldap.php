@@ -216,76 +216,98 @@ function vacation_write(array &$data)
 		return PLUGIN_ERROR_CONNECT;
 	}
 
+	$searchkeys = array('%username',
+					'%email_local',
+					'%email_domain',
+					'%email',
+					'%vacation_enable',
+					'%vacation_start',
+					'%vacation_end',
+					'%vacation_subject',
+					'%vacation_message',
+					'%vacation_keepcopyininbox',
+					'%vacation_forwarder'
+	);
+	$replaceby = array($data['username'],
+					 $data['email_local'],
+					 $data['email_domain'],
+					 $data['email'],
+					($data['vacation_enable'] ?
+						$rcmail->config->get('vacation_ldap_attr_vacationenable_value_enabled') :
+						$rcmail->config->get('vacation_ldap_attr_vacationenable_value_disabled')),
+					$data['vacation_start'],
+					$data['vacation_end'],
+					$data['vacation_subject'],
+					$data['vacation_message'],
+					$data['vacation_keepcopyininbox'],
+					$data['vacation_forwarder']
+	);
+
 	$dns = $rcmail->config->get('vacation_ldap_modify_dns');
 	$ops = $rcmail->config->get('vacation_ldap_modify_ops');
-	
-	for ($i = 0; $i < count($dns) && $i < count($ops); $i++)
-	{
-		$search = array('%username',
-						'%email_local',
-						'%email_domain',
-						'%email',
-						'%vacation_enable',
-						'%vacation_start',
-						'%vacation_end',
-						'%vacation_subject',
-						'%vacation_message',
-						'%vacation_keepcopyininbox',
-						'%vacation_forwarder',
-		);
-		$replace = array($data['username'],
-						 $data['email_local'],
-						 $data['email_domain'],
-						 $data['email'],
-						 ($data['vacation_enable'] ? "TRUE" : "FALSE"),
-						 $data['vacation_start'],
-						 $data['vacation_end'],
-						 $data['vacation_subject'],
-						 $data['vacation_message'],
-						 $data['vacation_keepcopyininbox'],
-						 $data['vacation_forwarder']
-		);
-		$dns[$i] = str_replace($search, $replace, $dns[$i]);
 
-		foreach ($ops[$i] as $op => $args)
+	if (!empty($dns)) {
+		for ($i = 0; $i < count($dns) && $i < count($ops); $i++)
 		{
-			foreach ($args as $key => $value)
+
+			$dns[$i] = str_replace($searchkeys, $replaceby, $dns[$i]);
+
+			foreach ($ops[$i] as $op => $args)
 			{
-				$search = array('%username',
-								'%email_local',
-								'%email_domain',
-								'%email',
-								'%vacation_enable',
-								'%vacation_start',
-								'%vacation_end',
-								'%vacation_subject',
-								'%vacation_message',
-								'%vacation_keepcopyininbox',
-								'%vacation_forwarder'
-				);
-				$replace = array($data['username'],
-								 $data['email_local'],
-								 $data['email_domain'],
-								 $data['email'],
-								($data['vacation_enable'] ?
-									$rcmail->config->get('vacation_ldap_attr_vacationenable_value_enabled') :
-									$rcmail->config->get('vacation_ldap_attr_vacationenable_value_disabled')),
-								$data['vacation_start'],
-								$data['vacation_end'],
-								$data['vacation_subject'],
-								$data['vacation_message'],
-								$data['vacation_keepcopyininbox'],
-								$data['vacation_forwarder']
-				);
-				$ops[$i][$op][$key] = str_replace($search, $replace, $value);				
+				foreach ($args as $key => $value)
+				{
+					$ops[$i][$op][$key] = str_replace($searchkeys, $replaceby, $value);
+				}
+			}
+
+			$ret = $ldap->modify($dns[$i], $ops[$i]);
+			if (PEAR::isError($ret))
+			{
+				$ldap->done();
+
+				return PLUGIN_ERROR_PROCESS;
 			}
 		}
+	}
+	else {
+		$search_base = str_replace($searchkeys, $replaceby, $rcmail->config->get('vacation_ldap_search_base'));
+		$search_filter = str_replace($searchkeys, $replaceby, $rcmail->config->get('vacation_ldap_search_filter'));
+		$search_params = array( 'attributes' => $rcmail->config->get('vacation_ldap_search_attrs') );
 
-		$ret = $ldap->modify($dns[$i], $ops[$i]);
-		if (PEAR::isError($ldap))
+		$search = $ldap->search($search_base, $search_filter, $search_params);
+		if (PEAR::isError($search))
 		{
 			$ldap->done();
-			
+
+			return PLUGIN_ERROR_PROCESS;
+		}
+
+		if ($search->count() < 1)
+		{
+			$ldap->done();
+
+			return PLUGIN_ERROR_PROCESS;
+		}
+
+		$entry = $search->shiftEntry();
+
+		foreach ($ops as $op => $args) {
+			if (in_array($op,array('add','replace','delete'))) {
+				foreach ($args as $key => $value) {
+					$value=str_replace($searchkeys, $replaceby, $value);
+					$ret = $entry -> $op(array($key => $value));
+					if (PEAR::isError($ret))
+						return PLUGIN_ERROR_PROCESS;
+				}
+			}
+			else return PLUGIN_ERROR_PROCESS;
+		}
+
+		$ret = $entry->update();
+
+		if (PEAR::isError($ret)) {
+			$ldap->done();
+
 			return PLUGIN_ERROR_PROCESS;
 		}
 	}
