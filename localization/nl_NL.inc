@@ -21,3 +21,4 @@ $messages['vacationinvalidforwarders'] = 'De doorstuur adreslijst is niet geldig
 $messages['vacationdriverdefaulterror'] = 'Onbekende uitvoerfout';
 $messages['vacationdriverconnecterror'] = 'Fout bij het verbinden';
 $messages['vacationdriverprocesserror'] = 'Fout bij het verwerken';
+$messages['vacationdriverdateerror'] = 'Invalide date. Select another end date.';

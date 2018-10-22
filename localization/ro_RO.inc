@@ -20,3 +20,4 @@ $messages['vacationinvalidforwarders'] = 'Lista de adrese de redirecționare nu 
 $messages['vacationdriverdefaulterror'] = 'Eroare necunoscută la execuție';
 $messages['vacationdriverconnecterror'] = 'Eroare la conectare';
 $messages['vacationdriverprocesserror'] = 'Eroare la procesare';
+$messages['vacationdriverdateerror'] = 'Invalide date. Select another end date.';

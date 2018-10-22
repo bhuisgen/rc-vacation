@@ -21,4 +21,4 @@ $messages['vacationinvalidforwarders'] = 'A továbbító címek listája nem ér
 $messages['vacationdriverdefaulterror'] = 'Ismeretlen végrehajtási hiba';
 $messages['vacationdriverconnecterror'] = 'Hiba a kapcsolódás során';
 $messages['vacationdriverprocesserror'] = 'Hiba a feldolgozás során';
-
+$messages['vacationdriverdateerror'] = 'Invalide date. Select another end date.';

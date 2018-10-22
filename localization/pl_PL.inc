@@ -20,3 +20,4 @@ $messages['vacationinvalidforwarders'] = 'Lista adresów przekierowań nie jest 
 $messages['vacationdriverdefaulterror'] = 'Nieznany błąd';
 $messages['vacationdriverconnecterror'] = 'Błąd podczas połączenia';
 $messages['vacationdriverprocesserror'] = 'Błąd przetwarzania danych';
+$messages['vacationdriverdateerror'] = 'Invalide date. Select another end date.';

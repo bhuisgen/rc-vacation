@@ -17,16 +17,17 @@ API :
 
      This function reads the data and store them in the array given in
      argument.
- 
+
 - vacation_write(array &$data)
 
      This function writes the data from the array given in argument.
-     
+
      Each function must return a status code which can be :
      - PLUGIN_SUCCESS : success status.
      - PLUGIN_ERROR_DEFAULT : status for generic error.
      - PLUGIN_ERROR_CONNECT : status for connection error.
      - PLUGIN_ERROR_PROCESS : status for processing error.
+     - PLUGIN_ERROR_DATE : status of the end date.
 
      The array of data contains values with specific keys. Each value can be
      get and/or set :
@@ -85,9 +86,9 @@ function vacation_read(array &$data)
  * @param $data array the array of data to set/get.
  *
  * @return integer the status code.
- */  
-function vacation_write(array &$data) 
-{      
+ */
+function vacation_write(array &$data)
+{
     // get the user vacation message
     $msg = $data['vacation_message'];
 

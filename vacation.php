@@ -13,6 +13,7 @@ define ('PLUGIN_SUCCESS', 0);
 define ('PLUGIN_ERROR_DEFAULT', 1);
 define ('PLUGIN_ERROR_CONNECT', 2);
 define ('PLUGIN_ERROR_PROCESS', 3);
+define ('PLUGIN_ERROR_DATE', 4);
 
 class vacation extends rcube_plugin
 {
@@ -35,7 +36,7 @@ class vacation extends rcube_plugin
 		$this->include_script('vacation.js');
 
 		$this->load_config();
-		
+
 		if ($this->rc->config->get('vacation_gui_vacationdate', FALSE) && $this->rc->config->get('vacation_jquery_calendar', FALSE))
 		{
 			$format = $this->rc->config->get('vacation_jquery_dateformat', 'mm/dd/yy');
@@ -43,7 +44,7 @@ class vacation extends rcube_plugin
 			    $this->rc->output->add_script("calendar_format='" . $format . "';");
 			$this->include_script('vacation_calendar.js');
 		}
-			
+
 		require_once ($this->home . '/lib/rcube_vacation.php');
 		$this->obj = new rcube_vacation();
 	}
@@ -228,6 +229,11 @@ class vacation extends rcube_plugin
 
 					return FALSE;
 				}
+				case PLUGIN_ERROR_DATE:
+				{
+					$this->rc->output->command('display_message', $this->gettext('vacationdriverdateerror'), 'error');
+					return FALSE;
+				}
 
 			case PLUGIN_SUCCESS:
 			default:
@@ -289,7 +295,7 @@ class vacation extends rcube_plugin
 		{
 			$this->obj->set_vacation_keep_copy_in_inbox($data['vacation_keepcopyininbox']);
 		}
-		
+
 		if (isset($data['vacation_forwarder']))
 		{
 			$this->obj->set_vacation_forwarder($data['vacation_forwarder']);
@@ -344,7 +350,7 @@ class vacation extends rcube_plugin
 			if (!is_string($subject) || (strlen($subject) == 0))
 			{
 				$this->rc->output->command('display_message', $this->gettext('vacationnosubject'), 'error');
-				
+
 				return FALSE;
 			}
 
@@ -355,7 +361,7 @@ class vacation extends rcube_plugin
 		if (!is_string($message) || (strlen($message) == 0))
 		{
 			$this->rc->output->command('display_message', $this->gettext('vacationnomessage'), 'error');
-				
+
 			return FALSE;
 		}
 		$this->obj->set_vacation_message($message);
@@ -394,7 +400,7 @@ class vacation extends rcube_plugin
 							$this->rc->output->command('display_message', $this->gettext('vacationinvalidforwarders'), 'error');
 						else
 							$this->rc->output->command('display_message', $this->gettext('vacationinvalidforwarder'), 'error');
-						
+
 						return FALSE;
 					}
 				}
@@ -459,6 +465,12 @@ class vacation extends rcube_plugin
 				{
 					$this->rc->output->command('display_message', $this->gettext('vacationdriverprocesserror'), 'error');
 
+					return FALSE;
+				}
+
+				case PLUGIN_ERROR_DATE:
+				{
+					$this->rc->output->command('display_message', $this->gettext('vacationdriverdateerror'), 'error');
 					return FALSE;
 				}
 
@@ -546,10 +558,10 @@ class vacation extends rcube_plugin
 
 		return TRUE;
 	}
-	
+
 	/*
 	 * Returns the informations of a given date.
-	 * 
+	 *
 	 * @param string the date format.
 	 * @param string the date.
 	 * @return array the array of asscociated formats.
@@ -566,7 +578,7 @@ class vacation extends rcube_plugin
 
 		foreach($formats as $key=>$value)
 		{
-			switch ($value) 
+			switch ($value)
 			{
 				case 'd':
 				case 'j':
