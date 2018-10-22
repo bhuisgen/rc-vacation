@@ -163,25 +163,10 @@ function vacation_write(array &$data)
   $ret['enabled'] = $data['vacation_enable'];
 
   // Set vacation_start
-  if ($data['vacation_start'] < time() )
-	{
-    $message = $rcmail->config->get('vacation_modoboa_message_date', '');
-    $this->rc->output->command('display_message', $message, 'error');
-		return PLUGIN_ERROR_PROCESS;
-	}
-  else {
     $ret['fromdate'] = date("Y-m-d\TH:i:sO", $data['vacation_start']);
-  }
 
   // Set vacation_end
-  if ($data['vacation_end'] < time() )
-	{
-    $message = $rcmail->config->get('vacation_modoboa_message_date', '');
-		return PLUGIN_ERROR_PROCESS;
-	}
-  else {
     $ret['untildate'] = date("Y-m-d\TH:i:sO", $data['vacation_end']);
-  }
 
   // Set mbox
   $mbox = $decoded[0]->mbox;
