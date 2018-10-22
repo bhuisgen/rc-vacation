@@ -3,7 +3,7 @@
 /**
  * Modoboa rc-vacation Driver
  *
- * @version 1.0
+ * @version 1.0.1
  * @author stephane @actionweb
  *
  * Copyright (C) 2018, The Roundcube Dev Team
@@ -38,7 +38,7 @@ function vacation_read(array &$data)
 {
   // Init config access
   $rcmail = rcmail::get_instance();
-  $ModoboaToken = $rcmail->config->get('token_api_modoboa', '');
+  $ModoboaToken = $rcmail->config->get('token_api_modoboa');
 
   $RoudCubeUsername = $_SESSION['username'];
   $IMAPhost = $_SESSION['imap_host'];
@@ -73,10 +73,6 @@ function vacation_read(array &$data)
 
   // Decode json string
   $decoded = json_decode($response);
-
-  if (!is_array($decoded)) {
-      return PLUGIN_ERROR_PROCESS;
-  }
 
   // Set id
   $userid = $decoded[0]->id;
@@ -106,7 +102,7 @@ function vacation_write(array &$data)
 
   // Init config access
   $rcmail = rcmail::get_instance();
-  $ModoboaToken = $rcmail->config->get('token_api_modoboa');
+  $ModoboaToken = $rcmail->config->get('token_api_modoboa', '');
 
   $RoudCubeUsername = $_SESSION['username'];
   $IMAPhost = $_SESSION['imap_host'];
@@ -130,10 +126,8 @@ function vacation_write(array &$data)
   ));
 
   $response = curl_exec($curl);
-  rcube::write_log('errors', "Response read: " . $response);
-
   $err = curl_error($curl);
-  rcube::write_log('errors', "Curl error: " . $err);
+
   curl_close($curl);
 
   if ($err) {
@@ -143,10 +137,6 @@ function vacation_write(array &$data)
 
   // Decode json string
   $decoded = json_decode($response);
-
-  if (!is_array($decoded)) {
-      return PLUGIN_ERROR_PROCESS;
-  }
 
   // Set id
   $userid = $decoded[0]->id;
@@ -158,11 +148,6 @@ function vacation_write(array &$data)
   $ret['subject'] = $data['vacation_subject'];
   $ret['content'] = $data['vacation_message'];
   $ret['enabled'] = $data['vacation_enable'];
-
-  // Return the number of days between the two dates:
-  function dateDiff($d1, $d2) {
-       return round(abs(strtotime($d1) - strtotime($d2))/86400);
-  }
 
   // Set vacation_start
   $ret['fromdate'] = date("Y-m-d\TH:i:sO", $data['vacation_start']);
@@ -184,9 +169,6 @@ function vacation_write(array &$data)
 
   // Encode json
   $encoded = json_encode($ret);
-  if (!is_array($encoded)) {
-      return PLUGIN_ERROR_PROCESS;
-  }
 
   // Call HTTP API Modoboa
   $curl = curl_init();
@@ -209,7 +191,6 @@ function vacation_write(array &$data)
 
   $response = curl_exec($curl);
   $err = curl_error($curl);
-  rcube::write_log('errors', "Curl error: " . $err);
 
   curl_close($curl);
 
