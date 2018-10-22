@@ -17,7 +17,7 @@ $rcmail_config['vacation_gui_vacationdate'] = FALSE;
 // allow vacation subject
 $rcmail_config['vacation_gui_vacationsubject'] = TRUE;
 
-// allow HTML for vacation message 
+// allow HTML for vacation message
 $rcmail_config['vacation_gui_vacationmessage_html'] = FALSE;
 
 // allow sending message to be keep in inbox
@@ -97,17 +97,17 @@ $rcmail_config['vacation_sql_write'] =
 			"DELETE from vacation_notification WHERE on_vacation=%email;",
 
 			//remove auto, but keep custom aliases
-			"UPDATE alias SET goto = replace(goto, CONCAT(',',%email_local,'#',%email_domain,'@','autoreply.my.domain'),''), modified = NOW() 
+			"UPDATE alias SET goto = replace(goto, CONCAT(',',%email_local,'#',%email_domain,'@','autoreply.my.domain'),''), modified = NOW()
 				WHERE address=%email AND domain=%email_domain;",
 			//add auto
-			"UPDATE alias SET goto = CONCAT(goto,',',%email_local,'#',%email_domain,'@','autoreply.my.domain'), modified = NOW() 
+			"UPDATE alias SET goto = CONCAT(goto,',',%email_local,'#',%email_domain,'@','autoreply.my.domain'), modified = NOW()
 				WHERE address=%email AND domain=%email_domain AND %vacation_enable=1;",
 
 			//remove fwd, but keep the other stuff  -- good would be some variable with the old forwarder!..
-			"UPDATE alias SET goto = replace(goto, CONCAT(',',%vacation_forwarder),''), modified = NOW() 
+			"UPDATE alias SET goto = replace(goto, CONCAT(',',%vacation_forwarder),''), modified = NOW()
 				WHERE address=%email AND domain=%email_domain AND %vacation_forwarder!='';",
 			//add fwd
-			"UPDATE alias SET goto = CONCAT(goto,',',%vacation_forwarder), modified = NOW() 
+			"UPDATE alias SET goto = CONCAT(goto,',',%vacation_forwarder), modified = NOW()
 				WHERE address=%email AND domain=%email_domain AND %vacation_forwarder!='' AND %vacation_enable=1;",
 		);
 	**/
@@ -261,7 +261,7 @@ $rcmail_config['vacation_maildrop_vacationenable_value_disabled'] = 'disabled';
 /*
  * Forward vacation driver
  */
- 
+
 // path of the user's forward file readed by the MTA
 $rcmail_config['vacation_forward_path'] = '/var/spool/forward/%email_local';
 
@@ -290,12 +290,18 @@ $rcmail_config['vacation_forward_vacation_command'] = '/usr/bin/vacation';
 $rcmail_config['vacation_forward_vacation_reply_interval'] = 0;
 
 // vacation message template
-$rcmail_config['vacation_forward_message_template'] = 
+$rcmail_config['vacation_forward_message_template'] =
 "From: %email\r\n" .
 "Subject: %vacation_subject\r\n" .
 "Delivered-By-The-Graces-Of: Vacation\r\n" .
 "Precedence: bulk\r\n" .
 "\r\n" .
 "%vacation_message";
+
+/*
+ * Modoboa vacation driver
+ */
+$rcmail_config['vacation_log'] = false;
+$rcmail_config['token_api_modoboa'] = '';
 
 // end vacation config file

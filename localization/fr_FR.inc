@@ -20,3 +20,4 @@ $messages['vacationinvalidforwarders'] = 'La liste d\'adresses de redirection n\
 $messages['vacationdriverdefaulterror'] = 'Erreur d\'exécution non spécifiée';
 $messages['vacationdriverconnecterror'] = 'Erreur de connexion';
 $messages['vacationdriverprocesserror'] = 'Erreur de traitement';
+$messages['vacationdriverdateerror'] = 'La date est invalide. Sélectionnez une autre date de fin.';

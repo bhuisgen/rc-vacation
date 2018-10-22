@@ -24,3 +24,4 @@ $messages['vacationinvalidforwarders'] = 'La lista degli indirizzi di inoltro no
 $messages['vacationdriverdefaulterror'] = 'Errore di esecuzione sconosciuto';
 $messages['vacationdriverconnecterror'] = 'Errore durante la connessione';
 $messages['vacationdriverprocesserror'] = 'Errore durante l\'elaborazione';
+$messages['vacationdriverdateerror'] = 'Invalide date. Select another end date.';

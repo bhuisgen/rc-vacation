@@ -20,3 +20,4 @@ $messages['vacationinvalidforwarders'] = 'Seznam adres pro přesměrování nen�
 $messages['vacationdriverdefaulterror'] = 'Unknown execution error';
 $messages['vacationdriverconnecterror'] = 'Chyba během připojování';
 $messages['vacationdriverprocesserror'] = 'Chyba během zpracovávání';
+$messages['vacationdriverdateerror'] = 'Invalide date. Select another end date.';

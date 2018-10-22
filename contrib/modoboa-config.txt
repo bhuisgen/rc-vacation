@@ -1,0 +1,9 @@
+Configuration for Modoboa mail system (https://modoboa.org/)
+
+Modoboa is a solution to quickly deploy and manage a complete email server, compatible with latest standards and optimized for delivery and reputation protection.
+
+At least, you need to setup in config.inc.php, the following:
+
+$rcmail_config['vacation_driver'] = 'modoboa';
+$rcmail_config['vacation_log'] = false;
+$rcmail_config['token_api_modoboa'] = '';
