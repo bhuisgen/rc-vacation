@@ -38,7 +38,7 @@ function vacation_read(array &$data)
 {
   // Init config access
   $rcmail = rcmail::get_instance();
-  $ModoboaToken = $rcmail->config->get('token_api_modoboa');
+  $ModoboaToken = $rcmail->config->get('token_api_modoboa', '');
 
   $RoudCubeUsername = $_SESSION['username'];
   $IMAPhost = $_SESSION['imap_host'];

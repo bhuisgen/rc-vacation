@@ -231,7 +231,7 @@ class vacation extends rcube_plugin
 				}
 				case PLUGIN_ERROR_DATE:
 				{
-					$this->rc->output->command('display_message', $this->gettext('vacationdriverdateerror'), 'error');
+					$this->rc->output->command('display_message', $this->gettext('vacationdriverdateerror'), 'warning');
 					return FALSE;
 				}
 
@@ -470,7 +470,7 @@ class vacation extends rcube_plugin
 
 				case PLUGIN_ERROR_DATE:
 				{
-					$this->rc->output->command('display_message', $this->gettext('vacationdriverdateerror'), 'error');
+					$this->rc->output->command('display_message', $this->gettext('vacationdriverdateerror'), 'warning');
 					return FALSE;
 				}
 
