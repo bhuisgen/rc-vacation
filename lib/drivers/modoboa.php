@@ -3,7 +3,7 @@
 /**
  * Modoboa rc-vacation Driver
  *
- * @version 1.0.1
+ * @version 1.0.2
  * @author stephane @actionweb
  *
  * Copyright (C) 2018, The Roundcube Dev Team
