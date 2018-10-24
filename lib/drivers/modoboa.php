@@ -3,7 +3,7 @@
 /**
  * Modoboa rc-vacation Driver
  *
- * @version 1.0.1
+ * @version 1.0.2
  * @author stephane @actionweb
  *
  * Copyright (C) 2018, The Roundcube Dev Team
@@ -38,7 +38,7 @@ function vacation_read(array &$data)
 {
   // Init config access
   $rcmail = rcmail::get_instance();
-  $ModoboaToken = $rcmail->config->get('token_api_modoboa');
+  $ModoboaToken = $rcmail->config->get('token_api_modoboa', '');
 
   $RoudCubeUsername = $_SESSION['username'];
   $IMAPhost = $_SESSION['imap_host'];
