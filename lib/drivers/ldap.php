@@ -125,9 +125,9 @@ function vacation_read(array &$data)
 	if ($entry->exists($rcmail->config->get('vacation_ldap_attr_vacationenable')))
 	{
 		if ($entry->get_value($rcmail->config->get('vacation_ldap_attr_vacationenable')) ==	$rcmail->config->get('vacation_ldap_attr_vacationenable_value_enabled'))
-			$data['vacation_enable'] = True;
+			$data['vacation_enable'] = true;
 		else
-			$data['vacation_enable'] = False;
+			$data['vacation_enable'] = false;
 	}
 
 	if ($entry->exists($rcmail->config->get('vacation_ldap_attr_vacationstart')))
@@ -157,9 +157,9 @@ function vacation_read(array &$data)
 	if ($entry->exists($rcmail->config->get('vacation_ldap_attr_vacationkeepcopyininbox')))
 	{
 		if ($entry->get_value($rcmail->config->get('vacation_ldap_attr_vacationkeepcopyininbox')) ==	$rcmail->config->get('vacation_ldap_attr_vacationkeepcopyininbox_value_enabled'))
-			$data['vacation_keepcopyininbox'] = True;
+			$data['vacation_keepcopyininbox'] = true;
 		else
-			$data['vacation_keepcopyininbox'] = False;
+			$data['vacation_keepcopyininbox'] = false;
 	}
 
 	if ($entry->exists($rcmail->config->get('vacation_ldap_attr_vacationforwarder')))

@@ -15,12 +15,12 @@ class rcube_vacation
 	public $email = '';
 	public $email_local = '';
 	public $email_domain =  '';
-	public $vacation_enable = FALSE;
-	public $vacation_start = NULL;
-	public $vacation_end = NULL;
+	public $vacation_enable = false;
+	public $vacation_start = null;
+	public $vacation_end = null;
 	public $vacation_subject = '';
 	public $vacation_message = '';
-	public $vacation_keepcopyininbox = TRUE;
+	public $vacation_keepcopyininbox = true;
 	public $vacation_forwarder = '';
 
 	/**
