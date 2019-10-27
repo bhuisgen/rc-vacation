@@ -86,16 +86,16 @@ function vacation_write(array &$data)
 	
 	if ($data['vacation_enable'])
 	{
-		if (!shell_exec($vacation_forward_command . " -i -f " . $vacation_database_filename) == NULL)
+		if (!shell_exec($vacation_forward_command . " -i -f " . $vacation_database_filename) == null)
 		{
-			return FALSE;
+			return false;
 		}
 		
 		$mode = $rcmail->config->get('vacation_forward_database_file_mode', 0644);
 
 		if (!chmod($vacation_database_filename, $mode))
 		{
-			return FALSE;
+			return false;
 		}
 		
 		$vacation_message_fd = fopen($vacation_message_filename, "w+");
@@ -103,7 +103,7 @@ function vacation_write(array &$data)
 		{
 			$this->rc->output->command('display_message', $this->gettext('forwardopenerror'), 'error');
 		
-			return FALSE;
+			return false;
 		}
 		
 		if (!fwrite($vacation_message_fd, construct_vacation_mail($data)))
@@ -112,7 +112,7 @@ function vacation_write(array &$data)
 		
 			fclose($vacation_message_fd);
 		
-			return FALSE;
+			return false;
 		}
 		
 		fclose($vacation_message_fd);
@@ -124,7 +124,7 @@ function vacation_write(array &$data)
 		{
 			$this->rc->output->command('display_message', $this->gettext('forwardopenerror'), 'error');
 		
-			return FALSE;
+			return false;
 		}
 		
 		if (!fwrite($forward_fd, $vacation_forward))
@@ -133,7 +133,7 @@ function vacation_write(array &$data)
 		
 			fclose($forward_fd);
 		
-			return FALSE;
+			return false;
 		}
 				
 		fclose($forward_fd);
@@ -144,8 +144,8 @@ function vacation_write(array &$data)
 		unlink($vacation_message_filename);
 		unlink($vacation_database_filename);
 		
-		$data['vacation_subject'] = NULL;
-		$data['vacation_message'] = NULL;
+		$data['vacation_subject'] = null;
+		$data['vacation_message'] = null;
 	}
 	
 	return PLUGIN_SUCCESS;
@@ -205,7 +205,7 @@ function construct_vacation_message_filename(array $data)
 	$vacation_file = str_replace($search, $replace, $vacation_file);
 	$filename = $forward_path . '/' . $vacation_file;
 
-	if ($rcmail->config->get('vacation_forward_create_dir', FALSE))
+	if ($rcmail->config->get('vacation_forward_create_dir', false))
 	{
 		$mode = $rcmail->config->get('vacation_forward_create_dir_mode', 0755);
 
@@ -308,23 +308,23 @@ function construct_vacation_mail(array $data)
 function extract_subject_from_mail($mail)
 {
 	$headers = strstr($mail, "\r\n\r\n", false);
-	if ($headers == NULL)
-		return NULL;
+	if ($headers == null)
+		return null;
 
 	foreach (explode("\r\n", $headers) as $header)
 	{
-		if (($str = strstr($header, "Subject: ")) != NULL)
+		if (($str = strstr($header, "Subject: ")) != null)
 			return strstr($str, "\r\n", false);
 	}
 	
-	return NULL;
+	return null;
 }
 
 function extract_message_from_mail($mail)
 {
 	$str = strstr($mail, "\r\n\r\n");
-	if ($str == NULL)
-		return NULL;
+	if ($str == null)
+		return null;
 	
 	return substr($str, 4);
 }
