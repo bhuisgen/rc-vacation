@@ -21,4 +21,4 @@ $messages['vacationinvalidforwarders'] = 'The forward addresses list is not vali
 $messages['vacationdriverdefaulterror'] = 'Unknown execution error';
 $messages['vacationdriverconnecterror'] = 'Error during connection';
 $messages['vacationdriverprocesserror'] = 'Error during processing';
-$messages['vacationdriverdateerror'] = 'Invalide date. Select another end date.';
+$messages['vacationdriverdateerror'] = 'Invalid date. Select another end date.';
