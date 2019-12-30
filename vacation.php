@@ -66,6 +66,7 @@ class vacation extends rcube_plugin
 	 */
 	public function vacation_save()
 	{
+		$this->read_data();
 		$this->write_data();
 
 		$this->register_handler('plugin.body', array($this, 'vacation_form'));
